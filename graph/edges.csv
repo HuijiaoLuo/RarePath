@@ -1,0 +1,31 @@
+edge_id,source_id,edge_type,target_id,assertion_level,evidence_id,confidence,source_url,notes
+EDGE:E01-01,MONDO:0009261,HAS_GENE,GENE_SYMBOL:GLB1,curated,E-01,high,https://dismech.monarchinitiative.org/pages/disorders/GM1_Gangliosidosis_Type_2.html,GM1 type 2 is associated with GLB1 deficiency
+EDGE:E02-01,MONDO:0010100,IS_A,MONDO:0017720,curated,E-02,high,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,Tay-Sachs is a member of the GM2 gangliosidosis group
+EDGE:E02-02,MONDO:0010006,IS_A,MONDO:0017720,curated,E-02,high,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,Sandhoff is a member of the GM2 gangliosidosis group
+EDGE:E03-01,MONDO:0017720,INVOLVES_GENE,GENE_SYMBOL:HEXA,curated,E-03,high,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,GM2 degradation uses the HEXA product
+EDGE:E03-02,MONDO:0017720,INVOLVES_GENE,GENE_SYMBOL:HEXB,curated,E-03,high,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,GM2 degradation uses the HEXB product
+EDGE:E03-03,MONDO:0017720,INVOLVES_GENE,GENE_SYMBOL:GM2A,curated,E-03,high,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,GM2 degradation uses the GM2A product
+EDGE:E04-01,NCT:NCT05109793,STUDIES,MONDO:0018149,curated,E-04,high,https://clinicaltrials.gov/study/NCT05109793,Study record includes GM1 gangliosidosis
+EDGE:E04-02,NCT:NCT05109793,STUDIES,MONDO:0010006,curated,E-04,high,https://clinicaltrials.gov/study/NCT05109793,Study record includes Sandhoff disease
+EDGE:E04-03,NCT:NCT05109793,STUDIES,MONDO:0010100,curated,E-04,high,https://clinicaltrials.gov/study/NCT05109793,Study record includes Tay-Sachs disease
+EDGE:E05-01,NCT:NCT00029965,RESEARCH_ASSET_FOR,MONDO:0018149,curated,E-05,medium,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,NTSAD lists GM1 within this natural history resource
+EDGE:E05-02,NCT:NCT00029965,RESEARCH_ASSET_FOR,MONDO:0017720,curated,E-05,medium,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,NTSAD lists GM2 within this natural history resource
+EDGE:E06-01,NCT:NCT07054515,STUDIES,MONDO:0018149,curated,E-06,medium,https://ntsad.org/ntsad-research/clinical-trials/,The master protocol includes a GM1 cohort
+EDGE:E06-02,NCT:NCT07054515,STUDIES,MONDO:0017720,curated,E-06,medium,https://ntsad.org/ntsad-research/clinical-trials/,The master protocol includes GM2 cohorts
+EDGE:E07-01,ORG:CURE_GM1,SUPPORTS,MONDO:0018149,curated,E-07,high,https://www.curegm1.org/,Patient-led GM1 research and support organization
+EDGE:E08-01,ORG:NTSAD,SUPPORTS,MONDO:0017720,curated,E-08,high,https://ntsad.org/about-ntsad/,Patient organization with GM2 research resources
+EDGE:E09-01,NCT:NCT04470713,RESEARCH_ASSET_FOR,MONDO:0018149,curated,E-09,medium,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,Shared natural history listing includes GM1
+EDGE:E09-02,NCT:NCT04470713,RESEARCH_ASSET_FOR,MONDO:0017720,curated,E-09,medium,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,Shared natural history listing includes GM2
+EDGE:E09-03,NCT:NCT04470713,RESEARCH_ASSET_FOR,MONDO:0009266,curated,E-09,medium,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,Shared natural history listing includes Gaucher type II
+EDGE:REL-01,MONDO:0018149,RESEARCH_NEIGHBOR,MONDO:0017720,inferred,E-04,medium,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,Shared research asset creates a research-neighbor link
+EDGE:REL-02,MONDO:0018149,RESOURCE_NEIGHBOR,MONDO:0009266,inferred,E-09,low,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,Shared study makes this a resource neighbor only
+EDGE:SUP-01,MONDO:0009261,SUPPORTED_BY,EVIDENCE:E-01,curated,E-01,high,https://dismech.monarchinitiative.org/pages/disorders/GM1_Gangliosidosis_Type_2.html,Source record for the disease-gene edge
+EDGE:SUP-02,MONDO:0010100,SUPPORTED_BY,EVIDENCE:E-02,curated,E-02,high,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,Source record for the group membership edge
+EDGE:SUP-03,MONDO:0010006,SUPPORTED_BY,EVIDENCE:E-02,curated,E-02,high,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,Source record for the group membership edge
+EDGE:SUP-04,MONDO:0017720,SUPPORTED_BY,EVIDENCE:E-03,curated,E-03,high,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,Source record for the GM2 mechanism edge
+EDGE:SUP-05,NCT:NCT05109793,SUPPORTED_BY,EVIDENCE:E-04,curated,E-04,high,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,Source record for the shared natural history edge
+EDGE:SUP-06,NCT:NCT00029965,SUPPORTED_BY,EVIDENCE:E-05,curated,E-05,medium,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,Source record for the natural history resource edge
+EDGE:SUP-07,NCT:NCT07054515,SUPPORTED_BY,EVIDENCE:E-06,curated,E-06,medium,https://ntsad.org/ntsad-research/clinical-trials/,Source record for the cross-disease trial-design edge
+EDGE:SUP-08,ORG:CURE_GM1,SUPPORTED_BY,EVIDENCE:E-07,curated,E-07,high,https://www.curegm1.org/,Source record for the organization edge
+EDGE:SUP-09,ORG:NTSAD,SUPPORTED_BY,EVIDENCE:E-08,curated,E-08,high,https://ntsad.org/about-ntsad/,Source record for the organization edge
+EDGE:SUP-10,NCT:NCT04470713,SUPPORTED_BY,EVIDENCE:E-09,curated,E-09,medium,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,Source record for the cautionary resource edge

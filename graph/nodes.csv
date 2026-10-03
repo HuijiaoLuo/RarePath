@@ -1,0 +1,26 @@
+node_id,node_type,label,external_id,source_url,status
+MONDO:0018149,Disease,GM1 gangliosidosis,MONDO:0018149,https://mondo.monarchinitiative.org/pages/download/,curated
+MONDO:0009261,Disease,GM1 gangliosidosis type 2,MONDO:0009261,https://dismech.monarchinitiative.org/pages/disorders/GM1_Gangliosidosis_Type_2.html,curated
+MONDO:0017720,Disease,GM2 gangliosidosis,MONDO:0017720,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,curated
+MONDO:0010100,Disease,Tay-Sachs disease,MONDO:0010100,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,curated
+MONDO:0010006,Disease,Sandhoff disease,MONDO:0010006,https://dismech.monarchinitiative.org/pages/disorders/Sandhoff_Disease.html,curated
+MONDO:0009266,Disease,Gaucher disease type II,MONDO:0009266,https://mondo.monarchinitiative.org/pages/download/,curated
+GENE_SYMBOL:GLB1,Gene,GLB1,GLB1,https://dismech.monarchinitiative.org/pages/disorders/GM1_Gangliosidosis_Type_2.html,provisional_symbol_id
+GENE_SYMBOL:HEXA,Gene,HEXA,HEXA,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,provisional_symbol_id
+GENE_SYMBOL:HEXB,Gene,HEXB,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,provisional_symbol_id
+GENE_SYMBOL:GM2A,Gene,GM2A,GM2A,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,provisional_symbol_id
+NCT:NCT05109793,Study,Natural history of GM1 and GM2 gangliosidosis,NCT05109793,https://clinicaltrials.gov/study/NCT05109793,curated
+NCT:NCT00029965,Study,Natural history of glycosphingolipid storage disorders,NCT00029965,https://clinicaltrials.gov/study/NCT00029965,curated
+NCT:NCT07054515,Study,Nizubaglustat master protocol,NCT07054515,https://clinicaltrials.gov/study/NCT07054515,curated
+NCT:NCT04470713,Study,Natural history of GM1 GM2 and Gaucher disease type II,NCT04470713,https://clinicaltrials.gov/study/NCT04470713,curated
+ORG:CURE_GM1,Organization,Cure GM1 Foundation,Cure GM1 Foundation,https://www.curegm1.org/,curated
+ORG:NTSAD,Organization,National Tay-Sachs and Allied Diseases Association,NTSAD,https://ntsad.org/,curated
+EVIDENCE:E-01,Evidence,GM1 type 2 causal gene evidence,E-01,https://dismech.monarchinitiative.org/pages/disorders/GM1_Gangliosidosis_Type_2.html,curated
+EVIDENCE:E-02,Evidence,GM2 grouping ontology evidence,E-02,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,curated
+EVIDENCE:E-03,Evidence,GM2 gene mechanism evidence,E-03,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,curated
+EVIDENCE:E-04,Evidence,GM1 GM2 natural history study,E-04,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,curated
+EVIDENCE:E-05,Evidence,NIH glycosphingolipid natural history study,E-05,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,curated
+EVIDENCE:E-06,Evidence,Cross-disease trial design asset,E-06,https://ntsad.org/ntsad-research/clinical-trials/,curated
+EVIDENCE:E-07,Evidence,Cure GM1 organization evidence,E-07,https://www.curegm1.org/,curated
+EVIDENCE:E-08,Evidence,NTSAD organization evidence,E-08,https://ntsad.org/about-ntsad/,curated
+EVIDENCE:E-09,Evidence,Gaucher shared natural history asset,E-09,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,curated

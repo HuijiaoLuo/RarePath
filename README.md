@@ -6,6 +6,7 @@ It contains:
 
 - the reproducible public-data fetch pipeline;
 - normalized disease, gene, ClinVar, and ClinicalTrials.gov CSV files;
+- an evidence-backed graph schema, node table, edge table, and Neo4j loader;
 - the team overview and evidence table;
 - a manifest for the committed data snapshot.
 
