@@ -8,3 +8,4 @@ Recommended reading order:
 2. [Seed data pipeline](DATA_PIPELINE.md) — how to regenerate the public-data snapshot.
 3. [Seed evidence table](SEED_EVIDENCE_TABLE.md) — curated claims and provenance.
 4. [Protein similarity integration](PROTEIN_SIMILARITY_INTEGRATION.md) — the proposed Gene → Protein → Similar Protein layer.
+5. [Graph DB handoff](GRAPH_DB_HANDOFF.md) — schema, loading, API shape, and UI guidance for the teammate building the graph experience.
