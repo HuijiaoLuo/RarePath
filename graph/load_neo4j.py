@@ -21,7 +21,15 @@ RELATION_PATTERN = re.compile(r"^[A-Z][A-Z0-9_]*$")
 
 def read_csv(path: Path) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8", newline="") as stream:
-        return list(csv.DictReader(stream))
+        reader = csv.DictReader(stream)
+        if not reader.fieldnames:
+            raise ValueError(f"CSV has no header: {path}")
+        rows: list[dict[str, str]] = []
+        for line_number, row in enumerate(reader, start=2):
+            if None in row or any(row[field] is None for field in reader.fieldnames):
+                raise ValueError(f"Malformed CSV row at {path}:{line_number}")
+            rows.append(row)  # type: ignore[arg-type]
+        return rows
 
 
 def validate(nodes: list[dict[str, str]], edges: list[dict[str, str]]) -> None:
@@ -137,7 +145,10 @@ def main() -> int:
     parser.add_argument("--graph-root", default=str(Path(__file__).resolve().parent))
     parser.add_argument("--load", action="store_true", help="Load into Neo4j after validation.")
     parser.add_argument("--uri", default=os.getenv("NEO4J_URI", "bolt://localhost:7687"))
-    parser.add_argument("--user", default=os.getenv("NEO4J_USER", "neo4j"))
+    parser.add_argument(
+        "--user",
+        default=os.getenv("NEO4J_USER", os.getenv("NEO4J_USERNAME", "neo4j")),
+    )
     parser.add_argument("--password", default=os.getenv("NEO4J_PASSWORD", ""))
     parser.add_argument("--database", default=os.getenv("NEO4J_DATABASE", "neo4j"))
     args = parser.parse_args()
@@ -165,4 +176,3 @@ if __name__ == "__main__":
     except (OSError, ValueError, RuntimeError) as error:
         print(f"Graph load failed: {error}", file=sys.stderr)
         raise SystemExit(1)
-

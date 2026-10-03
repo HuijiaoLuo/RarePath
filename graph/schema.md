@@ -30,9 +30,9 @@ The MVP uses **RESEARCH_NEIGHBOR** and **RESOURCE_NEIGHBOR** for research-naviga
 The first graph build is correct when these paths are queryable:
 
 1. GM1 gangliosidosis -> RESEARCH_NEIGHBOR -> GM2 gangliosidosis.
-2. GM1 gangliosidosis -> RESEARCH_ASSET_FOR <- NCT05109793.
+2. NCT05109793 -[STUDIES]-> GM1 gangliosidosis.
 3. GM1 gangliosidosis -> RESOURCE_NEIGHBOR -> Gaucher disease type II.
-4. Every material edge can traverse to an Evidence node with a source URL.
+4. Every material edge has an `evidence_id` that matches an Evidence node with a source URL.
 
 ## Identity note
 

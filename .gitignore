@@ -14,6 +14,8 @@ venv/
 tmp/
 *.log
 file.pdf
+Neo4j-*-Created-*.txt
+neo4j-credentials*.txt
 .DS_Store
 Thumbs.db
 

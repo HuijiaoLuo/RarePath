@@ -7,7 +7,7 @@ MONDO:0010006,Disease,Sandhoff disease,MONDO:0010006,https://dismech.monarchinit
 MONDO:0009266,Disease,Gaucher disease type II,MONDO:0009266,https://mondo.monarchinitiative.org/pages/download/,curated
 GENE_SYMBOL:GLB1,Gene,GLB1,GLB1,https://dismech.monarchinitiative.org/pages/disorders/GM1_Gangliosidosis_Type_2.html,provisional_symbol_id
 GENE_SYMBOL:HEXA,Gene,HEXA,HEXA,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,provisional_symbol_id
-GENE_SYMBOL:HEXB,Gene,HEXB,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,provisional_symbol_id
+GENE_SYMBOL:HEXB,Gene,HEXB,HEXB,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,provisional_symbol_id
 GENE_SYMBOL:GM2A,Gene,GM2A,GM2A,https://dismech.monarchinitiative.org/pages/groupings/GM2_Gangliosidoses.html,provisional_symbol_id
 NCT:NCT05109793,Study,Natural history of GM1 and GM2 gangliosidosis,NCT05109793,https://clinicaltrials.gov/study/NCT05109793,curated
 NCT:NCT00029965,Study,Natural history of glycosphingolipid storage disorders,NCT00029965,https://clinicaltrials.gov/study/NCT00029965,curated

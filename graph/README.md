@@ -21,12 +21,18 @@ This checks duplicate IDs, missing endpoints, invalid relationship names, and mi
 
 ## Neo4j loading
 
-Install the Python driver, start a local Neo4j instance, then set NEO4J_PASSWORD and run:
+Install the Python driver, then set the connection variables for the Neo4j instance you already created and run:
 
 ~~~bash
 python -m pip install neo4j
+export NEO4J_URI='neo4j+s://<instance>.databases.neo4j.io'
+export NEO4J_USER='<username>'
+export NEO4J_PASSWORD='<password>'
+export NEO4J_DATABASE='<database>'
 python graph/load_neo4j.py --load
 ~~~
+
+On Windows Git Bash, keep the credentials in a local, ignored file or set the four variables for the current shell. Do not commit the credential file or put the password in tracked documentation. The loader also accepts `NEO4J_USERNAME` as an alias for `NEO4J_USER`.
 
 The MVP deliberately uses a generic Entity label and a kind property. This keeps the import safe and lets the API expose consistent node data while the domain model is still evolving.
 
