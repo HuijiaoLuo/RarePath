@@ -18,11 +18,23 @@ docs/       project plans, evidence, and integration contracts
 data/       normalized data and data-specific notes
 graph/      graph CSVs, schema, loader, and graph-specific notes
 pipelines/  reproducible public-data fetch scripts
+rag/        provenance-preserving corpus builder and BM25 retriever
 ```
 
 The directory-level READMEs stay next to the data and graph files they describe. Project-wide documents live under `docs/`.
 
 The raw Mondo, ClinVar, and ClinicalTrials.gov responses are intentionally not committed. They can be regenerated with the pipeline and are excluded by .gitignore.
+
+## Run the lightweight RAG baseline
+
+The first retrieval layer is deliberately local and model-free. It indexes the normalized public records and project documentation, while preserving source paths, URLs, row/chunk locators, and content hashes.
+
+~~~bash
+python -m rag.build_corpus --repo-root .
+python -m rag.retrieve --query "GM1 gangliosidosis GLB1" --top-k 5
+~~~
+
+The generated corpus is `data/derived/rag/corpus.jsonl`. Use its returned source locators as the evidence input for a later structured LLM extraction step. Do not write retrieval results directly into Neo4j; review candidate claims first.
 
 ## Rebuild the seed data
 
