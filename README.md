@@ -32,9 +32,10 @@ The first retrieval layer is deliberately local and model-free. It indexes the n
 ~~~bash
 python -m rag.build_corpus --repo-root .
 python -m rag.retrieve --query "GM1 gangliosidosis GLB1" --top-k 5
+python -m rag.extract_candidates --query "GM1 gangliosidosis GLB1" --top-k 3
 ~~~
 
-The generated corpus is `data/derived/rag/corpus.jsonl`. Use its returned source locators as the evidence input for a later structured LLM extraction step. Do not write retrieval results directly into Neo4j; review candidate claims first.
+The generated corpus is `data/derived/rag/corpus.jsonl`; candidate extraction is written to `data/derived/rag/candidates.json`. The extraction step uses the `OPENAI_API_KEY` environment variable, preserves retrieved document IDs, and never writes directly to Neo4j. Review candidate claims first.
 
 ## Rebuild the seed data
 
