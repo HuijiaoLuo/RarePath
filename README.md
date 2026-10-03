@@ -7,7 +7,7 @@ Start with the [documentation index](docs/README.md), then use the [team overvie
 The repository contains:
 
 - reproducible public-data fetch and normalization code;
-- disease, gene, ClinVar, and ClinicalTrials.gov CSV files;
+- disease, gene, protein, ClinVar, and ClinicalTrials.gov CSV files;
 - an evidence-backed graph schema, node table, edge table, and Neo4j loader;
 - a manifest for the committed data snapshot.
 

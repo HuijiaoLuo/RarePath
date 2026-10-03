@@ -6,9 +6,9 @@ Neo4j is the query and provenance layer for the RarePath research-navigation pro
 
 The current seed snapshot contains:
 
-- 25 `Entity` nodes;
-- 30 relationships;
-- 6 diseases, 4 genes, 4 studies, 9 evidence records, and 2 organizations.
+- 30 `Entity` nodes;
+- 34 relationships;
+- 6 diseases, 4 genes, 4 proteins, 4 studies, 10 evidence records, and 2 organizations.
 
 ## Files to use
 
@@ -20,6 +20,8 @@ The current seed snapshot contains:
 | `graph/load_neo4j.py` | Validation and Neo4j import script. |
 | `graph/README.md` | Local and Aura loading instructions. |
 | `data/processed/*.csv` | Normalized disease, gene, variant, and study data. |
+| `data/processed/proteins.csv` / `proteins.fasta` | Reviewed human protein mapping and sequence snapshot. |
+| `pipelines/fetch_protein_mappings.py` | Reproducible UniProt mapping step. |
 
 ## Data model
 

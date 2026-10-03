@@ -10,6 +10,7 @@ Every node is stored with the generic Neo4j label Entity and a kind property.
 | --- | --- | --- |
 | Disease | MONDO ID | MONDO:0018149 |
 | Gene | Provisional symbol ID until HGNC IDs are resolved | GENE_SYMBOL:GLB1 |
+| Protein | UniProt accession for a reviewed human protein | UNIPROT:P16278 |
 | Study | NCT ID | NCT:NCT05109793 |
 | Organization | Stable local ID plus official URL | ORG:CURE_GM1 |
 | Evidence | Evidence-table ID | EVIDENCE:E-01 |
@@ -24,6 +25,8 @@ Each relationship has an edge ID, an assertion level, an evidence ID, a confiden
 - human_reviewed: reviewed by a person after extraction.
 
 The MVP uses **RESEARCH_NEIGHBOR** and **RESOURCE_NEIGHBOR** for research-navigation links. They must not be rendered as treatment-equivalence claims.
+
+**ENCODES** links a provisional gene node to a reviewed human UniProt protein node. It is an identity mapping, not a similarity claim.
 
 ## Query acceptance checks
 

@@ -1,0 +1,45 @@
+{
+  "pipeline": "RarePath protein mapping",
+  "script_version": "0.1.0",
+  "retrieved_at": "2026-10-03T19:07:00.160044Z",
+  "source": "UniProt REST search",
+  "source_releases": [
+    "2026_03"
+  ],
+  "genes": [
+    "GLB1",
+    "HEXA",
+    "HEXB",
+    "GM2A"
+  ],
+  "outputs": {
+    "proteins_csv": "data/processed/proteins.csv",
+    "proteins_fasta": "data/processed/proteins.fasta"
+  },
+  "records": [
+    {
+      "gene_symbol": "GLB1",
+      "uniprot_accession": "P16278",
+      "sequence_length": 677,
+      "sequence_sha256": "30ae540d47dc1251315dbbd90ec597d69fddefc1839a5e91832887e41ca3abe9"
+    },
+    {
+      "gene_symbol": "HEXA",
+      "uniprot_accession": "P06865",
+      "sequence_length": 529,
+      "sequence_sha256": "f15adfe9bbd352b772247696b53b5db7e5c88f0f4794922d82b3c3887a652494"
+    },
+    {
+      "gene_symbol": "HEXB",
+      "uniprot_accession": "P07686",
+      "sequence_length": 556,
+      "sequence_sha256": "6915055cbe1f1a40eb0618f56d431dcf661b91181b1634a8734f09aa81476292"
+    },
+    {
+      "gene_symbol": "GM2A",
+      "uniprot_accession": "P17900",
+      "sequence_length": 193,
+      "sequence_sha256": "4b1464e59a907ff4a5e9e1fde2c36d53aa8eb062710e8ae087f5db1168142b6c"
+    }
+  ]
+}

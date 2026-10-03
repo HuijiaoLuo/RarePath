@@ -29,3 +29,7 @@ EDGE:SUP-07,NCT:NCT07054515,SUPPORTED_BY,EVIDENCE:E-06,curated,E-06,medium,https
 EDGE:SUP-08,ORG:CURE_GM1,SUPPORTED_BY,EVIDENCE:E-07,curated,E-07,high,https://www.curegm1.org/,Source record for the organization edge
 EDGE:SUP-09,ORG:NTSAD,SUPPORTED_BY,EVIDENCE:E-08,curated,E-08,high,https://ntsad.org/about-ntsad/,Source record for the organization edge
 EDGE:SUP-10,NCT:NCT04470713,SUPPORTED_BY,EVIDENCE:E-09,curated,E-09,medium,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,Source record for the cautionary resource edge
+EDGE:PROT-GLB1,GENE_SYMBOL:GLB1,ENCODES,UNIPROT:P16278,curated,P-01,high,https://rest.uniprot.org/uniprotkb/search,Reviewed human UniProt mapping for GLB1
+EDGE:PROT-HEXA,GENE_SYMBOL:HEXA,ENCODES,UNIPROT:P06865,curated,P-01,high,https://rest.uniprot.org/uniprotkb/search,Reviewed human UniProt mapping for HEXA
+EDGE:PROT-HEXB,GENE_SYMBOL:HEXB,ENCODES,UNIPROT:P07686,curated,P-01,high,https://rest.uniprot.org/uniprotkb/search,Reviewed human UniProt mapping for HEXB
+EDGE:PROT-GM2A,GENE_SYMBOL:GM2A,ENCODES,UNIPROT:P17900,curated,P-01,high,https://rest.uniprot.org/uniprotkb/search,Reviewed human UniProt mapping for GM2A

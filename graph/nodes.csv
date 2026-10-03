@@ -24,3 +24,8 @@ EVIDENCE:E-06,Evidence,Cross-disease trial design asset,E-06,https://ntsad.org/n
 EVIDENCE:E-07,Evidence,Cure GM1 organization evidence,E-07,https://www.curegm1.org/,curated
 EVIDENCE:E-08,Evidence,NTSAD organization evidence,E-08,https://ntsad.org/about-ntsad/,curated
 EVIDENCE:E-09,Evidence,Gaucher shared natural history asset,E-09,https://ntsad.org/ntsad-research/research-for-families-and-individuals/natural-history-studies/,curated
+UNIPROT:P16278,Protein,Beta-galactosidase,P16278,https://www.uniprot.org/uniprotkb/P16278,curated
+UNIPROT:P06865,Protein,Beta-hexosaminidase subunit alpha,P06865,https://www.uniprot.org/uniprotkb/P06865,curated
+UNIPROT:P07686,Protein,Beta-hexosaminidase subunit beta,P07686,https://www.uniprot.org/uniprotkb/P07686,curated
+UNIPROT:P17900,Protein,Ganglioside GM2 activator,P17900,https://www.uniprot.org/uniprotkb/P17900,curated
+EVIDENCE:P-01,Evidence,UniProt reviewed human protein mapping release 2026_03,P-01,https://rest.uniprot.org/uniprotkb/search,curated
