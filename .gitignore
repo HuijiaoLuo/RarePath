@@ -1,0 +1,21 @@
+# Large and reproducible source snapshots
+data/raw/
+data/manifests/seed_snapshot_*.json
+
+# Python and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+
+# Temporary and local files
+tmp/
+*.log
+file.pdf
+.DS_Store
+Thumbs.db
+
+# Keep the curated snapshot metadata committed
+!data/manifests/manifest.json

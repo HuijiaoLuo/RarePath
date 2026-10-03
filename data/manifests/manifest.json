@@ -1,0 +1,85 @@
+{
+  "pipeline": "RarePath seed data fetch",
+  "script_version": "0.1.0",
+  "retrieved_at": "2026-10-03T17:58:14.119878Z",
+  "seed_scope": "GM1 / GM2 gangliosidosis prototype",
+  "components": {
+    "mondo": {
+      "release_tag": "v2026-09-01",
+      "source_url": "https://github.com/monarch-initiative/mondo/releases/download/v2026-09-01/mondo.json",
+      "raw_path": "data\\raw\\mondo\\v2026-09-01\\mondo.json",
+      "sha256": "ba19a3be2a384f21d2a09eaa726daedf6f06b9747ae011ab81d29fcd4dd8d3ee",
+      "record_count": 6,
+      "requested_seed_ids": {
+        "MONDO:0018149": "GM1 gangliosidosis",
+        "MONDO:0009261": "GM1 gangliosidosis type 2",
+        "MONDO:0017720": "GM2 gangliosidosis",
+        "MONDO:0010100": "Tay-Sachs disease",
+        "MONDO:0010006": "Sandhoff disease"
+      },
+      "missing_seed_ids": [],
+      "snapshot_stamp": "20261003T175814Z"
+    },
+    "clinvar": {
+      "source_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
+      "raw_directory": "data\\raw\\clinvar\\20261003T175814Z",
+      "query_count": 4,
+      "variant_record_count": 400,
+      "queries": [
+        {
+          "gene_symbol": "GLB1",
+          "query": "GLB1[gene] AND \"GM1 gangliosidosis\"[All Fields]",
+          "source_record_count": "1084",
+          "downloaded_record_count": 100,
+          "raw_directory": "data\\raw\\clinvar\\20261003T175814Z"
+        },
+        {
+          "gene_symbol": "HEXA",
+          "query": "HEXA[gene] AND (\"Tay-Sachs disease\"[All Fields] OR \"GM2 gangliosidosis\"[All Fields])",
+          "source_record_count": "1289",
+          "downloaded_record_count": 100,
+          "raw_directory": "data\\raw\\clinvar\\20261003T175814Z"
+        },
+        {
+          "gene_symbol": "HEXB",
+          "query": "HEXB[gene] AND (\"Sandhoff disease\"[All Fields] OR \"GM2 gangliosidosis\"[All Fields])",
+          "source_record_count": "843",
+          "downloaded_record_count": 100,
+          "raw_directory": "data\\raw\\clinvar\\20261003T175814Z"
+        },
+        {
+          "gene_symbol": "GM2A",
+          "query": "GM2A[gene] AND \"GM2 gangliosidosis\"[All Fields]",
+          "source_record_count": "201",
+          "downloaded_record_count": 100,
+          "raw_directory": "data\\raw\\clinvar\\20261003T175814Z"
+        }
+      ]
+    },
+    "clinicaltrials": {
+      "source_url": "https://clinicaltrials.gov/api/v2/studies",
+      "raw_directory": "data\\raw\\clinicaltrials\\20261003T175814Z",
+      "study_record_count": 4,
+      "nct_ids": [
+        "NCT05109793",
+        "NCT00029965",
+        "NCT07054515",
+        "NCT04470713"
+      ]
+    }
+  },
+  "normalized_outputs": {
+    "diseases": {
+      "path": "data\\processed\\diseases.csv",
+      "record_count": 6
+    },
+    "variants": {
+      "path": "data\\processed\\variants.csv",
+      "record_count": 400
+    },
+    "studies": {
+      "path": "data\\processed\\studies.csv",
+      "record_count": 4
+    }
+  }
+}

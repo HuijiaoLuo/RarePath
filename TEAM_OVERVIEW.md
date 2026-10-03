@@ -32,6 +32,23 @@ Start with a small, evidence-rich disease cluster:
 
 The first selection criterion is not disease popularity. It is whether we can support an end-to-end story with real biology, literature, community, and research-resource data.
 
+### Selected MVP disease cluster
+
+We will build the first prototype around **GM1 / GM2 gangliosidosis**, a lysosomal neurodegeneration cluster.
+
+| Role in the demo | Scope |
+| --- | --- |
+| Starting disease | GM1 gangliosidosis, with the late-infantile/juvenile form as the primary demonstration case where the study population requires it. |
+| Positive research neighbor | GM2 gangliosidoses: Tay-Sachs disease and Sandhoff disease. |
+| Cautionary comparison | Gaucher disease type 2: a shared natural-history resource can make it a research-operations neighbor, but this is not evidence that a therapeutic mechanism can be transferred. |
+| Context-only neighbor | Niemann-Pick type C may appear as a shared-study neighbor, but it is outside the first core path because its treatment context adds unnecessary complexity. |
+
+The intended journey is:
+
+> A GM1 organization discovers GM2 as a supported research neighbor, inspects the shared natural-history and trial-design assets, finds the relevant patient organizations, and receives a sourced prompt to validate endpoint and eligibility compatibility before proposing collaboration.
+
+The corresponding evidence inventory is maintained in [SEED_EVIDENCE_TABLE.md](SEED_EVIDENCE_TABLE.md).
+
 ## 4. Core experience
 
 The interface should have four simple surfaces.
@@ -231,4 +248,3 @@ A strong demo makes one concrete statement that judges can inspect:
 > "This patient organization should investigate collaboration with this related community because both conditions have evidence for a compatible mechanism. The related community already has this registry or study design. These differences must be reviewed by an expert before any joint study is proposed."
 
 The demo succeeds if every part of that statement is clickable, sourced, and clearly distinguishes evidence from hypothesis.
-

@@ -1,0 +1,5 @@
+gene_symbol,source_url,query,total_matching_records,downloaded_records,retrieved_at
+GLB1,https://www.ncbi.nlm.nih.gov/clinvar/docs/access/,"GLB1[gene] AND ""GM1 gangliosidosis""[All Fields]",1084,100,2026-10-03T17:58:14.119878Z
+HEXA,https://www.ncbi.nlm.nih.gov/clinvar/docs/access/,"HEXA[gene] AND (""Tay-Sachs disease""[All Fields] OR ""GM2 gangliosidosis""[All Fields])",1289,100,2026-10-03T17:58:14.119878Z
+HEXB,https://www.ncbi.nlm.nih.gov/clinvar/docs/access/,"HEXB[gene] AND (""Sandhoff disease""[All Fields] OR ""GM2 gangliosidosis""[All Fields])",843,100,2026-10-03T17:58:14.119878Z
+GM2A,https://www.ncbi.nlm.nih.gov/clinvar/docs/access/,"GM2A[gene] AND ""GM2 gangliosidosis""[All Fields]",201,100,2026-10-03T17:58:14.119878Z
