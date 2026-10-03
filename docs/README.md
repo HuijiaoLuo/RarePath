@@ -11,3 +11,4 @@ Recommended reading order:
 5. [Graph DB handoff](GRAPH_DB_HANDOFF.md) — schema, loading, API shape, and UI guidance for the teammate building the graph experience.
 6. [Ecosystem roadmap](ECOSYSTEM_ROADMAP.md) — research insights, collaboration, patient data, and ultra-rare disease workflows.
 7. [Protein model selection](PROTEIN_MODEL_SELECTION.md) — lightweight sequence, embedding, structure, phenotype, and pathway methods.
+8. [RAG-to-Graph ingestion](RAG_GRAPH_INGESTION.md) — how to discover missing diseases and add only reviewed evidence to Neo4j.
