@@ -1,0 +1,10 @@
+# Project documentation
+
+These are project-wide documents. Code-specific instructions remain next to their code in `data/` and `graph/`.
+
+Recommended reading order:
+
+1. [Team overview](TEAM_OVERVIEW.md) — scope, MVP, and working assumptions.
+2. [Seed data pipeline](DATA_PIPELINE.md) — how to regenerate the public-data snapshot.
+3. [Seed evidence table](SEED_EVIDENCE_TABLE.md) — curated claims and provenance.
+4. [Protein similarity integration](PROTEIN_SIMILARITY_INTEGRATION.md) — the proposed Gene → Protein → Similar Protein layer.

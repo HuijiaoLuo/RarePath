@@ -2,20 +2,31 @@
 
 This is the GitHub-ready seed package for the Rare Disease Atlas prototype.
 
-It contains:
+Start with the [documentation index](docs/README.md), then use the [team overview](docs/TEAM_OVERVIEW.md), [data pipeline guide](docs/DATA_PIPELINE.md), and [evidence table](docs/SEED_EVIDENCE_TABLE.md). The planned protein layer is described in the [protein similarity integration contract](docs/PROTEIN_SIMILARITY_INTEGRATION.md).
 
-- the reproducible public-data fetch pipeline;
-- normalized disease, gene, ClinVar, and ClinicalTrials.gov CSV files;
+The repository contains:
+
+- reproducible public-data fetch and normalization code;
+- disease, gene, ClinVar, and ClinicalTrials.gov CSV files;
 - an evidence-backed graph schema, node table, edge table, and Neo4j loader;
-- the protein-mapping and similarity integration contract for the next graph layer;
-- the team overview and evidence table;
 - a manifest for the committed data snapshot.
+
+## Repository map
+
+```text
+docs/       project plans, evidence, and integration contracts
+data/       normalized data and data-specific notes
+graph/      graph CSVs, schema, loader, and graph-specific notes
+pipelines/  reproducible public-data fetch scripts
+```
+
+The directory-level READMEs stay next to the data and graph files they describe. Project-wide documents live under `docs/`.
 
 The raw Mondo, ClinVar, and ClinicalTrials.gov responses are intentionally not committed. They can be regenerated with the pipeline and are excluded by .gitignore.
 
 ## Rebuild the seed data
 
-From this folder:
+From the repository root:
 
 ~~~bash
 python pipelines/fetch_seed_data.py
