@@ -353,6 +353,7 @@
     const other = (e, id) => e.source === id ? e.target : e.source;
     const edgesOf = id => byNode.get(id) || [];
     const label = id => (N.get(id) || { label: id }).label;
+    const plural = w => /s$/.test(w) ? w : /[^aeiou]y$/.test(w) ? w.slice(0, -1) + "ies" : w + "s";  // ciliopathy -> ciliopathies
     const list = arr => arr.length <= 1 ? (arr[0] || "") : arr.slice(0, -1).join(", ") + " and " + arr[arr.length - 1];
     const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
     const pct = v => Math.round(Math.max(0, Math.min(1, Number(v) || 0)) * 100);
@@ -528,7 +529,7 @@
       if (!g.sharedGenes.length && series.length) r.push(`Recorded as types of the same disease, ${list(series)}, in the MONDO disease ontology.`);
       const klass = (p.shared_mondo_class || []).map(c => c.label).filter(Boolean);
       if (!g.sharedGenes.length && !series.length && !paths.length && klass.length && g.tier !== "caution")
-        r.push(`Both are ${list(klass.map(k => k + (/s$/.test(k) ? "" : "s")))} in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match.`);
+        r.push(`Both are ${list(klass.map(plural))} in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match.`);
       if (!g.sharedGenes.length && paths.length && g.tier !== "caution") r.push(`Their genes act in the same biological processes: ${list(paths)}.`);
       const signs = clinicalSigns(p.shared_phenotypes).slice(0, 3).map(x => x.label.toLowerCase());
       if (signs.length && g.pct >= 0.5) r.push(`Shared distinctive signs: ${list(signs)}.`);
@@ -1363,6 +1364,35 @@ Kind regards,
       chatState.history.push({ role: "user", text: q }, { role: "assistant", text: result.answer });
       chatState.busy = false; $("#send").disabled = false;
     }
+    // A question that names a disease the facts on screen do not cover would be answered
+    // from the wrong disease's facts. Find such diseases, so the page can offer to switch first.
+    function otherDiseasesIn(q) {
+      if (!lastModel) return [];
+      const n = ` ${norm(q)} `;
+      const covered = ` ${norm([lastModel.f.label, ...chatState.facts.map(f => f.text)].join(" "))} `;
+      const own = new Set([...lastModel.scope.members, ...lastModel.scope.parents, ...lastModel.scope.siblings]);
+      const hits = new Map();
+      for (const d of DATA.nodes) {
+        if (d.kind !== "Disease" || own.has(d.id)) continue;
+        const terms = (d.search || []).map(norm).filter(t => t && !/^(mondo|omim|orpha|ncbigene|gene symbol|doid|umls|mesh|icd)/.test(t))
+          .flatMap(t => [t, t.replace(/\b(disease|syndrome|type|form|variant|deficiency)\b.*$/, "").trim(), ...(t.match(/\b[a-z]+\d\w*\b/g) || [])])
+          .filter(t => (t.length >= 5 || (/\d/.test(t) && /[a-z]/.test(t) && t.length >= 3)) && n.includes(` ${t} `) && !covered.includes(` ${t} `));
+        if (terms.length) { const t = terms.sort((x, y) => y.length - x.length)[0]; hits.set(d.id, t); }
+      }
+      // One button per disease named: drop a form when its parent also matched, and when several
+      // diseases matched the same words ("tay sachs"), keep the one with the shortest name.
+      const byTerm = new Map();
+      for (const id of [...hits.keys()].filter(id => !parentsOf(id).some(p => hits.has(p)))) {
+        const t = hits.get(id), seen = byTerm.get(t);
+        if (!seen || label(id).length < label(seen).length) byTerm.set(t, id);
+      }
+      return [...byTerm.entries()].sort((a, b) => b[0].length - a[0].length).map(([, id]) => id).slice(0, 2);
+    }
+    function switchCard(q, ids) {
+      postBot(`<p>Your question names <b>${esc(list(ids.map(label)))}</b>, but the facts RarePath has on screen are for <b>${esc(lastModel.f.label)}</b> and do not mention ${ids.length > 1 ? "them" : "it"}. An answer now would come from the wrong disease.</p>
+        <div class="chips">${ids.map(id => `<button type="button" data-switchask="${esc(id)}" data-q="${esc(q)}">Switch to ${esc(label(id))} and ask</button>`).join("")}
+        <button type="button" data-askhere="${esc(q)}">Answer about ${esc(lastModel.f.label)} anyway</button></div>`);
+    }
     function handleInput(text) {
       const q = text.trim(); if (!q || chatState.busy) return;
       postMe(q);
@@ -1375,6 +1405,8 @@ Kind regards,
         if (strong) { chooserCard(top); return; }
       }
       if (!lastModel || (!isQuestion && !hits.length && q.split(/\s+/).length <= 4)) { gapCard(q); return; }
+      const other = otherDiseasesIn(q);
+      if (other.length) { switchCard(q, other); return; }
       ask(q);
     }
 
@@ -1413,7 +1445,7 @@ Kind regards,
       };
       const f = m.f;
       const geneEdges = m.scope.members.flatMap(id => edgesOf(id).filter(e => (e.type === "HAS_GENE" || e.type === "INVOLVES_GENE") && e.source === id).map(e => e.id));
-      if (m.focusGenes.length) add(`${f.label} is caused by changes in the ${list(m.focusGenes)} gene.`, geneEdges, { title: `${f.label}: cause` });
+      if (m.focusGenes.length) add(`${f.label} is caused by changes in the ${list(m.focusGenes)} ${m.focusGenes.length > 1 ? "genes" : "gene"}.`, geneEdges, { title: `${f.label}: cause` });
       if (m.formIds.length) {
         const isa = [...m.scope.members, ...m.formIds].flatMap(id => edgesOf(id).filter(e => e.type === "IS_A").map(e => e.id));
         add(`${f.label} ${m.scope.members.length > 1 ? "has these forms" : "is related to these forms"}: ${list(m.formIds.map(label))}.`, isa, { title: "Forms of the disease" });
@@ -1437,7 +1469,7 @@ Kind regards,
         const { r, diff } = reasons(g, m.focusGenes);
         const members = g.memberIds.length > 1 ? ` (${g.memberIds.map(label).join(", ")})` : "";
         const care = g.tier === "caution" ? ` RarePath advises handling this one with care: ${cautionLine(g).toLowerCase()}.` : "";
-        add(`${g.title}${members} has a "${TIER[g.tier].text.toLowerCase()}" with ${f.label}. ${[...r, ...diff].join(" ")}${care}`,
+        add(`RarePath rates the link between ${g.title}${members} and ${f.label} as "${TIER[g.tier].text.toLowerCase()}". ${[...r, ...diff].join(" ")}${care}`,
           [...g.edges, ...g.seedEdges].map(e => e.id), { group: g.key, title: g.title, computed: g.edges.length > 0, match: terms([...g.memberIds, g.key].filter(id => N.has(id))), caution: g.tier === "caution" });
       }
       for (const sid of m.studyIds) {
@@ -1543,6 +1575,11 @@ Kind regards,
         return;
       }
       if (ev.target.id === "open-map") { mapMode = "focus"; renderMap(); return; }
+      const sw = ev.target.closest("[data-switchask],[data-askhere]");
+      if (sw) {
+        if (sw.dataset.switchask) { closeDrawer(); selectDisease(sw.dataset.switchask); }
+        ask(sw.dataset.q || sw.dataset.askhere); return;
+      }
       const fb = ev.target.closest("[data-fb]");
       if (fb) { sendFeedback(fb); return; }
       if (ev.target.closest("[data-forget]")) { forgetRecent(); return; }
@@ -1624,8 +1661,16 @@ Kind regards,
     // Read-only hook for evals/capture_facts.py: the exact facts the page would send, and its offline answer.
     window.RAREPATH_EVAL = {
       facts(id) { selectDisease(id); return JSON.parse(JSON.stringify(chatState.facts)); },
-      offline(id, q) { if (focusId !== id) selectDisease(id); return offlineAnswer(q); },
+      offline(id, q) {
+        if (focusId !== id) selectDisease(id);
+        const other = otherDiseasesIn(q);
+        if (other.length) return { answer: `Switch first: the question names ${list(other.map(label))}, not ${label(id)}.`, fact_ids: [], switch_to: other.map(label) };
+        return offlineAnswer(q);
+      },
       graphVersion,
+      other(id, q) { if (focusId !== id) selectDisease(id); return otherDiseasesIn(q).map(label); },
+      suggest(id) { if (focusId !== id) selectDisease(id); return [...new Set([...suggestions(), ...suggestionsFor()])]; },
+      diseases() { return DATA.nodes.filter(n => n.kind === "Disease").map(n => n.id); },
     };
     Promise.all([tryLive(), checkChat()]).then(boot);
   })();

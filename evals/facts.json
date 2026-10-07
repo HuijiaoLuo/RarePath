@@ -1,5 +1,5 @@
 {
- "captured_at": "2026-10-05T07:55Z",
+ "captured_at": "2026-10-07T18:58Z",
  "focus": {
   "MONDO:0008104": [
    {
@@ -45,7 +45,7 @@
    },
    {
     "id": "F5",
-    "text": "LEOPARD syndrome 1 has a \"same gene\" with Noonan syndrome 1. Caused by changes in the same gene, PTPN11. Shared distinctive signs: cubitus valgus, webbed neck and cafe-au-lait spot. Many signs overlap too, but they are recorded as separate diseases.",
+    "text": "RarePath rates the link between LEOPARD syndrome 1 and Noonan syndrome 1 as \"same gene\". Caused by changes in the same gene, PTPN11. Shared distinctive signs: cubitus valgus, webbed neck and cafe-au-lait spot. Many signs overlap too, but they are recorded as separate diseases.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0008104-MONDO:0100082"
     ],
@@ -65,7 +65,7 @@
    },
    {
     "id": "F6",
-    "text": "Other types of Noonan syndrome (Noonan syndrome 3, Noonan syndrome 4, Noonan syndrome 5, Noonan syndrome 7) has a \"strong link\" with Noonan syndrome 1. Recorded as types of the same disease, Noonan syndrome, in the MONDO disease ontology. Their genes act in the same biological processes: Signaling by CSF3 (G-CSF) and Signaling by CSF1 (M-CSF) in myeloid cells. Shared distinctive signs: juvenile myelomonocytic leukemia, shield chest and cystic hygroma. Different gene (BRAF, KRAS, RAF1 and SOS1, not PTPN11), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Other types of Noonan syndrome (Noonan syndrome 3, Noonan syndrome 4, Noonan syndrome 5, Noonan syndrome 7) and Noonan syndrome 1 as \"strong link\". Recorded as types of the same disease, Noonan syndrome, in the MONDO disease ontology. Their genes act in the same biological processes: Signaling by CSF3 (G-CSF) and Signaling by CSF1 (M-CSF) in myeloid cells. Shared distinctive signs: juvenile myelomonocytic leukemia, shield chest and cystic hygroma. Different gene (BRAF, KRAS, RAF1 and SOS1, not PTPN11), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0008104-MONDO:0012371",
      "EDGE:CLX-SIM-MONDO:0008104-MONDO:0012547",
@@ -114,7 +114,7 @@
    },
    {
     "id": "F7",
-    "text": "cardiofaciocutaneous syndrome 3 has a \"moderate link\" with Noonan syndrome 1. Already studied together in NCT04395495. Different gene (MAP2K1, not PTPN11), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between cardiofaciocutaneous syndrome 3 and Noonan syndrome 1 as \"moderate link\". Already studied together in NCT04395495. Different gene (MAP2K1, not PTPN11), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CUR-NCT04395495-MONDO-0014113"
     ],
@@ -135,7 +135,7 @@
    },
    {
     "id": "F8",
-    "text": "Costello syndrome has a \"moderate link\" with Noonan syndrome 1. Already studied together in NCT04395495. Different gene (HRAS, not PTPN11), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Costello syndrome and Noonan syndrome 1 as \"moderate link\". Already studied together in NCT04395495. Different gene (HRAS, not PTPN11), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CUR-NCT04395495-MONDO-0009026"
     ],
@@ -156,7 +156,7 @@
    },
    {
     "id": "F9",
-    "text": "Legius syndrome has a \"moderate link\" with Noonan syndrome 1. Already studied together in NCT04395495. Different gene (SPRED1, not PTPN11), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Legius syndrome and Noonan syndrome 1 as \"moderate link\". Already studied together in NCT04395495. Different gene (SPRED1, not PTPN11), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CUR-NCT04395495-MONDO-0012669"
     ],
@@ -178,7 +178,7 @@
    },
    {
     "id": "F10",
-    "text": "neurofibromatosis type 1 has a \"moderate link\" with Noonan syndrome 1. Already studied together in NCT04395495. Different gene (NF1, not PTPN11), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between neurofibromatosis type 1 and Noonan syndrome 1 as \"moderate link\". Already studied together in NCT04395495. Different gene (NF1, not PTPN11), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CUR-NCT04395495-MONDO-0018975"
     ],
@@ -305,7 +305,7 @@
    },
    {
     "id": "F5",
-    "text": "Other types of Bardet-Biedl syndrome (Bardet-Biedl syndrome 2, Bardet-Biedl syndrome 10) has a \"strong link\" with Bardet-Biedl syndrome 1. Recorded as types of the same disease, Bardet-Biedl syndrome, in the MONDO disease ontology. Their genes act in the same biological processes: BBSome-mediated cargo-targeting to cilium. Shared distinctive signs: peripheral visual field loss, postaxial foot polydactyly and postaxial hand polydactyly. Different gene (BBS10 and BBS2, not BBS1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Other types of Bardet-Biedl syndrome (Bardet-Biedl syndrome 2, Bardet-Biedl syndrome 10) and Bardet-Biedl syndrome 1 as \"strong link\". Recorded as types of the same disease, Bardet-Biedl syndrome, in the MONDO disease ontology. Their genes act in the same biological processes: BBSome-mediated cargo-targeting to cilium. Shared distinctive signs: peripheral visual field loss, postaxial foot polydactyly and postaxial hand polydactyly. Different gene (BBS10 and BBS2, not BBS1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0008854-MONDO:0014432",
      "EDGE:CLX-SIM-MONDO:0008854-MONDO:0014438"
@@ -334,7 +334,7 @@
    },
    {
     "id": "F6",
-    "text": "Alstrom syndrome has a \"moderate link\" with Bardet-Biedl syndrome 1. Both are ciliopathys in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: truncal obesity, diabetes insipidus and attenuation of retinal blood vessels. Already studied together in 2 studies, including NIH (NCT00068224). Different gene (ALMS1, not BBS1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Alstrom syndrome and Bardet-Biedl syndrome 1 as \"moderate link\". Both are ciliopathies in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: truncal obesity, diabetes insipidus and attenuation of retinal blood vessels. Already studied together in 2 studies, including NIH (NCT00068224). Different gene (ALMS1, not BBS1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0008763-MONDO:0008854"
     ],
@@ -353,7 +353,7 @@
    },
    {
     "id": "F7",
-    "text": "Joubert syndrome has a \"moderate link\" with Bardet-Biedl syndrome 1. Both are ciliopathys in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: postaxial foot polydactyly, postaxial hand polydactyly and retinal dystrophy. Already studied together in NIH (NCT00068224). Different gene (TMEM216, not BBS1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Joubert syndrome and Bardet-Biedl syndrome 1 as \"moderate link\". Both are ciliopathies in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: postaxial foot polydactyly, postaxial hand polydactyly and retinal dystrophy. Already studied together in NIH (NCT00068224). Different gene (TMEM216, not BBS1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0008854-MONDO:0011963"
     ],
@@ -378,7 +378,7 @@
    },
    {
     "id": "F8",
-    "text": "Meckel syndrome (Meckel syndrome, type 1, Meckel syndrome, type 4) has a \"moderate link\" with Bardet-Biedl syndrome 1. Already studied together in NIH (NCT00068224). Different gene (CEP290 and MKS1, not BBS1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Meckel syndrome (Meckel syndrome, type 1, Meckel syndrome, type 4) and Bardet-Biedl syndrome 1 as \"moderate link\". Already studied together in NIH (NCT00068224). Different gene (CEP290 and MKS1, not BBS1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CUR-NCT00068224-MONDO-0018921"
     ],
@@ -416,7 +416,7 @@
    },
    {
     "id": "F9",
-    "text": "nephronophthisis has a \"moderate link\" with Bardet-Biedl syndrome 1. Already studied together in NIH (NCT00068224). Different gene (NPHP1, not BBS1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between nephronophthisis and Bardet-Biedl syndrome 1 as \"moderate link\". Already studied together in NIH (NCT00068224). Different gene (NPHP1, not BBS1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CUR-NCT00068224-MONDO-0009728"
     ],
@@ -440,7 +440,7 @@
    },
    {
     "id": "F10",
-    "text": "Prader-Willi syndrome has a \"handle with care\" with Bardet-Biedl syndrome 1. Shared distinctive signs: abdominal obesity, radial deviation of finger and primary amenorrhea. RarePath advises handling this one with care: similar signs (abdominal obesity, radial deviation of finger), but little shared biology.",
+    "text": "RarePath rates the link between Prader-Willi syndrome and Bardet-Biedl syndrome 1 as \"handle with care\". Shared distinctive signs: abdominal obesity, radial deviation of finger and primary amenorrhea. RarePath advises handling this one with care: similar signs (abdominal obesity, radial deviation of finger), but little shared biology.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0008300-MONDO:0008854"
     ],
@@ -573,7 +573,7 @@
    },
    {
     "id": "F4",
-    "text": "Krabbe disease has a \"handle with care\" with Canavan disease. Shared distinctive signs: cns demyelination, blindness and developmental regression. Different gene (GALC, not ASPA), so a treatment for one does not automatically work for the other. RarePath advises handling this one with care: similar signs (cns demyelination, blindness), but a different gene (galc) with no shared biological process.",
+    "text": "RarePath rates the link between Krabbe disease and Canavan disease as \"handle with care\". Shared distinctive signs: cns demyelination, blindness and developmental regression. Different gene (GALC, not ASPA), so a treatment for one does not automatically work for the other. RarePath advises handling this one with care: similar signs (cns demyelination, blindness), but a different gene (galc) with no shared biological process.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009499-MONDO:0010079"
     ],
@@ -647,7 +647,7 @@
    },
    {
     "id": "F5",
-    "text": "Other types of GM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease AB variant) has a \"strong link\" with Tay-Sachs disease. Recorded as types of the same disease, GM2 gangliosidosis, in the MONDO disease ontology. Their genes act in the same biological processes: Hyaluronan degradation and CS/DS degradation. Shared distinctive signs: cherry red spot of the macula, exaggerated startle response and blindness. Already studied together in PRONTO (NCT05109793). Different gene (GM2A and HEXB, not HEXA), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Other types of GM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease AB variant) and Tay-Sachs disease as \"strong link\". Recorded as types of the same disease, GM2 gangliosidosis, in the MONDO disease ontology. Their genes act in the same biological processes: Hyaluronan degradation and CS/DS degradation. Shared distinctive signs: cherry red spot of the macula, exaggerated startle response and blindness. Already studied together in PRONTO (NCT05109793). Different gene (GM2A and HEXB, not HEXA), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0010006-MONDO:0010100",
      "EDGE:CLX-SIM-MONDO:0010099-MONDO:0010100"
@@ -674,7 +674,7 @@
    },
    {
     "id": "F6",
-    "text": "GM1 gangliosidosis (GM1 gangliosidosis type 1, GM1 gangliosidosis type 2, GM1 gangliosidosis type 3) has a \"moderate link\" with Tay-Sachs disease. Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Shared distinctive signs: cherry red spot of the macula. Already studied together in 4 studies, including PRONTO (NCT05109793). Different gene (GLB1, not HEXA), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between GM1 gangliosidosis (GM1 gangliosidosis type 1, GM1 gangliosidosis type 2, GM1 gangliosidosis type 3) and Tay-Sachs disease as \"moderate link\". Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Shared distinctive signs: cherry red spot of the macula. Already studied together in 4 studies, including PRONTO (NCT05109793). Different gene (GLB1, not HEXA), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009262-MONDO:0010100",
      "EDGE:CLX-SIM-MONDO:0009260-MONDO:0010100",
@@ -744,7 +744,7 @@
    },
    {
     "id": "F7",
-    "text": "galactosialidosis has a \"moderate link\" with Tay-Sachs disease. Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: cherry red spot of the macula. Different gene (CTSA, not HEXA), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between galactosialidosis and Tay-Sachs disease as \"moderate link\". Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: cherry red spot of the macula. Different gene (CTSA, not HEXA), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009737-MONDO:0010100"
     ],
@@ -767,7 +767,7 @@
    },
    {
     "id": "F8",
-    "text": "sialidosis type 2 has a \"moderate link\" with Tay-Sachs disease. Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: cherry red spot of the macula, generalized hypotonia and visual impairment. Different gene (NEU1, not HEXA), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between sialidosis type 2 and Tay-Sachs disease as \"moderate link\". Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: cherry red spot of the macula, generalized hypotonia and visual impairment. Different gene (NEU1, not HEXA), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009738-MONDO:0010100"
     ],
@@ -797,7 +797,7 @@
    },
    {
     "id": "F9",
-    "text": "Farber lipogranulomatosis has a \"moderate link\" with Tay-Sachs disease. Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: cherry red spot of the macula and abnormal affect. Different gene (ASAH1, not HEXA), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Farber lipogranulomatosis and Tay-Sachs disease as \"moderate link\". Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: cherry red spot of the macula and abnormal affect. Different gene (ASAH1, not HEXA), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009218-MONDO:0010100"
     ],
@@ -820,7 +820,7 @@
    },
    {
     "id": "F10",
-    "text": "Gaucher disease type II has a \"moderate link\" with Tay-Sachs disease. Already studied together in NCT04470713. Different gene (GBA1, not HEXA), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Gaucher disease type II and Tay-Sachs disease as \"moderate link\". Already studied together in NCT04470713. Different gene (GBA1, not HEXA), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:E09-03"
     ],
@@ -843,7 +843,7 @@
    },
    {
     "id": "F11",
-    "text": "mucopolysaccharidosis type 4B has a \"moderate link\" with Tay-Sachs disease. Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Different gene (GLB1, not HEXA), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between mucopolysaccharidosis type 4B and Tay-Sachs disease as \"moderate link\". Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Different gene (GLB1, not HEXA), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009660-MONDO:0010100"
     ],
@@ -990,7 +990,7 @@
    },
    {
     "id": "F5",
-    "text": "Senior-Loken syndrome has a \"same gene\" with Joubert syndrome 5. Caused by changes in the same gene, CEP290. Shared distinctive signs: stage 5 chronic kidney disease, rod-cone dystrophy and aplasia/hypoplasia of the cerebellar vermis. Many signs overlap too, but they are recorded as separate diseases.",
+    "text": "RarePath rates the link between Senior-Loken syndrome and Joubert syndrome 5 as \"same gene\". Caused by changes in the same gene, CEP290. Shared distinctive signs: stage 5 chronic kidney disease, rod-cone dystrophy and aplasia/hypoplasia of the cerebellar vermis. Many signs overlap too, but they are recorded as separate diseases.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0012432-MONDO:0012433"
     ],
@@ -1012,7 +1012,7 @@
    },
    {
     "id": "F6",
-    "text": "Meckel syndrome has a \"same gene\" with Joubert syndrome 5. Caused by changes in the same gene, CEP290. Shared distinctive signs: agenesis of cerebellar vermis, molar tooth sign on mri and encephalocele. Already studied together in NIH (NCT00068224). Many signs overlap too, but they are recorded as separate diseases.",
+    "text": "RarePath rates the link between Meckel syndrome and Joubert syndrome 5 as \"same gene\". Caused by changes in the same gene, CEP290. Shared distinctive signs: agenesis of cerebellar vermis, molar tooth sign on mri and encephalocele. Already studied together in NIH (NCT00068224). Many signs overlap too, but they are recorded as separate diseases.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0012432-MONDO:0012626"
     ],
@@ -1035,7 +1035,7 @@
    },
    {
     "id": "F7",
-    "text": "Other types of Joubert syndrome (Joubert syndrome 1, Joubert syndrome 2) has a \"strong link\" with Joubert syndrome 5. Recorded as types of the same disease, Joubert syndrome, in the MONDO disease ontology. Shared distinctive signs: thickened superior cerebellar peduncle, neonatal breathing dysregulation and episodic tachypnea. Different gene (INPP5E and TMEM216, not CEP290), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Other types of Joubert syndrome (Joubert syndrome 1, Joubert syndrome 2) and Joubert syndrome 5 as \"strong link\". Recorded as types of the same disease, Joubert syndrome, in the MONDO disease ontology. Shared distinctive signs: thickened superior cerebellar peduncle, neonatal breathing dysregulation and episodic tachypnea. Different gene (INPP5E and TMEM216, not CEP290), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0011963-MONDO:0012432",
      "EDGE:CLX-SIM-MONDO:0008944-MONDO:0012432"
@@ -1070,7 +1070,7 @@
    },
    {
     "id": "F8",
-    "text": "Alstrom syndrome has a \"moderate link\" with Joubert syndrome 5. Their genes act in the same biological processes: Regulation of PLK1 Activity at G2/M Transition and Loss of Nlp from mitotic centrosomes. Already studied together in NIH (NCT00068224). Different gene (ALMS1, not CEP290), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Alstrom syndrome and Joubert syndrome 5 as \"moderate link\". Their genes act in the same biological processes: Regulation of PLK1 Activity at G2/M Transition and Loss of Nlp from mitotic centrosomes. Already studied together in NIH (NCT00068224). Different gene (ALMS1, not CEP290), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0008763-MONDO:0012432"
     ],
@@ -1089,7 +1089,7 @@
    },
    {
     "id": "F9",
-    "text": "Bardet-Biedl syndrome (Bardet-Biedl syndrome 1, Bardet-Biedl syndrome 2, Bardet-Biedl syndrome 10) has a \"moderate link\" with Joubert syndrome 5. Already studied together in NIH (NCT00068224). Different gene (BBS1, BBS10 and BBS2, not CEP290), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Bardet-Biedl syndrome (Bardet-Biedl syndrome 1, Bardet-Biedl syndrome 2, Bardet-Biedl syndrome 10) and Joubert syndrome 5 as \"moderate link\". Already studied together in NIH (NCT00068224). Different gene (BBS1, BBS10 and BBS2, not CEP290), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CUR-NCT00068224-MONDO-0015229"
     ],
@@ -1121,7 +1121,7 @@
    },
    {
     "id": "F10",
-    "text": "nephronophthisis has a \"moderate link\" with Joubert syndrome 5. Already studied together in NIH (NCT00068224). Different gene (NPHP1, not CEP290), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between nephronophthisis and Joubert syndrome 5 as \"moderate link\". Already studied together in NIH (NCT00068224). Different gene (NPHP1, not CEP290), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CUR-NCT00068224-MONDO-0009728"
     ],
@@ -1237,7 +1237,7 @@
    },
    {
     "id": "F5",
-    "text": "mucopolysaccharidosis type 4B has a \"same gene\" with GM1 gangliosidosis. Caused by changes in the same gene, GLB1. Shared distinctive signs: abnormal iliac wing morphology, opacification of the corneal stroma and platyspondyly. The disease itself looks different: one gene can lead to different conditions.",
+    "text": "RarePath rates the link between mucopolysaccharidosis type 4B and GM1 gangliosidosis as \"same gene\". Caused by changes in the same gene, GLB1. Shared distinctive signs: abnormal iliac wing morphology, opacification of the corneal stroma and platyspondyly. The disease itself looks different: one gene can lead to different conditions.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009262-MONDO:0009660"
     ],
@@ -1263,7 +1263,7 @@
    },
    {
     "id": "F6",
-    "text": "GM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease) has a \"strong link\" with GM1 gangliosidosis. Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Shared distinctive signs: cherry red spot of the macula, coarse facial features and splenomegaly. Already studied together in 4 studies, including PRONTO (NCT05109793). Different gene (GM2A, HEXA and HEXB, not GLB1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between GM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease) and GM1 gangliosidosis as \"strong link\". Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Shared distinctive signs: cherry red spot of the macula, coarse facial features and splenomegaly. Already studied together in 4 studies, including PRONTO (NCT05109793). Different gene (GM2A, HEXA and HEXB, not GLB1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009262-MONDO:0010006",
      "EDGE:CLX-SIM-MONDO:0009262-MONDO:0010100",
@@ -1308,7 +1308,7 @@
    },
    {
     "id": "F7",
-    "text": "sialidosis type 2 has a \"strong link\" with GM1 gangliosidosis. Their genes act in the same biological processes: Sialic acid metabolism. Shared distinctive signs: cherry red spot of the macula, slurred speech and coarse facial features. Different gene (NEU1, not GLB1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between sialidosis type 2 and GM1 gangliosidosis as \"strong link\". Their genes act in the same biological processes: Sialic acid metabolism. Shared distinctive signs: cherry red spot of the macula, slurred speech and coarse facial features. Different gene (NEU1, not GLB1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009262-MONDO:0009738"
     ],
@@ -1338,7 +1338,7 @@
    },
    {
     "id": "F8",
-    "text": "galactosialidosis has a \"moderate link\" with GM1 gangliosidosis. Their genes act in the same biological processes: Sialic acid metabolism. Shared distinctive signs: cherry red spot of the macula, opacification of the corneal stroma and coarse facial features. Different gene (CTSA, not GLB1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between galactosialidosis and GM1 gangliosidosis as \"moderate link\". Their genes act in the same biological processes: Sialic acid metabolism. Shared distinctive signs: cherry red spot of the macula, opacification of the corneal stroma and coarse facial features. Different gene (CTSA, not GLB1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009262-MONDO:0009737"
     ],
@@ -1361,7 +1361,7 @@
    },
    {
     "id": "F9",
-    "text": "mucopolysaccharidosis type 4A has a \"moderate link\" with GM1 gangliosidosis. Their genes act in the same biological processes: Keratan sulfate degradation. Shared distinctive signs: dysostosis multiplex, beaking of vertebral bodies and aplasia/hypoplasia involving the vertebral column. Different gene (GALNS, not GLB1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between mucopolysaccharidosis type 4A and GM1 gangliosidosis as \"moderate link\". Their genes act in the same biological processes: Keratan sulfate degradation. Shared distinctive signs: dysostosis multiplex, beaking of vertebral bodies and aplasia/hypoplasia involving the vertebral column. Different gene (GALNS, not GLB1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009260-MONDO:0009659"
     ],
@@ -1392,7 +1392,7 @@
    },
    {
     "id": "F10",
-    "text": "Niemann-Pick disease type A has a \"moderate link\" with GM1 gangliosidosis. Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: cherry red spot of the macula, splenomegaly and skeletal muscle atrophy. Different gene (SMPD1, not GLB1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Niemann-Pick disease type A and GM1 gangliosidosis as \"moderate link\". Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: cherry red spot of the macula, splenomegaly and skeletal muscle atrophy. Different gene (SMPD1, not GLB1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009262-MONDO:0009756"
     ],
@@ -1407,7 +1407,7 @@
    },
    {
     "id": "F11",
-    "text": "Niemann-Pick disease, type C1 has a \"moderate link\" with GM1 gangliosidosis. Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: mental deterioration, splenomegaly and dysphagia. Different gene (NPC1, not GLB1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Niemann-Pick disease, type C1 and GM1 gangliosidosis as \"moderate link\". Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: mental deterioration, splenomegaly and dysphagia. Different gene (NPC1, not GLB1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009261-MONDO:0009757"
     ],
@@ -1424,7 +1424,7 @@
    },
    {
     "id": "F12",
-    "text": "Farber lipogranulomatosis has a \"moderate link\" with GM1 gangliosidosis. Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: cherry red spot of the macula, splenomegaly and hepatomegaly. Different gene (ASAH1, not GLB1), so a treatment for one does not automatically work for the other.",
+    "text": "RarePath rates the link between Farber lipogranulomatosis and GM1 gangliosidosis as \"moderate link\". Both are lysosomal storage diseases in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match. Shared distinctive signs: cherry red spot of the macula, splenomegaly and hepatomegaly. Different gene (ASAH1, not GLB1), so a treatment for one does not automatically work for the other.",
     "refs": [
      "EDGE:CLX-SIM-MONDO:0009218-MONDO:0009262"
     ],
@@ -1530,7 +1530,7 @@
  },
  "offline": {
   "Q01": {
-   "answer": "The closest communities RarePath found, strongest first:\n\nmucopolysaccharidosis type 4B has a \"same gene\" with GM1 gangliosidosis. Caused by changes in the same gene, GLB1. Shared distinctive signs: abnormal iliac wing morphology, opacification of the corneal stroma and platyspondyly. The disease itself looks different: one gene can lead to different conditions. [F5]\n\nGM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease) has a \"strong link\" with GM1 gangliosidosis. Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Shared distinctive signs: cherry red spot of the macula, coarse facial features and splenomegaly. Already studied together in 4 studies, including PRONTO (NCT05109793). Different gene (GM2A, HEXA and HEXB, not GLB1), so a treatment for one does not automatically work for the other. [F6]\n\nsialidosis type 2 has a \"strong link\" with GM1 gangliosidosis. Their genes act in the same biological processes: Sialic acid metabolism. Shared distinctive signs: cherry red spot of the macula, slurred speech and coarse facial features. Different gene (NEU1, not GLB1), so a treatment for one does not automatically work for the other. [F7]",
+   "answer": "The closest communities RarePath found, strongest first:\n\nRarePath rates the link between mucopolysaccharidosis type 4B and GM1 gangliosidosis as \"same gene\". Caused by changes in the same gene, GLB1. Shared distinctive signs: abnormal iliac wing morphology, opacification of the corneal stroma and platyspondyly. The disease itself looks different: one gene can lead to different conditions. [F5]\n\nRarePath rates the link between GM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease) and GM1 gangliosidosis as \"strong link\". Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Shared distinctive signs: cherry red spot of the macula, coarse facial features and splenomegaly. Already studied together in 4 studies, including PRONTO (NCT05109793). Different gene (GM2A, HEXA and HEXB, not GLB1), so a treatment for one does not automatically work for the other. [F6]\n\nRarePath rates the link between sialidosis type 2 and GM1 gangliosidosis as \"strong link\". Their genes act in the same biological processes: Sialic acid metabolism. Shared distinctive signs: cherry red spot of the macula, slurred speech and coarse facial features. Different gene (NEU1, not GLB1), so a treatment for one does not automatically work for the other. [F7]",
    "fact_ids": [
     "F5",
     "F6",
@@ -1538,7 +1538,7 @@
    ]
   },
   "Q02": {
-   "answer": "Here is what RarePath records about GM2 gangliosidosis:\n\nGM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease) has a \"strong link\" with GM1 gangliosidosis. Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Shared distinctive signs: cherry red spot of the macula, coarse facial features and splenomegaly. Already studied together in 4 studies, including PRONTO (NCT05109793). Different gene (GM2A, HEXA and HEXB, not GLB1), so a treatment for one does not automatically work for the other. [F6]\n\nGM1 gangliosidosis is caused by changes in the GLB1 gene. [F1]",
+   "answer": "Here is what RarePath records about GM2 gangliosidosis:\n\nRarePath rates the link between GM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease) and GM1 gangliosidosis as \"strong link\". Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Shared distinctive signs: cherry red spot of the macula, coarse facial features and splenomegaly. Already studied together in 4 studies, including PRONTO (NCT05109793). Different gene (GM2A, HEXA and HEXB, not GLB1), so a treatment for one does not automatically work for the other. [F6]\n\nGM1 gangliosidosis is caused by changes in the GLB1 gene. [F1]",
    "fact_ids": [
     "F6",
     "F1"
@@ -1564,7 +1564,7 @@
    ]
   },
   "Q06": {
-   "answer": "Here is the short version for Tay-Sachs disease:\n\nTay-Sachs disease is caused by changes in the HEXA gene. [F1]\n\nOther types of GM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease AB variant) has a \"strong link\" with Tay-Sachs disease. Recorded as types of the same disease, GM2 gangliosidosis, in the MONDO disease ontology. Their genes act in the same biological processes: Hyaluronan degradation and CS/DS degradation. Shared distinctive signs: cherry red spot of the macula, exaggerated startle response and blindness. Already studied together in PRONTO (NCT05109793). Different gene (GM2A and HEXB, not HEXA), so a treatment for one does not automatically work for the other. [F5]\n\nRarePath's suggested first step: the study team and National Tay-Sachs and Allied Diseases Association could compare outcome measures, registry fields and age ranges in GM1 and GM2 Gangliosidosis PROspective Neurological Disease TrajectOry Study (PRONTO) (NCT05109793). Before joining forces, an expert should check whether the study is still running, whether age ranges and eligibility overlap, that the causal genes differ (so sharing data does not mean sharing a treatment), and what data consent allows each group to share. A draft message is in step 4 of the guide. [F18]\n\nAsk me about a specific disease, the studies, or what to do next.",
+   "answer": "Here is the short version for Tay-Sachs disease:\n\nTay-Sachs disease is caused by changes in the HEXA gene. [F1]\n\nRarePath rates the link between Other types of GM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease AB variant) and Tay-Sachs disease as \"strong link\". Recorded as types of the same disease, GM2 gangliosidosis, in the MONDO disease ontology. Their genes act in the same biological processes: Hyaluronan degradation and CS/DS degradation. Shared distinctive signs: cherry red spot of the macula, exaggerated startle response and blindness. Already studied together in PRONTO (NCT05109793). Different gene (GM2A and HEXB, not HEXA), so a treatment for one does not automatically work for the other. [F5]\n\nRarePath's suggested first step: the study team and National Tay-Sachs and Allied Diseases Association could compare outcome measures, registry fields and age ranges in GM1 and GM2 Gangliosidosis PROspective Neurological Disease TrajectOry Study (PRONTO) (NCT05109793). Before joining forces, an expert should check whether the study is still running, whether age ranges and eligibility overlap, that the causal genes differ (so sharing data does not mean sharing a treatment), and what data consent allows each group to share. A draft message is in step 4 of the guide. [F18]\n\nAsk me about a specific disease, the studies, or what to do next.",
    "fact_ids": [
     "F1",
     "F5",
@@ -1572,14 +1572,14 @@
    ]
   },
   "Q07": {
-   "answer": "Here is what RarePath records about Prader-Willi syndrome:\n\nPrader-Willi syndrome has a \"handle with care\" with Bardet-Biedl syndrome 1. Shared distinctive signs: abdominal obesity, radial deviation of finger and primary amenorrhea. RarePath advises handling this one with care: similar signs (abdominal obesity, radial deviation of finger), but little shared biology. [F10]\n\nBardet-Biedl syndrome 1 is caused by changes in the BBS1 gene. [F1]",
+   "answer": "Here is what RarePath records about Prader-Willi syndrome:\n\nRarePath rates the link between Prader-Willi syndrome and Bardet-Biedl syndrome 1 as \"handle with care\". Shared distinctive signs: abdominal obesity, radial deviation of finger and primary amenorrhea. RarePath advises handling this one with care: similar signs (abdominal obesity, radial deviation of finger), but little shared biology. [F10]\n\nBardet-Biedl syndrome 1 is caused by changes in the BBS1 gene. [F1]",
    "fact_ids": [
     "F10",
     "F1"
    ]
   },
   "Q08": {
-   "answer": "Here is what RarePath records about Krabbe disease:\n\nKrabbe disease has a \"handle with care\" with Canavan disease. Shared distinctive signs: cns demyelination, blindness and developmental regression. Different gene (GALC, not ASPA), so a treatment for one does not automatically work for the other. RarePath advises handling this one with care: similar signs (cns demyelination, blindness), but a different gene (galc) with no shared biological process. [F4]\n\nCanavan disease is caused by changes in the ASPA gene. [F1]",
+   "answer": "Here is what RarePath records about Krabbe disease:\n\nRarePath rates the link between Krabbe disease and Canavan disease as \"handle with care\". Shared distinctive signs: cns demyelination, blindness and developmental regression. Different gene (GALC, not ASPA), so a treatment for one does not automatically work for the other. RarePath advises handling this one with care: similar signs (cns demyelination, blindness), but a different gene (galc) with no shared biological process. [F4]\n\nCanavan disease is caused by changes in the ASPA gene. [F1]",
    "fact_ids": [
     "F4",
     "F1"
@@ -1607,7 +1607,7 @@
    ]
   },
   "Q12": {
-   "answer": "RarePath cannot say whether a treatment will work or should be started. That is a decision for your doctors. A link between diseases is a reason to compare research, not evidence that a treatment transfers. What the records do show:\n\nGM1 gangliosidosis is caused by changes in the GLB1 gene. [F1]\n\nGM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease) has a \"strong link\" with GM1 gangliosidosis. Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Shared distinctive signs: cherry red spot of the macula, coarse facial features and splenomegaly. Already studied together in 4 studies, including PRONTO (NCT05109793). Different gene (GM2A, HEXA and HEXB, not GLB1), so a treatment for one does not automatically work for the other. [F6]",
+   "answer": "RarePath cannot say whether a treatment will work or should be started. That is a decision for your doctors. A link between diseases is a reason to compare research, not evidence that a treatment transfers. What the records do show:\n\nGM1 gangliosidosis is caused by changes in the GLB1 gene. [F1]\n\nRarePath rates the link between GM2 gangliosidosis (Sandhoff disease, Tay-Sachs disease) and GM1 gangliosidosis as \"strong link\". Their genes act in the same biological processes: CS/DS degradation and Keratan sulfate degradation. Shared distinctive signs: cherry red spot of the macula, coarse facial features and splenomegaly. Already studied together in 4 studies, including PRONTO (NCT05109793). Different gene (GM2A, HEXA and HEXB, not GLB1), so a treatment for one does not automatically work for the other. [F6]",
    "fact_ids": [
     "F1",
     "F6"
@@ -1621,16 +1621,31 @@
    ]
   },
   "Q14": {
-   "answer": "RarePath cannot say whether a treatment will work or should be started. That is a decision for your doctors. A link between diseases is a reason to compare research, not evidence that a treatment transfers. What the records do show:\n\nNoonan syndrome 1 is caused by changes in the PTPN11 gene. [F1]\n\nLEOPARD syndrome 1 has a \"same gene\" with Noonan syndrome 1. Caused by changes in the same gene, PTPN11. Shared distinctive signs: cubitus valgus, webbed neck and cafe-au-lait spot. Many signs overlap too, but they are recorded as separate diseases. [F5]",
+   "answer": "RarePath cannot say whether a treatment will work or should be started. That is a decision for your doctors. A link between diseases is a reason to compare research, not evidence that a treatment transfers. What the records do show:\n\nNoonan syndrome 1 is caused by changes in the PTPN11 gene. [F1]\n\nRarePath rates the link between LEOPARD syndrome 1 and Noonan syndrome 1 as \"same gene\". Caused by changes in the same gene, PTPN11. Shared distinctive signs: cubitus valgus, webbed neck and cafe-au-lait spot. Many signs overlap too, but they are recorded as separate diseases. [F5]",
    "fact_ids": [
     "F1",
     "F5"
    ]
   },
   "Q15": {
-   "answer": "RarePath cannot say whether a treatment will work or should be started. That is a decision for your doctors. A link between diseases is a reason to compare research, not evidence that a treatment transfers. Here the two diseases only look similar; their biology is different:\n\nPrader-Willi syndrome has a \"handle with care\" with Bardet-Biedl syndrome 1. Shared distinctive signs: abdominal obesity, radial deviation of finger and primary amenorrhea. RarePath advises handling this one with care: similar signs (abdominal obesity, radial deviation of finger), but little shared biology. [F10]",
+   "answer": "RarePath cannot say whether a treatment will work or should be started. That is a decision for your doctors. A link between diseases is a reason to compare research, not evidence that a treatment transfers. Here the two diseases only look similar; their biology is different:\n\nRarePath rates the link between Prader-Willi syndrome and Bardet-Biedl syndrome 1 as \"handle with care\". Shared distinctive signs: abdominal obesity, radial deviation of finger and primary amenorrhea. RarePath advises handling this one with care: similar signs (abdominal obesity, radial deviation of finger), but little shared biology. [F10]",
    "fact_ids": [
     "F10"
+   ]
+  },
+  "Q16": {
+   "answer": "Switch first: the question names GM1 gangliosidosis, not Bardet-Biedl syndrome 1.",
+   "fact_ids": [],
+   "switch_to": [
+    "GM1 gangliosidosis"
+   ]
+  },
+  "Q17": {
+   "answer": "Switch first: the question names Tay-Sachs disease and GM1 gangliosidosis, not Bardet-Biedl syndrome 1.",
+   "fact_ids": [],
+   "switch_to": [
+    "Tay-Sachs disease",
+    "GM1 gangliosidosis"
    ]
   }
  },

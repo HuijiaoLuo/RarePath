@@ -2,6 +2,13 @@
 
 What changed, and why. Scoring versions are recorded in each run's manifest (`data/manifests/`).
 
+## First test on the hosted site (2026-10-07)
+
+- **Found by using the site: an answer about the wrong disease.** While viewing Bardet-Biedl syndrome, the question "What is the life expectancy for GM1?" was answered from Bardet-Biedl's facts. The page answers only from the facts of the disease on screen, but did not notice that the question was about another one.
+  - The page now checks whether a question names a disease the facts on screen do not mention. If it does, it offers "Switch to GM1 gangliosidosis and ask" or "Answer about Bardet-Biedl syndrome anyway" instead of answering.
+  - The check runs before any model call, so it protects AI answers too. Two eval cases (Q16, Q17) keep it working. None of the page's own suggested questions, across all 51 diseases, triggers it.
+- Wording: "caused by changes in the BBS1, BBS10 and BBS2 genes" (was "gene"), "ciliopathies" (was "ciliopathys"), and "RarePath rates the link between A and B as …" (was "A has a "handle with care" with B").
+
 ## Published as a static site (2026-10-07)
 
 - `demo/` is published on GitHub Pages ([open the app](https://huijiaoluo.github.io/RarePath/explore.html)). It is the static mode only: offline answers, no key and no server, so no model or spending decision was needed yet. Live AI answers stay local; section 6 of the release checklist lists what a hosted AI version needs first.

@@ -71,6 +71,14 @@ def score(case: dict[str, Any], result: dict[str, Any], facts: list[dict[str, An
     cited = [f for f in facts if f["id"] in set(result.get("fact_ids") or [])]
     checks: dict[str, bool] = {}
     problems: list[str] = []
+    if case.get("switch_to"):
+        ok = any(case["switch_to"].lower() in str(x).lower() for x in result.get("switch_to") or [])
+        checks["offers to switch"] = ok
+        if not ok:
+            problems.append(f"answered instead of offering to switch to {case['switch_to']}")
+    elif result.get("switch_to"):
+        checks["answers"] = False
+        problems.append(f"offered to switch to {result['switch_to']} instead of answering")
     for sel in case.get("must_cite", []):
         ok = any(matches(f, sel) for f in cited)
         checks[f"cites {sel}"] = ok
@@ -136,7 +144,8 @@ def run(live: bool = False) -> dict[str, Any]:
     for case in [c for c in load_cases() if c["kind"] == "question"]:
         facts = snap["focus"][case["focus"]]
         try:
-            result = answer_live(case, facts, graph) if live else snap["offline"][case["id"]]
+            # page_only cases test the page's guard, which runs before any model call
+            result = answer_live(case, facts, graph) if live and not case.get("page_only") else snap["offline"][case["id"]]
         except Exception as error:  # noqa: BLE001 - a failed call is a failed case, not a crash
             result = {"answer": "", "fact_ids": [], "error": f"{type(error).__name__}: {error}"[:300]}
         verdict = score(case, result, facts)

@@ -124,7 +124,7 @@ class OfflineBaseline(unittest.TestCase):
         self.assertGreaterEqual(len(cases), 15)
         for c in cases:
             if c["kind"] == "question":
-                self.assertTrue(c.get("must_cite") or c.get("abstain") or c.get("defer_to"), c["id"])
+                self.assertTrue(c.get("must_cite") or c.get("abstain") or c.get("defer_to") or c.get("switch_to"), c["id"])
             else:
                 self.assertTrue(c["covered_by"].startswith("tests.test_chat_eval.SystemCases."), c["id"])
 

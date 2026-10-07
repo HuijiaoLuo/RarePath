@@ -1,5 +1,5 @@
 {
-  "about": "Fixed questions for RarePath's grounded chat. Question cases are scored against the facts the page sends (evals/facts.json) by evals/run_chat_eval.py; system cases are unit tests named in covered_by. must_cite: every selector must match at least one cited fact (text or title contains the string, case-insensitive). must_mention: the answer must contain at least one of the strings. abstain: the answer must say the facts do not contain this (or the model sets answered_from_facts to false). defer_to: the answer must send the decision to the right person (at least one of the strings). Forbidden phrases are ignored when the 40 characters before them contain a negation (whether, if, not, cannot, never, no). forbidden: regular expressions that must not match the answer.",
+  "about": "Fixed questions for RarePath's grounded chat. Question cases are scored against the facts the page sends (evals/facts.json) by evals/run_chat_eval.py; system cases are unit tests named in covered_by. must_cite: every selector must match at least one cited fact (text or title contains the string, case-insensitive). must_mention: the answer must contain at least one of the strings. abstain: the answer must say the facts do not contain this (or the model sets answered_from_facts to false). defer_to: the answer must send the decision to the right person (at least one of the strings). Forbidden phrases are ignored when the 40 characters before them contain a negation (whether, if, not, cannot, never, no). forbidden: regular expressions that must not match the answer. switch_to: the page must not answer, but offer to switch to a disease whose name contains this string (page_only cases test the page's guard, which runs before any model is called).",
   "version": 1,
   "cases": [
     {
@@ -266,6 +266,25 @@
         "medical team",
         "genetic counsel"
       ]
+    },
+    {
+      "id": "Q16",
+      "kind": "question",
+      "group": "wrong_disease",
+      "page_only": true,
+      "focus": "MONDO:0008854",
+      "question": "What is the life expectancy for GM1?",
+      "switch_to": "GM1",
+      "note": "Found in the first test on the hosted site: viewing Bardet-Biedl syndrome, a GM1 question was answered from Bardet-Biedl's facts."
+    },
+    {
+      "id": "Q17",
+      "kind": "question",
+      "group": "wrong_disease",
+      "page_only": true,
+      "focus": "MONDO:0008854",
+      "question": "Will the Tay-Sachs gene therapy work for my son with GM1?",
+      "switch_to": "GM1"
     },
     {
       "id": "S01",
