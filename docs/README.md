@@ -13,21 +13,22 @@ Start with the [README](../README.md) or the case-study page (`demo/index.html`)
 ## Data and graph
 
 6. [Seed data pipeline](DATA_PIPELINE.md): how to regenerate the public-data snapshot.
-7. [Graph schema](../graph/schema.md).
-8. [RAG-to-graph ingestion](RAG_GRAPH_INGESTION.md): how candidate diseases and links are found and reviewed before entering the graph.
+7. [Sources and attribution](SOURCES_AND_ATTRIBUTION.md): licences, required credit and snapshot versions for every external source.
+8. [Graph schema](../graph/schema.md).
+9. [RAG-to-graph ingestion](RAG_GRAPH_INGESTION.md): how candidate diseases and links are found and reviewed before entering the graph.
 
 ## Design notes and ideas
 
-9. [Protein similarity integration](PROTEIN_SIMILARITY_INTEGRATION.md): the Gene → Protein → Similar Protein layer.
-10. [Protein model selection](PROTEIN_MODEL_SELECTION.md): sequence, embedding, structure, phenotype and pathway methods considered.
-11. [Ecosystem roadmap](ECOSYSTEM_ROADMAP.md): collaboration, patient data and ultra-rare disease workflows.
+10. [Protein similarity integration](PROTEIN_SIMILARITY_INTEGRATION.md): the Gene → Protein → Similar Protein layer.
+11. [Protein model selection](PROTEIN_MODEL_SELECTION.md): sequence, embedding, structure, phenotype and pathway methods considered.
+12. [Ecosystem roadmap](ECOSYSTEM_ROADMAP.md): collaboration, patient data and ultra-rare disease workflows.
 
 ## Presenting
 
-12. [1-minute walkthrough](DEMO_SCRIPT.md): the tested click path and voice-over.
-13. [Release checklist](RELEASE_CHECKLIST.md): rebuild, test and publish a consistent version.
-14. [Architecture](ARCHITECTURE.md): the evidence graph, the LLM and user data as three separate layers, what static and API modes support, and the path to a hosted service.
-15. [Demo candidate](DEMO_CANDIDATE.md): freezing a build with its graph version, results and file checksums.
-16. [User test protocol](USER_TEST_PROTOCOL.md): four tasks and the three misreadings to check, with a record sheet.
+13. [1-minute walkthrough](DEMO_SCRIPT.md): the tested click path and voice-over.
+14. [Release checklist](RELEASE_CHECKLIST.md): rebuild, test and publish a consistent version.
+15. [Architecture](ARCHITECTURE.md): the evidence graph, the LLM and user data as three separate layers, what static and API modes support, and the path to a hosted service.
+16. [Demo candidate](DEMO_CANDIDATE.md): freezing a build with its graph version, results and file checksums.
+17. [User test protocol](USER_TEST_PROTOCOL.md): four tasks and the three misreadings to check, with a record sheet.
 
 Earlier planning notes from the project's first version are kept in [archive/](archive/).

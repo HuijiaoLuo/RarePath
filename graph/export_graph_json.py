@@ -140,6 +140,13 @@ def build_components(repo_root: Path) -> dict[str, str]:
         value = str(manifest(name).get(field, ""))[:10]
         if value:
             out[key] = value
+    # Source releases, shown on the page: HPO's terms require its version wherever HPO data is displayed.
+    sources = manifest("cluster_expansion_v0.1.json").get("sources", {})
+    for key, src, field in (("mondo_release", "mondo", "release_tag"), ("hpo_release", "hpo", "release_tag"),
+                            ("reactome_release", "reactome", "version"), ("uniprot_release", "uniprot", "release")):
+        value = str(sources.get(src, {}).get(field, ""))
+        if value:
+            out[key] = value
     return out
 
 

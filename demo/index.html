@@ -126,7 +126,7 @@
         <a class="btn primary" href="explore.html">Open the app →</a>
         <a class="btn ghost" href="https://github.com/HuijiaoLuo/RarePath">Code on GitHub</a>
       </div>
-      <p class="disclaimer">A research prototype built on public, aggregate data. It is not medical advice and does not decide eligibility for any study.</p>
+      <p class="disclaimer"><b>Research navigation, not medical advice.</b> A research prototype built on public, aggregate data. It does not diagnose, predict how a disease will progress, decide who can join a study, or recommend treatments.</p>
       <dl class="facts">
         <div><dt>Scope</dt><dd id="fact-scope">43 diseases in 3 families</dd></div>
         <div><dt>Graph</dt><dd id="fact-graph">Neo4j, CSV source of truth</dd></div>
@@ -276,8 +276,9 @@
   <footer>
     <div class="wrap">
       <span>RarePath by Huijiao Luo · public, aggregate research data only</span>
-      <span><a href="explore.html">App</a> · <a href="https://github.com/HuijiaoLuo/RarePath">GitHub</a> · <a href="https://github.com/HuijiaoLuo/RarePath/blob/main/docs/CLUSTER_EXPANSION.md">Method notes</a></span>
+      <span><a href="explore.html">App</a> · <a href="https://github.com/HuijiaoLuo/RarePath">GitHub</a> · <a href="https://github.com/HuijiaoLuo/RarePath/blob/main/docs/CLUSTER_EXPANSION.md">Method notes</a> · <a href="https://github.com/HuijiaoLuo/RarePath/blob/main/docs/SOURCES_AND_ATTRIBUTION.md">Sources and licences</a></span>
     </div>
+    <div class="wrap"><span id="credits" style="font-size:13px">This service uses the Human Phenotype Ontology, the Mondo Disease Ontology (CC BY 4.0), Reactome (CC0), UniProt (CC BY 4.0), AlphaFold DB (CC BY 4.0), ClinVar and ClinicalTrials.gov. Not medical advice.</span></div>
   </footer>
 
   <script src="data/graph.js"></script>
@@ -289,6 +290,8 @@
         const diseases = g.nodes.filter(n => n.kind === "Disease" && n.props && n.props.family && !n.props.disease_group);
         const families = new Set(diseases.map(n => n.props.family));
         if (diseases.length) document.getElementById("fact-scope").textContent = `${diseases.length} diseases in ${families.size} ${families.size === 1 ? "family" : "families"}`;
+        const b = (g.meta && g.meta.build) || {}, r = k => String(b[k] || "").replace(/^v/, "");
+        if (b.hpo_release) document.getElementById("credits").textContent = `This service uses the Human Phenotype Ontology (version ${r("hpo_release")}), the Mondo Disease Ontology (release ${r("mondo_release")}; CC BY 4.0), Reactome (version ${r("reactome_release")}; CC0), UniProt (release ${r("uniprot_release")}; CC BY 4.0), AlphaFold DB (CC BY 4.0), ClinVar and ClinicalTrials.gov. Not medical advice.`;
         document.getElementById("fact-graph").textContent = `${g.nodes.length} nodes, ${g.edges.length} links (Neo4j)`;
       }
     } catch (_) { /* the static text stays */ }

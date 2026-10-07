@@ -2,6 +2,19 @@
 
 What changed, and why. Scoring versions are recorded in each run's manifest (`data/manifests/`).
 
+## First 30 seconds, disclaimer, limitations (2026-10-08)
+
+- **README opening.** One sentence on what RarePath does, the app link, the screenshot and a medical disclaimer now come before anything else. A new **Limitations** section collects in one place what the docs said separately: the 43-disease panel, coarse pathway data, protein comparison for four proteins only, descriptive variants, dated study snapshots, the 10× hypothesis, no user testing yet, and a chat evaluated by the author on one model.
+- **Disclaimer on both pages.** The app's first screen and the case study now say plainly that RarePath does not diagnose, predict progression, decide study eligibility or recommend treatments. The chat line repeats "Not medical advice".
+- **Source credits on both pages,** with the releases taken from the build manifests (HPO and Mondo v2026-09-01, Reactome 97, UniProt 2026_03). HPO's terms ask for its version wherever its data is displayed.
+- **Attribution record corrected.** The Mondo citation is the 2025 *Genetics* paper. HPO now points to its current paper and the required credit sentence. The record adds the UniProt copyright statement, ClinicalTrials.gov's conditions (processing date, stated modifications), and ClinVar's and AlphaFold DB's notes that their data is not for direct medical decisions. Fonts are listed too. Adding the HPO logo is left open.
+
+## Data attribution audit (2026-10-08)
+
+- Added `docs/SOURCES_AND_ATTRIBUTION.md`, which separates RarePath's Apache-2.0 code and documentation from third-party data terms.
+- Recorded the current release, retrieval date, licence or use condition and required credit for Mondo, HPO, Reactome, UniProt, AlphaFold DB, ClinVar, ClinicalTrials.gov and curated patient-organisation links.
+- Linked the attribution record from the README and documentation index. The AlphaFold page notice remains in the explorer; the repository now has one source list for the whole snapshot.
+
 ## First test on the hosted site (2026-10-07)
 
 - **Found by using the site: an answer about the wrong disease.** While viewing Bardet-Biedl syndrome, the question "What is the life expectancy for GM1?" was answered from Bardet-Biedl's facts. The page answers only from the facts of the disease on screen, but did not notice that the question was about another one.

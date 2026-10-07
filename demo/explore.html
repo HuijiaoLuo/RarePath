@@ -272,6 +272,7 @@
     .cmphead { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .notevald { font-weight: 700; color: var(--muted); }
     .cmp.slim { padding: 10px 14px; background: transparent; }
+    .notice { margin-top: 14px; padding: 10px 14px; border-left: 4px solid #d9a441; background: #fff8e8; border-radius: 8px; font-size: 15px; color: #5c4210; }
     .recent { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line, #e3ebe7); }
     .recent .label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
     .recent .forget { border: 0; background: none; padding: 0; color: var(--faint); font-size: 13px; text-decoration: underline; cursor: pointer; }
@@ -304,7 +305,7 @@
           <textarea id="ask" rows="1" placeholder="Type a disease, or ask a question in your own words"></textarea>
           <button type="submit" id="send">Send</button>
         </form>
-        <p class="fine"><span class="mode" id="mode">Offline answers</span> · <span id="privacy">Answers use only RarePath's sourced facts. Please don't type names or medical details.</span></p>
+        <p class="fine"><span class="mode" id="mode">Offline answers</span> · <span id="privacy">Answers use only RarePath's sourced facts. Please don't type names or medical details.</span> · Not medical advice</p>
       </div>
     </main>
     <aside class="mappanel" id="mappanel" aria-label="Connection map"></aside>
@@ -737,6 +738,11 @@ Kind regards,
     const fbSent = new Set();
     let feedbackServer = false;
     const graphVersion = () => (DATA.meta && DATA.meta.graph_version) || "";
+    // Credits with releases. HPO's terms ask for this sentence and the version wherever HPO data is shown.
+    const sourceCredits = () => {
+      const b = (DATA.meta && DATA.meta.build) || {}, v = (k, pre) => b[k] ? ` ${pre || ""}${esc(String(b[k]).replace(/^v/, ""))}` : "";
+      return `This service uses the Human Phenotype Ontology (version${v("hpo_release")}), the Mondo Disease Ontology (${v("mondo_release", "release ").trim() || "current release"}; CC BY 4.0), Reactome (version${v("reactome_release")}; CC0), UniProt (release${v("uniprot_release")}; CC BY 4.0), AlphaFold DB (CC BY 4.0), ClinVar and ClinicalTrials.gov.`;
+    };
     const buildText = () => Object.entries((DATA.meta && DATA.meta.build) || {}).map(([k, v]) => `${k.replace(/_/g, " ")}: ${v}`).join("; ");
     function feedbackBlock(kind, targetId) {
       if (!targetId) return "";
@@ -1226,6 +1232,7 @@ Kind regards,
       const picks = ["MONDO:0018149", "MONDO:0010100", "MONDO:0008104", "MONDO:0008854", "MONDO:0012432", "MONDO:0010079"].filter(id => N.has(id));
       postBot(`<div class="hello"><h1>Which rare disease is your family facing?</h1>
         <p>Type its name below. RarePath shows which other communities share its biology, what already exists, and one step you can take. Every answer shows its source.</p>
+        <p class="notice"><b>Research navigation, not medical advice.</b> RarePath shows public research links between diseases. It does not diagnose, predict how a disease will progress, decide who can join a study, or recommend treatments. Please talk to your care team about those.</p>
         <div class="chips">${picks.map(id => `<button type="button" data-go="${esc(id)}">${esc(label(id))}</button>`).join("")}</div>
         ${recentHtml(readRecent())}</div>`);
     }
@@ -1318,7 +1325,8 @@ Kind regards,
         ${miniMap(m.f, m.main.slice(0, 4), m.caution.slice(0, 2))}
         <div class="key"><span><i class="d-gene"></i>same gene</span><span><i class="d-strong"></i>strong link</span><span><i class="d-moderate"></i>moderate link</span><span><i class="d-caution"></i>look similar only</span></div>
         <button class="linkbtn" type="button" id="open-map">Open the full evidence map</button>
-        <p class="trust">Links come from MONDO, HPO, Reactome, ClinicalTrials.gov and patient-group websites, or are computed by RarePath from them. Not medical advice. Data from ${esc(snapshotDate())}${DATA.meta && DATA.meta.source === "neo4j" ? ", live from Neo4j" : ""}${graphVersion() ? `, graph <span title="${esc(buildText())}">${esc(graphVersion())}</span>` : ""}.</p>`;
+        <p class="trust">Links come from MONDO, HPO, Reactome, ClinicalTrials.gov and patient-group websites, or are computed by RarePath from them. Not medical advice. Data from ${esc(snapshotDate())}${DATA.meta && DATA.meta.source === "neo4j" ? ", live from Neo4j" : ""}${graphVersion() ? `, graph <span title="${esc(buildText())}">${esc(graphVersion())}</span>` : ""}.</p>
+        <p class="trust">${sourceCredits()} <a href="https://github.com/HuijiaoLuo/RarePath/blob/main/docs/SOURCES_AND_ATTRIBUTION.md" target="_blank" rel="noopener">Sources and licences ↗</a></p>`;
     }
 
     // ================================================================= asking

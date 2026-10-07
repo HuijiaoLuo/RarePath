@@ -1,18 +1,24 @@
 # RarePath: from a rare diagnosis to the people already working on it
 
-[![Tests](https://github.com/HuijiaoLuo/RarePath/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/HuijiaoLuo/RarePath/actions/workflows/tests.yml) **[Open the app](https://huijiaoluo.github.io/RarePath/explore.html)** · **[Case study](https://huijiaoluo.github.io/RarePath/)**
+**Type the name of a rare genetic disease. RarePath shows which other disease communities share its biology, which studies and patient groups already exist, and one concrete next step. Every link names its source.**
 
-RarePath is an evidence graph and a conversational guide for rare genetic diseases. A family types the name of a disease. RarePath shows:
+[![Tests](https://github.com/HuijiaoLuo/RarePath/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/HuijiaoLuo/RarePath/actions/workflows/tests.yml) **[Open the app](https://huijiaoluo.github.io/RarePath/explore.html)** · **[Case study](https://huijiaoluo.github.io/RarePath/)** · [Limitations](#limitations) · [Data sources and licences](#data-sources-and-licences)
+
+![The RarePath guide for GM1 gangliosidosis: its three closest communities, one next step and a map of the connections](docs/img/rarepath-guide.png)
+
+> **Research navigation, not medical advice.** RarePath is built on public, aggregate research data. It does not diagnose, predict how a disease will progress, decide who can join a study, or recommend treatments. A link between two diseases is a reason to compare research, not evidence that a treatment transfers.
+
+## What it does
+
+For each disease, RarePath shows:
 
 - which other disease communities share its biology;
 - which studies and patient groups already exist;
 - one concrete next step, with a checklist and a draft message.
 
-Every link names its source. Anything RarePath computed is labelled as computed, and a disease that only *looks* similar is shown as a caution, never as a partner.
+Anything RarePath computed is labelled as computed, and a disease that only *looks* similar is shown as a caution, never as a partner.
 
 It covers 43 diseases in three families (lysosomal storage diseases, RASopathies and ciliopathies). They were chosen to test three claims: one gene can cause different diseases, different genes can disrupt the same process, and similar symptoms can have different causes.
-
-![The RarePath guide for GM1 gangliosidosis: its three closest communities, one next step and a map of the connections](docs/img/rarepath-guide.png)
 
 ## Highlights
 
@@ -29,16 +35,9 @@ It covers 43 diseases in three families (lysosomal storage diseases, RASopathies
   - a rotatable AlphaFold model coloured by confidence, with disease-causing ClinVar missense variants placed on it. A variant is placed only when its reference amino acid matches the model's sequence.
 
   The viewer is a small, dependency-free canvas script. The model is labelled as a prediction, and the variant pattern as descriptive ([details](docs/GENE_AND_VARIANT_LAYER.md)).
-- **An evaluation set for the chat.** 15 fixed questions (answerable, not in the graph, treatment and eligibility, look-alikes) list the facts an answer must cite and the phrases it must never use, plus 5 system cases (forged citations, graph-version mismatch, no key, Neo4j down). Its first run caught six offline answers that guessed instead of saying "RarePath does not record this"; they now abstain ([`evals/`](evals/run_chat_eval.py)).
+- **An evaluation set for the chat.** 17 fixed questions (answerable, not in the graph, treatment and eligibility, look-alikes and wrong-disease prompts) list the facts an answer must cite and the phrases it must never use, plus 5 system cases (forged citations, graph-version mismatch, no key, Neo4j down). Its first run caught six offline answers that guessed instead of saying "RarePath does not record this"; they now abstain ([`evals/`](evals/run_chat_eval.py)).
 - **Privacy by design.** Feedback is one tap on a fixed category ("the link looks wrong") about a record ID, with no free text and no identity, and it goes to a review queue, never straight into the graph. Recent diseases are remembered only in the browser. Every answer and feedback record names the graph version it came from ([architecture](docs/ARCHITECTURE.md)).
 - **Reproducible data.** Downloads are reused when present, written atomically and recorded with source versions and SHA-256 checksums. The graph's source of truth is two CSV files under version control, loaded into Neo4j.
-
-Each part of the answer opens a panel:
-
-| Why we think so | Your next step | Gene and protein |
-| --- | --- | --- |
-| <img src="docs/img/evidence-panel.png" width="280" alt="Evidence panel for GM1 and GM2 gangliosidosis: reasons, what differs, and sources from Reactome, HPO and ClinicalTrials.gov"> | <img src="docs/img/next-step.png" width="280" alt="Next-step panel: compare how the PRONTO study measures progression, a checklist for an expert, and a draft email"> | <img src="docs/img/gene-panel-glb1.png" width="280" alt="Gene panel for GLB1: UniProt summary and the AlphaFold model coloured by confidence, with disease-causing ClinVar variants"> |
-| Every reason, what differs, and the sources behind it | One step, what an expert must check, and a draft message | UniProt summary, AlphaFold model and ClinVar variants |
 
 ## Three stories from the data
 
@@ -125,8 +124,38 @@ tests/      unit and end-to-end tests
 - [Seed evidence table](docs/SEED_EVIDENCE_TABLE.md), [data pipeline](docs/DATA_PIPELINE.md) and [graph schema](graph/schema.md)
 - [1-minute walkthrough](docs/DEMO_SCRIPT.md) and [all documents](docs/README.md)
 
-## Limits
+## Data sources and licences
 
-RarePath uses public, aggregate research data only. It is a research-navigation tool, not a diagnostic or treatment tool. A link between two diseases is a reason to investigate together, not evidence that a treatment transfers. The panel is hand-chosen, Reactome membership is coarse, and study status is a dated snapshot that must be checked on the live ClinicalTrials.gov record.
+The Apache-2.0 licence in [`LICENSE`](LICENSE) covers RarePath's original code and documentation. Third-party data keeps its own terms, so the repository does not relicense it:
+
+- **Mondo** (release v2026-09-01) is CC BY 4.0. **HPO** (v2026-09-01) may be used with acknowledgement, citation and its version shown wherever it is displayed, and must not be altered; both RarePath pages show the HPO credit and version.
+- **Reactome** data files are CC0; attribution is encouraged. Reactome software, illustrations and branding have separate terms.
+- **UniProt** (release 2026_03) is CC BY 4.0; its copyright statement is reproduced in the sources document, and accessions and release are kept.
+- **AlphaFold DB** models are CC BY 4.0 and require attribution to AlphaFold DB, EMBL-EBI and Google DeepMind.
+- **ClinVar** is publicly reusable with attribution requested; submitter credit and record accessions remain part of the provenance.
+- **ClinicalTrials.gov** records are shown with their NCT ID, source link and retrieval date, and with the fields RarePath changed stated; status and eligibility must be checked on the live record.
+
+The complete source list, snapshot versions, citations and official terms are in [Sources and attribution](docs/SOURCES_AND_ATTRIBUTION.md).
+
+Each part of the answer opens a panel:
+
+| Why we think so | Your next step | Gene and protein |
+| --- | --- | --- |
+| <img src="docs/img/evidence-panel.png" width="280" alt="Evidence panel for GM1 and GM2 gangliosidosis: reasons, what differs, and sources from Reactome, HPO and ClinicalTrials.gov"> | <img src="docs/img/next-step.png" width="280" alt="Next-step panel: compare how the PRONTO study measures progression, a checklist for an expert, and a draft email"> | <img src="docs/img/gene-panel-glb1.png" width="280" alt="Gene panel for GLB1: UniProt summary and the AlphaFold model coloured by confidence, with disease-causing ClinVar variants"> |
+| Every reason, what differs, and the sources behind it | One step, what an expert must check, and a draft message | UniProt summary, AlphaFold model and ClinVar variants |
+
+## Limitations
+
+What RarePath can and cannot support today:
+
+- **Small, hand-picked panel.** 43 diseases in three families, chosen to test the method. Links to diseases outside the panel do not exist yet.
+- **Coarse biology.** Mechanism similarity uses Reactome pathway membership of the causal genes, which is coarse; symptom similarity depends on how completely HPO annotates each disease. The thresholds for relation classes were tuned on these families and checked by 23 known-biology checks, 12 of them written before their data was scored. They are not validated beyond these families.
+- **Protein comparison covers four proteins.** Sequence and structure comparison was run for GLB1, HEXA, HEXB and GM2A only (6 pairs). One pair, HEXA–HEXB, could be superimposed; the other five are "not evaluated", not "different". AlphaFold models are predictions, not experimental structures.
+- **Variants are descriptive.** ClinVar missense records show where reported variants cluster on a protein, not how common they are in patients, and nothing about a single person's variant.
+- **Studies and groups are snapshots.** Study status was retrieved on 2026-10-03 to 2026-10-05 and can change; patient organisations were checked by hand and some communities have none listed.
+- **The 10× case is a hypothesis.** The estimate that reusing an existing study could bring comparable data in months rather than years has not been tested with a patient group ([assumptions](docs/TEN_X_CASE.md)).
+- **No user testing yet.** The [test protocol](docs/USER_TEST_PROTOCOL.md) is ready; nobody outside the project has used RarePath in a structured session. The first informal use on the hosted site already found one bug (an answer about the wrong disease), now fixed.
+- **Chat answers.** On the hosted site, answers come from keyword rules over the facts, not a language model, so unusual phrasings can get a generic reply. The AI mode was checked on 15 fixed questions over three runs of one model (gpt-5), judged by the author only; two more questions test the page's wrong-disease check.
+- **Not reviewed by clinicians or by patient organisations,** and available in English only.
 
 Built by Huijiao Luo.
