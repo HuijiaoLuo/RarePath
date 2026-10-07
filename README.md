@@ -1,6 +1,6 @@
 # RarePath: from a rare diagnosis to the people already working on it
 
-[![Tests](https://github.com/HuijiaoLuo/RarePath/actions/workflows/tests.yml/badge.svg)](https://github.com/HuijiaoLuo/RarePath/actions/workflows/tests.yml) **Not deployed yet:** clone the repository and open `demo/explore.html` in a browser ([how](#run-it)).
+[![Tests](https://github.com/HuijiaoLuo/RarePath/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/HuijiaoLuo/RarePath/actions/workflows/tests.yml) **[Open the app](https://huijiaoluo.github.io/RarePath/explore.html)** · **[Case study](https://huijiaoluo.github.io/RarePath/)**
 
 RarePath is an evidence graph and a conversational guide for rare genetic diseases. A family types the name of a disease. RarePath shows:
 
@@ -42,11 +42,11 @@ Each part of the answer opens a panel:
 
 ## Three stories from the data
 
-| Family | What RarePath shows | Open locally |
+| Family | What RarePath shows | Try it |
 | --- | --- | --- |
-| Lysosomal storage | GM1 gangliosidosis's strongest neighbour is the GM2 group (a shared breakdown process and a cherry-red spot). A completed natural-history study (PRONTO, NCT05109793) already enrolled both. Reusing it instead of starting a new one could cut the time to comparable data from about 4 years to about 4 months. That is a hypothesis, with its assumptions listed for testing ([10× case](docs/TEN_X_CASE.md)). | GM1: `?focus=MONDO:0018149` |
-| Ciliopathies | One gene, CEP290, appears as three diseases: Joubert syndrome 5, Senior-Loken syndrome 6 and Meckel syndrome 4. Prader-Willi syndrome shares obesity and hypogonadism with Bardet-Biedl syndrome but is flagged as a look-alike. | Joubert 5: `?focus=MONDO:0012432` |
-| RASopathies | Noonan, Costello, CFC, Legius syndromes and NF1 involve different genes in one pathway, and a recruiting RASopathy biorepository (NCT04395495) covers five of them. Aarskog-Scott syndrome has a Noonan-like face but is kept apart. | Noonan 1: `?focus=MONDO:0008104` |
+| Lysosomal storage | GM1 gangliosidosis's strongest neighbour is the GM2 group (a shared breakdown process and a cherry-red spot). A completed natural-history study (PRONTO, NCT05109793) already enrolled both. Reusing it instead of starting a new one could cut the time to comparable data from about 4 years to about 4 months. That is a hypothesis, with its assumptions listed for testing ([10× case](docs/TEN_X_CASE.md)). | [GM1](https://huijiaoluo.github.io/RarePath/explore.html?focus=MONDO:0018149) |
+| Ciliopathies | One gene, CEP290, appears as three diseases: Joubert syndrome 5, Senior-Loken syndrome 6 and Meckel syndrome 4. Prader-Willi syndrome shares obesity and hypogonadism with Bardet-Biedl syndrome but is flagged as a look-alike. | [Joubert 5](https://huijiaoluo.github.io/RarePath/explore.html?focus=MONDO:0012432) |
+| RASopathies | Noonan, Costello, CFC, Legius syndromes and NF1 involve different genes in one pathway, and a recruiting RASopathy biorepository (NCT04395495) covers five of them. Aarskog-Scott syndrome has a Noonan-like face but is kept apart. | [Noonan 1](https://huijiaoluo.github.io/RarePath/explore.html?focus=MONDO:0008104) |
 
 Studies and patient organisations for the newer families are hand-checked against their official pages, with the check date stored in [`data/curated/family_resources.csv`](data/curated/family_resources.csv).
 
@@ -77,7 +77,7 @@ The protein layer (`pipelines/compute_protein_similarity.py`) adds Smith-Waterma
 
 ## Run it
 
-RarePath is not deployed yet. Open `demo/explore.html` from a local copy in any browser; it needs no install or server. Add `?focus=` and a MONDO ID to start at a disease, for example `demo/explore.html?focus=MONDO:0018149` for GM1. `demo/index.html` is the case study.
+The quickest way is the [hosted app](https://huijiaoluo.github.io/RarePath/explore.html), a static copy of `demo/` on GitHub Pages. It has everything except live AI answers: the chat answers offline from the same facts, and feedback opens a prefilled GitHub issue. Locally, open `demo/explore.html` in any browser; it needs no install. Add `?focus=` and a MONDO ID to start at a disease, for example `explore.html?focus=MONDO:0018149` for GM1.
 
 For AI answers and live Neo4j data:
 

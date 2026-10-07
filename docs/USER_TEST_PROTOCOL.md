@@ -23,7 +23,7 @@ Five people in total finds most usability problems. Add more family participants
 ## Before each session
 
 - Run `python pipelines/freeze_candidate.py --check`. Write the candidate name and graph version in the session log.
-- Use **static mode** (open `demo/explore.html`), so every participant sees offline answers built from the same facts. Use API mode only if testing the AI answers is the point of the session.
+- Use **static mode**, so every participant sees offline answers built from the same facts. Send the hosted link (https://huijiaoluo.github.io/RarePath/explore.html), or open `demo/explore.html` locally; check that the page footer shows the candidate's graph version. Use API mode only if testing the AI answers is the point of the session.
 - Clear the browser's site data, so "Recently viewed" starts empty.
 - Say: *"I'm testing the tool, not you. Please think aloud. I won't help during the tasks; afterwards I'll answer anything."*
 - Say: *"Please don't type your own family's names or medical details."* Do not record the screen if any personal health information appears; stop and restart the task instead.

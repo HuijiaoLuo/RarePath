@@ -50,12 +50,12 @@ git add -A && git commit && git push
 ```
 
 - The published site is the `demo/` folder (`index.html` is the case study, `explore.html` the app).
-- Pushing the repository does not publish the site. The README says it is not deployed yet; see section 6 before changing that.
+- A push that changes `demo/` republishes the site through `.github/workflows/pages.yml`, so freeze and check a candidate before pushing changes there.
 - Confirm the Tests badge turns green on GitHub after pushing.
 
-## 6. Before making the site public
+## 6. Before making AI answers public
 
-Publishing the site is a separate decision from pushing the code. Do these first:
+The site is published **static only** (decided 2026-10-07): GitHub Pages serves `demo/`, the chat answers offline, and no key or model is involved. Before a hosted version with live AI answers, do these first:
 
 - **Choose the AI model again.** The chat uses `gpt-5` with the owner's key. That is fine for a local demo, but too costly to put in front of anyone with a link. Either publish the site **static only** (offline answers, no key, no cost), or run the API with a smaller model set through `OPENAI_MODEL`, behind a monthly spend cap, rate limits and a separate project key.
 - **Re-run the chat eval on the chosen model**, and read every answer:
@@ -63,5 +63,4 @@ Publishing the site is a separate decision from pushing the code. Do these first
   OPENAI_MODEL=<model> python evals/run_chat_eval.py --live --save
   ```
   Add the run to `tests/fixtures/eval/` with your own verdict for each answer. The results so far are for gpt-5 only and say nothing about another model.
-- Move `setup/github-workflows/pages.yml` into `.github/workflows/`, and put the hosted links back in the README.
 - Freeze a new demo candidate (`python pipelines/freeze_candidate.py --name ...`).

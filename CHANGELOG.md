@@ -2,6 +2,11 @@
 
 What changed, and why. Scoring versions are recorded in each run's manifest (`data/manifests/`).
 
+## Published as a static site (2026-10-07)
+
+- `demo/` is published on GitHub Pages ([open the app](https://huijiaoluo.github.io/RarePath/explore.html)). It is the static mode only: offline answers, no key and no server, so no model or spending decision was needed yet. Live AI answers stay local; section 6 of the release checklist lists what a hosted AI version needs first.
+- The README links point to the site again, and the Tests badge names the branch so it shows the current status.
+
 ## Not deployed yet (2026-10-05)
 
 - The README no longer links to a hosted site that does not exist; it says how to open the app locally. Publishing now has its own checklist step, which starts with choosing a cheaper model for public AI answers and re-running the chat eval on it.

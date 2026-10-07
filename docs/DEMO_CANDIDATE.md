@@ -39,5 +39,5 @@ This lists any changed, missing or new tracked file, and any change of graph ver
 
 ## What a candidate is not
 
-- It is not a deployment. Static mode and API mode are described in [ARCHITECTURE.md](ARCHITECTURE.md#two-ways-to-run-it).
+- It is not a deployment by itself. GitHub Pages publishes whatever `demo/` holds on `main`, so freeze and `--check` before pushing changes to `demo/`. Static mode and API mode are described in [ARCHITECTURE.md](ARCHITECTURE.md#two-ways-to-run-it).
 - A live chat-eval run (`python evals/run_chat_eval.py --live --save`) is recorded separately in `evals/results/`, because it depends on the model as well as the candidate. The saved result names the graph version.

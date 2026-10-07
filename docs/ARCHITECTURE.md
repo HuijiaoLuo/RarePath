@@ -29,7 +29,7 @@ The current version is a **demo candidate**: a frozen, checked build (`docs/DEMO
 
 | | Static mode | API mode |
 | --- | --- | --- |
-| How | Open `demo/explore.html`, or any static host | `python api/server.py` on your own machine |
+| How | The hosted copy on GitHub Pages, or open `demo/explore.html` | `python api/server.py` on your own machine |
 | Graph | The exported snapshot (`demo/data/graph.js`) | Neo4j if configured, else the same snapshot |
 | Search, evidence panels, map, next step, gene and protein panels | Yes | Yes |
 | Chat answers | Offline answers built from the same facts | The OpenAI model with the server's key; offline answers if the call fails |
@@ -39,7 +39,7 @@ The current version is a **demo candidate**: a frozen, checked build (`docs/DEMO
 **What is never saved**, in either mode:
 
 - Questions typed into the chat, and the answers. The server keeps no chat log. The model call uses `store=False`, and the page holds the conversation in memory only until it is closed.
-- Who is using it. There are no accounts, cookies or analytics, and feedback records no IP address. (Two caveats: the pages load their fonts from Google Fonts, which sees the visitor's IP like any web request; and the local server prints standard request lines to its own console, which it does not write to disk.)
+- Who is using it. There are no accounts, cookies or analytics, and feedback records no IP address. (Three caveats: GitHub Pages, like any web host, logs visitors' IP addresses; the pages load their fonts from Google Fonts, which also sees the IP; and the local server prints standard request lines to its own console, which it does not write to disk.)
 
 **What is saved, and where:**
 
@@ -64,8 +64,8 @@ The current version is a **demo candidate**: a frozen, checked build (`docs/DEMO
 
 ## How it would grow
 
-1. **Public portfolio (next; today it runs locally only).** A static host serves the page and `graph.js`. AI answers are off unless someone runs their own server with their own key. No database, no accounts.
-2. **Invited testers.** A small app API with the chat behind rate limits, a monthly spend cap, timeouts and a separate project key. The model is chosen again for cost (gpt-5 is the local-demo choice) and the chat eval is re-run and hand-checked on it before anyone else uses it ([release checklist](RELEASE_CHECKLIST.md#6-before-making-the-site-public)); feedback stored in a managed Postgres. The graph can still be served from the static file: at 481 nodes it is about 0.7 MB.
+1. **Public portfolio (now).** GitHub Pages serves `demo/` as static files (`.github/workflows/pages.yml`). AI answers are off unless someone runs their own server with their own key. No database, no accounts.
+2. **Invited testers.** A small app API with the chat behind rate limits, a monthly spend cap, timeouts and a separate project key. The model is chosen again for cost (gpt-5 is the local-demo choice) and the chat eval is re-run and hand-checked on it before anyone else uses it ([release checklist](RELEASE_CHECKLIST.md#6-before-making-ai-answers-public)); feedback stored in a managed Postgres. The graph can still be served from the static file: at 481 nodes it is about 0.7 MB.
 3. **Many diseases.** When the graph no longer fits in one file, the browser stops loading it whole and calls fixed, parameterised queries (one disease's neighbours, one gene's diseases) on a read-only Neo4j user over an encrypted connection. Accounts (for saved diseases across devices) arrive here, with row-level security so each person sees only their own rows.
 
 Design rules that hold at every stage:
