@@ -1,6 +1,6 @@
 {
- "name": "demo-candidate-2",
- "frozen_at": "2026-10-07T19:01Z",
+ "name": "demo-candidate-3",
+ "frozen_at": "2026-10-07T22:17Z",
  "graph": {
   "graph_version": "gf1c8c1571e",
   "build": {
@@ -8,7 +8,11 @@
    "disease_panel": "2026-10-05",
    "gene_profiles": "2026-10-05",
    "clinvar": "2026-10-05",
-   "protein_similarity": "2026-10-04"
+   "protein_similarity": "2026-10-04",
+   "mondo_release": "v2026-09-01",
+   "hpo_release": "v2026-09-01",
+   "reactome_release": "97",
+   "uniprot_release": "2026_03"
   },
   "node_count": 481,
   "edge_count": 921,
@@ -45,9 +49,9 @@
   }
  },
  "files": {
-  "demo/explore.html": "9943fe01a87ef3e5d9ee6ab99930b0bc32656148fbc626cf75a4187890a3902e",
-  "demo/index.html": "36a2e91d600ecc65abcbb3254b47592ae824616119b56c5aa5feae8a8a8020af",
-  "demo/data/graph.js": "d87914aed8a853b54c8543043c37c46ab6aeefb050a0de75ef514946fa2879aa",
+  "demo/explore.html": "2e19fbe2055d5bb2943d4e4714b1c0523cc88423b17eafa896e0506f0ee86c44",
+  "demo/index.html": "57ac671be97c0420161cae7623612ccdadf73396b634d7c40e9379b5d240a54c",
+  "demo/data/graph.js": "eeeda560575a4fc3d52cf3ab6e9f4390fc0bd9081e3fb5765487f10d5641ec30",
   "demo/data/structures.js": "c316fb0c0cf94d47f0b9744d1e35f7ee5a06f4b307aa59db6df51525c3c57811",
   "graph/nodes.csv": "d95ab887f79ba12cf6f2736bebd74b0e991537c327a6e789b76ff3032eca8c72",
   "graph/edges.csv": "c83d50e142d11e281c1671773d81f418fb354b5e43b236a114a7372a373d6b56",
@@ -76,7 +80,7 @@
  "environment": {
   "python": "3.11.17",
   "platform": "Windows",
-  "commit": "f3ee36d",
-  "uncommitted_changes": false
+  "commit": "5a306b8",
+  "uncommitted_changes": true
  }
 }
