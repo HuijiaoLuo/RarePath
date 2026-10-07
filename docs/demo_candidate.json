@@ -1,0 +1,82 @@
+{
+ "name": "demo-candidate-1",
+ "frozen_at": "2026-10-07T18:14Z",
+ "graph": {
+  "graph_version": "gf1c8c1571e",
+  "build": {
+   "disease_similarity": "v0.4",
+   "disease_panel": "2026-10-05",
+   "gene_profiles": "2026-10-05",
+   "clinvar": "2026-10-05",
+   "protein_similarity": "2026-10-04"
+  },
+  "node_count": 481,
+  "edge_count": 921,
+  "kinds": {
+   "Disease": 51,
+   "Evidence": 28,
+   "Gene": 34,
+   "Organization": 9,
+   "Pathway": 66,
+   "Phenotype": 280,
+   "Protein": 4,
+   "Study": 9
+  }
+ },
+ "results": {
+  "biology_checks": {
+   "run": 23,
+   "passed": 23
+  },
+  "clinvar": {
+   "variants": 2633,
+   "genes": 32,
+   "problems": 0
+  },
+  "tests": {
+   "run": 71,
+   "failures": 0,
+   "errors": 0,
+   "skipped": 0
+  },
+  "chat_eval_offline": {
+   "questions": 15,
+   "passed": 15
+  }
+ },
+ "files": {
+  "demo/explore.html": "b79c665378d296647d637f4ab403bf723182fa2c475dd7887e70907f95067acf",
+  "demo/index.html": "36a2e91d600ecc65abcbb3254b47592ae824616119b56c5aa5feae8a8a8020af",
+  "demo/data/graph.js": "d87914aed8a853b54c8543043c37c46ab6aeefb050a0de75ef514946fa2879aa",
+  "demo/data/structures.js": "c316fb0c0cf94d47f0b9744d1e35f7ee5a06f4b307aa59db6df51525c3c57811",
+  "graph/nodes.csv": "d95ab887f79ba12cf6f2736bebd74b0e991537c327a6e789b76ff3032eca8c72",
+  "graph/edges.csv": "c83d50e142d11e281c1671773d81f418fb354b5e43b236a114a7372a373d6b56",
+  "evals/chat_cases.json": "82c45d2d0784af8ca87410542ac4155c25f03f3c9032094e1c08c5acb79064d9",
+  "evals/facts.json": "7c59685e364bbb42c565b258ac43633fc7e5f32a2964292a6d5b379b5054d4e2",
+  "data/curated/family_resources.csv": "1edcf0efc80651df6e582d49c2ccec6087a6430181b8794caeff64cd57850959",
+  "data/manifests/cluster_expansion_v0.1.json": "fcfe211b42ff6932fdd904ff90e57c1b6ba204cdddad9d3047823d2ac56c4b29",
+  "data/manifests/disease_similarity_v0.1.json": "4dece78541e0f7ae7ae5213fe140fccb08e2d8695c7a918198849435c0a29ca8",
+  "data/manifests/gene_profiles_v0.1.json": "a9122ffe6ad81a5f999d4c6ac112e4cd0d13d62cf8d98ef9a23db65192197064",
+  "data/manifests/gene_variants_v0.1.json": "821cfe37b4cd4718900e267678e470f2aa3c56d645061016c9649bafc4952e86",
+  "data/manifests/graph_cluster_sync_v0.1.json": "1c4810b114f67bbe63526ee55a6277b98f0978b23a443de338af01e2dac5e335",
+  "data/manifests/graph_structure_sync_v0.1.json": "220de4af24edd82434b8d6b07327a24f27148ad0b81e72cb6587cca0470a2825",
+  "data/manifests/manifest.json": "7d80a0b8d2245c97a231edd959f68085f9eb4cf3c60a34afdfad90f777d7f9e8",
+  "data/manifests/protein_similarity_v0.1.json": "9dfc9680e67e96a38153c0bfe8ee22fa9a0cc45f19f6c1e7f0be95ba64d8d324",
+  "data/manifests/protein_similarity_v0.2.json": "ef31287c2cbe960c90c1dde6f390cd7ddededa42e78a173f73152f1f06912ca3",
+  "data/manifests/protein_snapshot_20261003T190700Z.json": "4c2cbbaaabf1c77483ea471bb597b1f02aaf425f004a9e41acb87985c92dec31",
+  "data/manifests/structure_comparison_v0.1.json": "d3836ef9e469f56d388abc5d60465fc2f7aa40e0db21cd46901d49520a414e06",
+  "data/manifests/structure_snapshot_20261003T231744Z.json": "86e798061b0d8c98e968d3c4840fe779855ed090ab3ccf5582ac270dfdf778bc",
+  "data/manifests/structure_snapshot_20261003T231828Z.json": "e174e28d5e61e3374aa45da2a37268285b44ea14286fea9ac238a384e64eec6c",
+  "docs/img/evidence-panel.png": "b344335f1cb6f80ba9e7bc4afae95218947d369a241956765499d86a4ade9795",
+  "docs/img/gene-panel-gba1.png": "839191ff8f3add0a7b67c42edcc4f4f245b3966c356688861dcbcd9b222d7372",
+  "docs/img/gene-panel-glb1.png": "98cc9fb4ef7e82737c9cd4d29789243a7d7ef317ccbf45f704c71b48959007a8",
+  "docs/img/next-step.png": "6cc1b3cf51ce965e20c5e09b4930532fc3c7098d98d25897df4f139371ea1453",
+  "docs/img/rarepath-guide.png": "a07093d5f64b175b7b91fe51e5f80bcbd92bac9f6e5c12f6658ef75a687e01fa"
+ },
+ "environment": {
+  "python": "3.11.17",
+  "platform": "Windows",
+  "commit": "f7dc772",
+  "uncommitted_changes": false
+ }
+}
