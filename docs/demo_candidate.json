@@ -1,6 +1,6 @@
 {
- "name": "demo-candidate-1",
- "frozen_at": "2026-10-07T18:14Z",
+ "name": "demo-candidate-2",
+ "frozen_at": "2026-10-07T19:01Z",
  "graph": {
   "graph_version": "gf1c8c1571e",
   "build": {
@@ -40,19 +40,19 @@
    "skipped": 0
   },
   "chat_eval_offline": {
-   "questions": 15,
-   "passed": 15
+   "questions": 17,
+   "passed": 17
   }
  },
  "files": {
-  "demo/explore.html": "b79c665378d296647d637f4ab403bf723182fa2c475dd7887e70907f95067acf",
+  "demo/explore.html": "9943fe01a87ef3e5d9ee6ab99930b0bc32656148fbc626cf75a4187890a3902e",
   "demo/index.html": "36a2e91d600ecc65abcbb3254b47592ae824616119b56c5aa5feae8a8a8020af",
   "demo/data/graph.js": "d87914aed8a853b54c8543043c37c46ab6aeefb050a0de75ef514946fa2879aa",
   "demo/data/structures.js": "c316fb0c0cf94d47f0b9744d1e35f7ee5a06f4b307aa59db6df51525c3c57811",
   "graph/nodes.csv": "d95ab887f79ba12cf6f2736bebd74b0e991537c327a6e789b76ff3032eca8c72",
   "graph/edges.csv": "c83d50e142d11e281c1671773d81f418fb354b5e43b236a114a7372a373d6b56",
-  "evals/chat_cases.json": "82c45d2d0784af8ca87410542ac4155c25f03f3c9032094e1c08c5acb79064d9",
-  "evals/facts.json": "7c59685e364bbb42c565b258ac43633fc7e5f32a2964292a6d5b379b5054d4e2",
+  "evals/chat_cases.json": "0b5a2c05fae5693c62341c3b3764f5ef28ffcb028426272edb1841dbae062799",
+  "evals/facts.json": "8be15408a6e9945b60be68d2c1f8bf5f12210332f36ad3913e5c66db1e9d4dcb",
   "data/curated/family_resources.csv": "1edcf0efc80651df6e582d49c2ccec6087a6430181b8794caeff64cd57850959",
   "data/manifests/cluster_expansion_v0.1.json": "fcfe211b42ff6932fdd904ff90e57c1b6ba204cdddad9d3047823d2ac56c4b29",
   "data/manifests/disease_similarity_v0.1.json": "4dece78541e0f7ae7ae5213fe140fccb08e2d8695c7a918198849435c0a29ca8",
@@ -76,7 +76,7 @@
  "environment": {
   "python": "3.11.17",
   "platform": "Windows",
-  "commit": "f7dc772",
+  "commit": "f3ee36d",
   "uncommitted_changes": false
  }
 }
