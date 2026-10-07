@@ -1,0 +1,19 @@
+{
+  "pipeline": "RarePath cluster layer graph synchronization",
+  "script_version": "0.1.0",
+  "generated_at": "2026-10-05T00:25:30.286552Z",
+  "added_nodes": 426,
+  "added_edges": 860,
+  "total_nodes": 481,
+  "total_edges": 921,
+  "edge_types_added": [
+    "HAS_GENE",
+    "HAS_PHENOTYPE",
+    "IS_A",
+    "MECHANISM_NEIGHBOR",
+    "PARTICIPATES_IN",
+    "PHENOTYPE_LOOKALIKE",
+    "PHENOTYPE_NEIGHBOR",
+    "SHARES_CAUSAL_GENE"
+  ]
+}

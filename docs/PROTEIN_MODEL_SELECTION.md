@@ -36,7 +36,7 @@ The sequence checksums and UniProt release are recorded in `data/manifests/prote
 
 Use MMseqs2 or DIAMOND to retrieve candidate homologues and store identity, alignment coverage, E-value, bitscore, and database release. This is interpretable, fast, and provides a baseline for every later model.
 
-For four seed genes, the team can validate a small number of pairs with BLASTP. For a larger human-protein search, MMseqs2 or DIAMOND is more practical than repeatedly calling a web service.
+For four seed genes, it is practical to validate a small number of pairs with BLASTP. For a larger human-protein search, MMseqs2 or DIAMOND is more practical than repeatedly calling a web service.
 
 ### 2. ESM-2 for a light embedding layer
 
@@ -107,7 +107,7 @@ candidate_rank = f(sequence, embedding, structure,
                    phenotype, pathway, evidence_prior)
 ```
 
-Do not train `f` until the team has a labelled evaluation set. A graph neural network trained on the current 25-node graph would memorize the seed rather than generalize.
+Do not train `f` until there is a labelled evaluation set. A graph neural network trained on the current 25-node graph would memorize the seed rather than generalize.
 
 ## Protein-folding opportunity
 
@@ -126,7 +126,7 @@ For the current seed, the first structural deliverable should be a side-by-side 
 1. Four seed genes map to traceable reviewed human proteins or have an explicit unmapped status.
 2. Each sequence has a release and SHA-256 checksum.
 3. The sequence baseline produces reproducible results on a versioned database.
-4. ESM-2 35M embeddings run on the team’s available hardware and are cached by sequence checksum.
+4. ESM-2 35M embeddings run on ordinary laptop hardware and are cached by sequence checksum.
 5. AlphaFold DB/Foldseek results are stored separately from sequence results.
 6. HEXA–HEXB is detected as a positive control.
 7. The UI labels every similarity result as computational and shows method, version, score, and evidence.

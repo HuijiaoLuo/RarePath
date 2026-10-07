@@ -1,0 +1,58 @@
+{
+  "pipeline": "RarePath gene profiles and AlphaFold structures",
+  "script_version": "0.1.0",
+  "retrieved_at": "2026-10-05T00:21:26Z",
+  "genes_requested": 34,
+  "profiles": 34,
+  "structures": 32,
+  "problems": [],
+  "sources": {
+    "uniprot": {
+      "api": "https://rest.uniprot.org/uniprotkb/search",
+      "fields": "accession,gene_primary,protein_name,length,cc_function,cc_subcellular_location",
+      "releases": [
+        "2026_03"
+      ]
+    },
+    "alphafold": {
+      "api": "https://alphafold.ebi.ac.uk/api/prediction/{accession}",
+      "licence": "CC BY 4.0",
+      "model_sha256": {
+        "AF-P15289-F1-model_v6.pdb": "16f9a2d4ef8bbd8a55799facc01b334fb9eb8e84ca8b3c8b1c5ae71c2ed69148",
+        "AF-Q13510-F1-model_v6.pdb": "057781c9325c0e76b7f90bee0609dca3385856e622e28b1b339bd4473b275c12",
+        "AF-P45381-F1-model_v6.pdb": "b748b301447c90f9deeddcd7db46a13b1d89956ee03e5937f4288a4022b75a49",
+        "AF-Q8NFJ9-F1-model_v6.pdb": "ca3bbea59447582f3ba23b9d31c524a2f9eba55801f92b62729be8835e65b2a0",
+        "AF-Q8TAM1-F1-model_v6.pdb": "156880e2063849ee2c6c6095a3ccfa5fea4a59bb3716579419f8e9f4db7d7b29",
+        "AF-Q9BXC9-F1-model_v6.pdb": "e05eebd6c8b09208c5db149319223969f1ea9ab7175f449a3a4924ae161e8056",
+        "AF-P15056-F1-model_v6.pdb": "73e7fde74dca04df65fb3370fd969cd485d83b2f9dd102975f10a87fdfa78766",
+        "AF-O15078-F1-model_v6.pdb": "a915b21ef4cd0902600e4e70fb14d36bbf553ff42bf0595ca632cddca75dba77",
+        "AF-P10619-F1-model_v6.pdb": "e833f69e75ac1690f4b7a93e6cfdd3017b61a4837b7fd76941fde505d282c23e",
+        "AF-P98174-F1-model_v6.pdb": "0df2ba45e40b0a9d725331767863406ef5124c29e87ec8812bf2b7ac65a362a3",
+        "AF-P54803-F1-model_v6.pdb": "03f3680d7d059323eb6c2bf69466482056b7afb1af48d5589218f1acef5aa459",
+        "AF-P34059-F1-model_v6.pdb": "750a62e629ca8fb8f8fd85e3cf7fc2ef4caffa1a98637876d2c050ac6045bb10",
+        "AF-P04062-F1-model_v6.pdb": "b1d56a3c8b08facf27930d9f9ee4b98d84aea8f4304181fb77af32a574ce68b0",
+        "AF-P06280-F1-model_v6.pdb": "2750b644759d2b05875b604cdfb8dace77c0d285358cae0614e1eced99980eb3",
+        "AF-P16278-F1-model_v6.pdb": "98c0cd365a4488c81093a2f9950553dd7cf667a0da90a39cd41341abb6a9b8d3",
+        "AF-P17900-F1-model_v6.pdb": "072d54bface754be4266962c81960d7c64c5ebb401f97f1873103d9e81c126c1",
+        "AF-P06865-F1-model_v6.pdb": "27ddbc2022c4e081b7cb0ab293e4d434a93f63828fa6a762ff9efe0725d1167d",
+        "AF-P07686-F1-model_v6.pdb": "0dc1f6b6ea8b31a3bee7c9bf943eedddd1d1f5a94e22f15cf3cf8e615e6ac224",
+        "AF-P01112-F1-model_v6.pdb": "1b3343857748945a6e565a8e85024b76507e868c960a69d7fa8a5727d79b89ea",
+        "AF-Q9NRR6-F1-model_v6.pdb": "c874034bb945d86a30bba234356c1ddbfddded138394e6bac369d74871de3cd8",
+        "AF-P01116-F1-model_v6.pdb": "91d0235061e6ce0b08057c3742d5c899a99fbe38d2e1b5b6d54fa3029c54d34f",
+        "AF-Q02750-F1-model_v6.pdb": "773cbd1b98e203c7a233de7c4d173cc1cf33b410cdfa0faad907dc360f3aa515",
+        "AF-Q9NXB0-F1-model_v6.pdb": "3f97931ca5dda7ad91203af050b4f993fe409cfa17829ce21bde3a00f279b3a5",
+        "AF-Q99519-F1-model_v6.pdb": "82040163499103d8bde5558c1d7f7a9c2347371135784c3fc147216e6c8f9b55",
+        "AF-O15118-F1-model_v6.pdb": "ce685f668ae91f1c13254297361e2467987b1c1226e5debdbe6a7f98a8855947",
+        "AF-O15259-F1-model_v6.pdb": "f58e48dbfcd8b516e0c458e932d7168240d203a73369e33f832645df03d9b9a9",
+        "AF-Q06124-F1-model_v6.pdb": "e9a415cf3a3c2c40c253e2b97d81f022d6c9f4d3ec31959a33fdb4131a32debc",
+        "AF-P04049-F1-model_v6.pdb": "5cf638eb37037d8672fa502d9bcb946b989ba94b9ead0282e77447cc33afb1a9",
+        "AF-P17405-F1-model_v6.pdb": "40d6de2fcaa99a0e3ccb761f2fef45150f20871d674be6899a09e665f83a16c4",
+        "AF-Q07889-F1-model_v6.pdb": "3912dc8efed98a593b227caf4cbc8ba8647976eadc2feae5b53030060b7593f8",
+        "AF-Q7Z699-F1-model_v6.pdb": "596057c0451dfc0b94eff86c43d129083dba334e1148113f020523e4ee404dfb",
+        "AF-Q9P0N5-F1-model_v6.pdb": "e1dfb2432119966c456c4510646173b87921c2227f692f76137806704f0929f8"
+      },
+      "citation": "Jumper et al., Nature 2021; Varadi et al., Nucleic Acids Research 2024"
+    }
+  },
+  "stored_trace": "C-alpha coordinates centred on the protein and rounded to 0.1 \u00c5, with per-residue pLDDT"
+}

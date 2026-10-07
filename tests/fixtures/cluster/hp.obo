@@ -1,0 +1,76 @@
+format-version: 1.2
+data-version: hp/releases/2026-09-01
+
+[Term]
+id: HP:0000001
+name: All
+
+[Term]
+id: HP:0000118
+name: Phenotypic abnormality
+is_a: HP:0000001 ! All
+
+[Term]
+id: HP:0000707
+name: Abnormality of the nervous system
+is_a: HP:0000118 ! Phenotypic abnormality
+
+[Term]
+id: HP:0001250
+name: Seizure
+alt_id: HP:0002279
+is_a: HP:0000707 ! Abnormality of the nervous system
+
+[Term]
+id: HP:0002376
+name: Developmental regression
+is_a: HP:0000707 ! Abnormality of the nervous system
+
+[Term]
+id: HP:0000478
+name: Abnormality of the eye
+is_a: HP:0000118 ! Phenotypic abnormality
+
+[Term]
+id: HP:0010729
+name: Cherry red spot of the macula
+is_a: HP:0000478 ! Abnormality of the eye
+
+[Term]
+id: HP:0000924
+name: Abnormality of the skeletal system
+is_a: HP:0000118 ! Phenotypic abnormality
+
+[Term]
+id: HP:0002655
+name: Spondyloepiphyseal dysplasia
+is_a: HP:0000924 ! Abnormality of the skeletal system
+
+[Term]
+id: HP:0000256
+name: Macrocephaly
+is_a: HP:0000118 ! Phenotypic abnormality
+
+[Term]
+id: HP:0001433
+name: Hepatosplenomegaly
+is_a: HP:0000118 ! Phenotypic abnormality
+
+[Term]
+id: HP:0000005
+name: Mode of inheritance
+is_a: HP:0000001 ! All
+
+[Term]
+id: HP:0000007
+name: Autosomal recessive inheritance
+is_a: HP:0000005 ! Mode of inheritance
+
+[Term]
+id: HP:9999999
+name: obsolete thing
+is_obsolete: true
+
+[Typedef]
+id: part_of
+name: part of

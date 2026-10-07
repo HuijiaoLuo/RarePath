@@ -178,7 +178,7 @@ The most important safety metric is unsupported-claim rate. A system that return
 
 ## MVP implementation order
 
-1. Build an offline RAG corpus from the original challenge PDF, the curated evidence table, and the public source snapshots.
+1. Build an offline RAG corpus from the original project brief (not committed), the curated evidence table, and the public source snapshots.
 2. Implement entity resolution and source-tier metadata.
 3. Extract candidates into JSON and validate them without writing Neo4j.
 4. Add a candidate review page with source spans and accept/reject actions.

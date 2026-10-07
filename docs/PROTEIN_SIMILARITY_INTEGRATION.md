@@ -2,7 +2,7 @@
 
 ## Recommendation
 
-Protein mapping and similarity search can be added to RarePath as a derived research-navigation layer. It should extend the current evidence graph rather than replace the curated disease, gene, study, organization, and evidence layer.
+Protein mapping and similarity search are implemented in RarePath as a derived research-navigation layer. They extend the curated disease, gene, study, organization, and evidence layer rather than replace it.
 
 The output of a similarity search is a hypothesis or ranking signal. It is not, by itself, evidence that two diseases are equivalent, that a treatment will work, or that a patient is eligible for a study.
 
@@ -17,6 +17,8 @@ The current graph keeps provisional gene nodes such as `GENE_SYMBOL:GLB1`. Add p
 ```
 
 `SIMILAR_TO` should be an inferred relationship with explicit provenance. It must not be rendered as a treatment-equivalence edge.
+
+The current bounded implementation is intentionally restrictive. Running `python pipelines/sync_structure_evidence_to_graph.py` reads `data/processed/structure_comparison.csv` and creates graph evidence only for rows with `status = computed`. It currently adds the HEXA (P06865) -> HEXB (P07686) edge from the 0.865 Å, 483-high-confidence-pair C-alpha fit. The five rows with insufficient mapping are retained in the comparison CSV but create no graph edge.
 
 ### Protein node fields
 
@@ -51,9 +53,10 @@ Only populate the metrics produced by the selected method. Do not fill missing m
 
 Use a staged approach:
 
-1. **Sequence baseline:** BLASTP or DIAMOND against a versioned protein set. Keep identity, alignment coverage, E-value, and bit score. This gives the team an interpretable baseline.
-2. **Embedding ranking:** add a fixed protein language model and record the model name, version, pooling method, and cosine similarity. Use this as a separate ranking signal until it has been calibrated against known relationships.
-3. **Structure search:** use Foldseek only when a consistent structure source and quality threshold are available. Store the structure accession and structural score with the edge.
+1. **Pairwise sequence baseline:** the committed four-protein portfolio first runs two reproducible Smith-Waterman methods: a transparent +2/-1/-2 linear-gap baseline and BLOSUM62 with affine gaps. Keep identity, alignment coverage, gap fraction, the substitution matrix, and gap model. Raw scores are only comparable within a method.
+2. **Database sequence search:** use BLASTP or DIAMOND against a versioned protein set when expanding beyond the four seed proteins. Keep identity, alignment coverage, E-value, and bit score. The pairwise DP portfolio does not produce a calibrated E-value.
+3. **Embedding ranking:** add a fixed protein language model and record the model name, version, pooling method, and cosine similarity. Use this as a separate ranking signal until it has been calibrated against known relationships.
+4. **Structure search:** use Foldseek only when a consistent structure source and quality threshold are available. Store the structure accession and structural score with the edge.
 
 Reference implementations: [NCBI Protein BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi?BLAST_PROGRAMS=blastp&LINK_LOC=protein&PAGE=Proteins&PAGE_TYPE=BlastSearch) and [Foldseek](https://github.com/steineggerlab/foldseek).
 
@@ -77,6 +80,44 @@ Every derived similarity edge should include:
 - an `evidence_id` linked to a computational-evidence node or record.
 
 Curated disease-gene edges remain authoritative for the MVP. A similarity edge may help find a candidate disease or study, but it must not upgrade a disease-gene assertion or clinical recommendation.
+
+### Interpreting confidence
+
+Confidence has two separate meanings and they must not be conflated:
+
+1. **Claim support:** does the cited source actually contain the extracted claim?
+2. **Biological truth:** is the claim sufficient to establish a disease mechanism or a useful intervention?
+
+The first can be scored mechanically. The current RAG extractor uses this auditable policy:
+
+```text
+score = source-tier weight
+      + structured-record weight
+      + exact source-span match
+      + endpoint appears in source
+      then apply a relationship-specific cap
+```
+
+The policy labels `high` (>=0.80), `medium` (0.55-0.79), or `low` (<0.55). A direct statement such as “this record is reported in GLB1” can therefore have high **claim-support confidence** when its ClinVar row and exact source span are present. That does not mean the record is an expert-confirmed causal variant. A `seed_condition` search label is capped at medium because it may describe retrieval context rather than an explicit condition assertion.
+
+Protein similarity is computational evidence. A high sequence, embedding, or structure score can support a hypothesis about shared ancestry, fold, domain, active-site geometry, or possibly a related pathway, depending on the method and its coverage. It does not by itself establish:
+
+- that two diseases are equivalent;
+- that the proteins have the same substrate or cellular role;
+- that a variant is pathogenic; or
+- that a drug or gene therapy will work.
+
+For a similarity edge to move above a low-confidence research lead, add independent evidence such as:
+
+| Evidence layer | What it supports |
+| --- | --- |
+| Reproducible score, coverage, E-value/TM-score, model and release | The computational similarity result is reproducible |
+| Domain, active-site, localization, substrate, and pathway agreement | A plausible shared mechanism |
+| Functional assay or curated disease-gene record | Direct biological support |
+| Repeated patient phenotype or natural-history concordance | Human relevance |
+| Independent sources and replicated experiments | Confidence that the signal is not an artifact |
+
+The UI should display these layers separately. It should never turn one similarity score into a “similar disease” or treatment recommendation.
 
 ## Acceptance checks
 
@@ -122,5 +163,5 @@ The exact relationship properties should be adapted to the chosen similarity met
 1. Resolve the four provisional gene symbols to reviewed human UniProt entries.
 2. Commit a small, versioned protein mapping table with checksums.
 3. Run the sequence baseline and inspect the positive/negative controls.
-4. Add `Protein` nodes and `ENCODES`/`SIMILAR_TO` relationships to the loader.
-5. Add embeddings or structure search only after the baseline output is visible and reviewable.
+4. Run `python pipelines/sync_structure_evidence_to_graph.py`, then dry-validate with `python graph/load_neo4j.py`.
+5. Add embeddings or an independent structure search only after the baseline output is visible and reviewable.

@@ -8,6 +8,23 @@ The graph layer converts the normalized seed data into a small evidence-backed g
 - edges.csv: relationships with assertion level, evidence ID, confidence, and source URL.
 - schema.md: node, relationship, and acceptance rules.
 - load_neo4j.py: standard-library dry-run validator and optional Neo4j loader.
+- ../pipelines/sync_structure_evidence_to_graph.py: turns only computed structure rows into inferred graph evidence.
+
+## Add bounded structure evidence
+
+After regenerating `data/processed/structure_comparison.csv`, synchronize its
+eligible rows into the local graph files:
+
+~~~bash
+python pipelines/sync_structure_evidence_to_graph.py
+~~~
+
+The synchronizer creates an `Evidence` node and a `SIMILAR_TO` edge only for a
+row whose status is `computed`. It deliberately excludes `not_evaluated` rows:
+insufficient residue mapping cannot be interpreted as structural dissimilarity.
+The current seed adds one inferred HEXA -> HEXB protein edge, retaining its
+method, 0.865 Å C-alpha RMSD, 89.928% mapped coverage, model versions, and
+source model URLs. It does not connect to Neo4j.
 
 ## Dry-run validation
 
@@ -17,7 +34,7 @@ From the repository root:
 python graph/load_neo4j.py
 ~~~
 
-This checks duplicate IDs, missing endpoints, invalid relationship names, and missing evidence nodes without requiring Neo4j.
+This checks duplicate IDs, missing endpoints, invalid relationship names, and missing evidence nodes without requiring Neo4j. The current graph validates 31 nodes and 35 edges.
 
 ## Neo4j loading
 

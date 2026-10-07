@@ -14,6 +14,8 @@ Every node is stored with the generic Neo4j label Entity and a kind property.
 | Study | NCT ID | NCT:NCT05109793 |
 | Organization | Stable local ID plus official URL | ORG:CURE_GM1 |
 | Evidence | Evidence-table ID | EVIDENCE:E-01 |
+| Phenotype | HPO term ID | HP:0010729 |
+| Pathway | Reactome stable ID | REACTOME:R-HSA-... |
 
 ## Relationships
 
@@ -28,6 +30,25 @@ The MVP uses **RESEARCH_NEIGHBOR** and **RESOURCE_NEIGHBOR** for research-naviga
 
 **ENCODES** links a provisional gene node to a reviewed human UniProt protein node. It is an identity mapping, not a similarity claim.
 
+**SIMILAR_TO** links two protein nodes only when a separately versioned
+computational result passes its declared method gate. It must use
+`assertion_level = inferred`; the `confidence` field reflects its current
+research-lead status, not a probability that diseases or treatments are the
+same. A structure-derived edge records `method`, `score_name`, `primary_score`,
+`minimum_coverage_pct`, `aligned_residue_pairs`, `high_confidence_ca_pairs`,
+`structure_comparison_id`, and the two model versions. A missing or
+`not_evaluated` structural result must not create a negative edge.
+
+**Cluster layer** (see `docs/CLUSTER_EXPANSION.md`). Curated: `HAS_PHENOTYPE`
+(HPO annotation), `HAS_GENE` (HPO Mendelian gene-disease), `PARTICIPATES_IN`
+(Reactome), `IS_A` (MONDO). Inferred, undirected disease-disease edges:
+`SHARES_CAUSAL_GENE`, `MECHANISM_NEIGHBOR`, `PHENOTYPE_NEIGHBOR` and
+`PHENOTYPE_LOOKALIKE` (a counterexample, never a research neighbor). Their
+scores, shared genes, pathways and symptoms live in the `properties_json`
+column; `limitations` holds the sentence the UI must show. The loader flattens
+`properties_json` into Neo4j properties and also adds the node kind as a second
+label (for example `:Entity:Disease`).
+
 ## Query acceptance checks
 
 The first graph build is correct when these paths are queryable:
@@ -36,6 +57,7 @@ The first graph build is correct when these paths are queryable:
 2. NCT05109793 -[STUDIES]-> GM1 gangliosidosis.
 3. GM1 gangliosidosis -> RESOURCE_NEIGHBOR -> Gaucher disease type II.
 4. Every material edge has an `evidence_id` that matches an Evidence node with a source URL.
+5. The only current `SIMILAR_TO` edge is HEXA protein -> HEXB protein and is labelled `inferred`.
 
 ## Identity note
 

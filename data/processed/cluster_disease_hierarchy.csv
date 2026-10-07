@@ -1,0 +1,62 @@
+child_id,parent_id,parent_label,relation,grouping,mondo_release_tag
+MONDO:0008104,MONDO:0018997,Noonan syndrome,is_a,series,v2026-09-01
+MONDO:0008104,MONDO:0021060,RASopathy,is_a_transitive,class,v2026-09-01
+MONDO:0008763,MONDO:0005308,ciliopathy,is_a,class,v2026-09-01
+MONDO:0008854,MONDO:0005308,ciliopathy,is_a_transitive,class,v2026-09-01
+MONDO:0008854,MONDO:0015229,Bardet-Biedl syndrome,is_a,series,v2026-09-01
+MONDO:0008944,MONDO:0005308,ciliopathy,is_a_transitive,class,v2026-09-01
+MONDO:0008944,MONDO:0018772,Joubert syndrome,is_a,series,v2026-09-01
+MONDO:0009026,MONDO:0021060,RASopathy,is_a_transitive,class,v2026-09-01
+MONDO:0009218,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009260,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009260,MONDO:0018149,GM1 gangliosidosis,is_a,series,v2026-09-01
+MONDO:0009261,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009261,MONDO:0018149,GM1 gangliosidosis,is_a,series,v2026-09-01
+MONDO:0009262,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009262,MONDO:0018149,GM1 gangliosidosis,is_a,series,v2026-09-01
+MONDO:0009265,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009266,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009267,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009499,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009571,MONDO:0005308,ciliopathy,is_a_transitive,class,v2026-09-01
+MONDO:0009571,MONDO:0018921,Meckel syndrome,is_a,series,v2026-09-01
+MONDO:0009591,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009659,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009660,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009728,MONDO:0005308,ciliopathy,is_a,class,v2026-09-01
+MONDO:0009728,MONDO:0019005,nephronophthisis,is_a,series,v2026-09-01
+MONDO:0009737,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009738,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009756,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0009757,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0010006,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0010006,MONDO:0017720,GM2 gangliosidosis,is_a,series,v2026-09-01
+MONDO:0010099,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0010099,MONDO:0017720,GM2 gangliosidosis,is_a,series,v2026-09-01
+MONDO:0010100,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0010100,MONDO:0017720,GM2 gangliosidosis,is_a,series,v2026-09-01
+MONDO:0010526,MONDO:0002561,lysosomal storage disease,is_a_transitive,class,v2026-09-01
+MONDO:0011963,MONDO:0005308,ciliopathy,is_a_transitive,class,v2026-09-01
+MONDO:0011963,MONDO:0018772,Joubert syndrome,is_a,series,v2026-09-01
+MONDO:0012371,MONDO:0018997,Noonan syndrome,is_a,series,v2026-09-01
+MONDO:0012371,MONDO:0021060,RASopathy,is_a_transitive,class,v2026-09-01
+MONDO:0012432,MONDO:0005308,ciliopathy,is_a_transitive,class,v2026-09-01
+MONDO:0012432,MONDO:0018772,Joubert syndrome,is_a,series,v2026-09-01
+MONDO:0012433,MONDO:0005308,ciliopathy,is_a_transitive,class,v2026-09-01
+MONDO:0012433,MONDO:0017842,Senior-Loken syndrome,is_a,series,v2026-09-01
+MONDO:0012547,MONDO:0018997,Noonan syndrome,is_a,series,v2026-09-01
+MONDO:0012547,MONDO:0021060,RASopathy,is_a_transitive,class,v2026-09-01
+MONDO:0012626,MONDO:0005308,ciliopathy,is_a_transitive,class,v2026-09-01
+MONDO:0012626,MONDO:0018921,Meckel syndrome,is_a,series,v2026-09-01
+MONDO:0012669,MONDO:0021060,RASopathy,is_a_transitive,class,v2026-09-01
+MONDO:0012690,MONDO:0018997,Noonan syndrome,is_a,series,v2026-09-01
+MONDO:0012690,MONDO:0021060,RASopathy,is_a_transitive,class,v2026-09-01
+MONDO:0013379,MONDO:0018997,Noonan syndrome,is_a,series,v2026-09-01
+MONDO:0013379,MONDO:0021060,RASopathy,is_a_transitive,class,v2026-09-01
+MONDO:0014113,MONDO:0021060,RASopathy,is_a_transitive,class,v2026-09-01
+MONDO:0014432,MONDO:0005308,ciliopathy,is_a_transitive,class,v2026-09-01
+MONDO:0014432,MONDO:0015229,Bardet-Biedl syndrome,is_a,series,v2026-09-01
+MONDO:0014438,MONDO:0005308,ciliopathy,is_a_transitive,class,v2026-09-01
+MONDO:0014438,MONDO:0015229,Bardet-Biedl syndrome,is_a,series,v2026-09-01
+MONDO:0018975,MONDO:0021060,RASopathy,is_a,class,v2026-09-01
+MONDO:0100082,MONDO:0021060,RASopathy,is_a_transitive,class,v2026-09-01

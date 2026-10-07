@@ -1,0 +1,33 @@
+{
+  "pipeline": "RarePath bounded sequence-guided AlphaFold C-alpha comparison",
+  "script_version": "0.1.0",
+  "generated_at": "2026-10-03T23:24:50.057340Z",
+  "inputs": {
+    "proteins_csv": "data/processed/proteins.csv",
+    "proteins_fasta": "data/processed/proteins.fasta",
+    "structure_models_csv": "data/processed/structure_models.csv"
+  },
+  "method": {
+    "name": "sequence_guided_ca_superposition_horn_quaternion_v0.1",
+    "sequence_alignment": "smith_waterman_local_blosum62_affine_v0.2",
+    "coordinate_selection": "PDB C-alpha atoms mapped by affine local alignment",
+    "confidence_filter": "both AlphaFold pLDDT >= 70.0",
+    "rigid_fit_objective": "minimize sum_i ||R*x_i + t - y_i||^2 with R a proper rotation",
+    "solver": "Horn quaternion least-squares fit; 4x4 symmetric eigenproblem solved by Jacobi rotations",
+    "not_reported": [
+      "TM-score",
+      "lDDT",
+      "database-search hit",
+      "clinical similarity"
+    ]
+  },
+  "gates": {
+    "minimum_mapped_ca_pairs": 30,
+    "minimum_mapping_coverage_pct": 25.0
+  },
+  "result_counts": {
+    "total_pairs": 6,
+    "computed": 1,
+    "not_evaluated": 5
+  }
+}

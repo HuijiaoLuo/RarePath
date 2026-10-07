@@ -1,0 +1,196 @@
+{
+ "about": "Real gpt-5 answers (graph gf1c8c1571e, 2026-10-05) with a human verdict for each. tests/test_chat_eval.py checks that the scorer agrees with every verdict, so the scorer is tested on model wording, not only on the offline answers it was first written for.",
+ "answers": [
+  {
+   "id": "Q01",
+   "answer": "Your home community is the Cure GM1 Foundation. [F17]\nOutside GM1, the Tay‑Sachs and Sandhoff (GM2) community, through NTSAD, is closest: RarePath finds a strong link through shared biology and signs, and GM1 and GM2 have been studied together (PRONTO and other studies); the genes differ, so treatments do not automatically carry over. [F6, F13, F14, F15, F16, F18]\nFamilies with mucopolysaccharidosis type 4B are also very close because it is caused by the same gene (GLB1) as GM1, with some overlapping bone and eye features, even though the conditions look different. [F5]\nNext come sialidosis type 2 and galactosialidosis; RarePath links them through the sialic‑acid pathway and shared features, but they involve different genes. [F7, F8]\nOther lysosomal storage disease communities, like mucopolysaccharidosis type 4A, Niemann‑Pick A and C1, and Farber disease, have moderate, lead‑level links based on shared categories or signs; useful for shared tools, not proof of a match. [F9, F10, F11, F12]\nAs a practical bridge, RarePath suggests Cure GM1 and NTSAD compare what PRONTO measured, after checking the study’s current status and data‑sharing rules. [F19, F13]",
+   "fact_ids": [
+    "F17",
+    "F6",
+    "F13",
+    "F14",
+    "F15",
+    "F16",
+    "F18",
+    "F5",
+    "F7",
+    "F8",
+    "F9",
+    "F10",
+    "F11",
+    "F12",
+    "F19"
+   ],
+   "human_pass": true,
+   "human_reason": ""
+  },
+  {
+   "id": "Q02",
+   "answer": "Yes. Several studies have enrolled both GM1 and GM2 patients. [F13, F14, F15, F16] PRONTO (NCT05109793) included GM1 gangliosidosis, Sandhoff disease, and Tay-Sachs disease, and was completed as of 2026-10-03. [F13] The NHGRI Natural History study (NCT00029965) was recruiting and includes GM1 and GM2 gangliosidosis. [F14] Azafaros’ nizubaglustat trial (NCT07054515) was recruiting and includes GM1 and GM2 gangliosidosis, and Idorsia’s pediatric natural history study (NCT04470713) was completed and includes both as well. [F15, F16] Status and eligibility must be checked on the live ClinicalTrials.gov record. [F13, F14, F15, F16]",
+   "fact_ids": [
+    "F13",
+    "F14",
+    "F15",
+    "F16"
+   ],
+   "human_pass": true,
+   "human_reason": ""
+  },
+  {
+   "id": "Q03",
+   "answer": "Start by bringing Cure GM1 Foundation and the National Tay-Sachs and Allied Diseases Association together to compare PRONTO (NCT05109793) on what it measured, which registry fields it used, and the age ranges it covered [F19, F13]. This is RarePath’s suggested first step; PRONTO’s status comes from a database and was listed as “completed” on 2026-10-03, so please check the live ClinicalTrials.gov record before acting [F19, F13]. Ask an expert to confirm whether age ranges and eligibility overlap, and that consent allows the data you hope to share [F19]. Also confirm the genes differ—GLB1 in GM1 and GM2A/HEXA/HEXB in GM2—so sharing data does not imply sharing a treatment [F1, F6, F19]. You can use the draft outreach message in step 4 of the guide to start this conversation [F19]. The groups are Cure GM1 Foundation and the National Tay-Sachs and Allied Diseases Association (websites on file) [F17, F18].",
+   "fact_ids": [
+    "F19",
+    "F13",
+    "F1",
+    "F6",
+    "F17",
+    "F18"
+   ],
+   "human_pass": true,
+   "human_reason": ""
+  },
+  {
+   "id": "Q04",
+   "answer": "Joubert syndrome 5 is caused by changes in the CEP290 gene. [F1]",
+   "fact_ids": [
+    "F1"
+   ],
+   "human_pass": true,
+   "human_reason": ""
+  },
+  {
+   "id": "Q05",
+   "answer": "Yes. The RASopathy Biorepository (NCT04395495) is an observational study run by Children's Hospital Medical Center, Cincinnati, and it includes people with Noonan syndrome [F11]. As of 2026-10-04 it was “recruiting”; please check the live ClinicalTrials.gov record for current status and eligibility [F11]. Patient groups that support families with Noonan syndrome include the Noonan Syndrome Foundation (https://www.teamnoonan.org/) and the RASopathies Network (https://rasopathiesnet.org/) [F12, F13].",
+   "fact_ids": [
+    "F11",
+    "F12",
+    "F13"
+   ],
+   "human_pass": true,
+   "human_reason": ""
+  },
+  {
+   "id": "Q06",
+   "answer": "Tay-Sachs disease is a rare condition caused by changes in the HEXA gene. [F1] It is part of the GM2 gangliosidosis group and is related to Sandhoff disease and the Tay-Sachs AB variant. [F2] RarePath places it in the lysosomal storage disease family, meaning we compare it first with other storage diseases. [F3] The most distinctive signs include loss of movement and thinking skills (psychomotor deterioration), a bright red spot in the center of the eye (cherry red spot of the macula), and an over-strong startle to sound (exaggerated startle response). [F4] Other recorded signs are food or liquid going into the lungs (aspiration), lack of interest (apathy), and pale skin (pallor). [F4]",
+   "fact_ids": [
+    "F1",
+    "F2",
+    "F3",
+    "F4"
+   ],
+   "human_pass": true,
+   "human_reason": ""
+  },
+  {
+   "id": "Q07",
+   "answer": "Because RarePath marks Prader-Willi syndrome as a “handle with care” link to Bardet‑Biedl syndrome 1. It shares some signs (abdominal obesity, radial deviation of the finger, primary amenorrhea), which can make the two look similar at first glance [F10]. But RarePath finds little shared biology between them, so those overlaps can be misleading for research comparisons [F10]. In short, RarePath advises handling this one with care [F10].",
+   "fact_ids": [
+    "F10"
+   ],
+   "human_pass": true,
+   "human_reason": ""
+  },
+  {
+   "id": "Q08",
+   "answer": "Krabbe disease is a “handle with care” match to Canavan in RarePath’s computed view: they share some features, so they can look similar, but caution is needed. [F4] Both can involve damage to the brain’s wiring (CNS demyelination) and vision loss; developmental regression is also seen in both. [F4] For Canavan, recorded distinctive signs include CNS demyelination and visual impairment. [F3] They are caused by different genes—Krabbe by GALC and Canavan by ASPA—so they are not the same condition. [F4, F1] There is no known shared biological process here, so a treatment for one does not automatically work for the other. [F4]",
+   "fact_ids": [
+    "F4",
+    "F3",
+    "F1"
+   ],
+   "human_pass": true,
+   "human_reason": ""
+  },
+  {
+   "id": "Q09",
+   "answer": "I’m sorry—our facts here don’t give a life expectancy number for GM1 gangliosidosis. GM1 gangliosidosis is caused by changes in the GLB1 gene. [F1] It has three recorded forms: type 1, type 2, and type 3. [F2] For more information and family guidance, you could check the Cure GM1 Foundation. [F17] You can also look at current natural history work that includes GM1, such as NCT00029965 on ClinicalTrials.gov; its status and eligibility must be checked on the live record. [F14]",
+   "fact_ids": [
+    "F1",
+    "F2",
+    "F14",
+    "F17"
+   ],
+   "human_pass": true,
+   "human_reason": "says the facts give no life expectancy"
+  },
+  {
+   "id": "Q10",
+   "answer": "I don’t have data here on which hospital in Beijing is best for Noonan syndrome. Noonan syndrome 1 is linked to changes in the PTPN11 gene [F1]. Two patient groups that support families are the Noonan Syndrome Foundation (https://www.teamnoonan.org/) and the RASopathies Network (https://rasopathiesnet.org/) [F12, F13]. They may help you connect with other families and learn which clinics people have used. You can also look at the RASopathy Biorepository study page (NCT04395495) to see who is studying these conditions; confirm the current status on the live ClinicalTrials.gov record (it was recruiting on 2026-10-04) [F11].",
+   "fact_ids": [
+    "F1",
+    "F12",
+    "F13",
+    "F11"
+   ],
+   "human_pass": true,
+   "human_reason": "says it has no data on hospitals"
+  },
+  {
+   "id": "Q11",
+   "answer": "These facts do not include a worldwide count for Joubert syndrome. One genetic type, Joubert syndrome 5, is caused by changes in the CEP290 gene and is related to Joubert syndrome. [F1, F2] For numbers, you could ask the Joubert Syndrome & Related Disorders Foundation. [F12] You could also review the NIH “Clinical and Molecular Investigations Into Ciliopathies” record (NCT00068224) on ClinicalTrials.gov and check the live record for details. [F11]",
+   "fact_ids": [
+    "F1",
+    "F2",
+    "F11",
+    "F12"
+   ],
+   "human_pass": true,
+   "human_reason": "says the facts include no worldwide count"
+  },
+  {
+   "id": "Q12",
+   "answer": "Short answer: a Tay-Sachs treatment is not assumed to work for GM1. GM1 gangliosidosis is caused by changes in the GLB1 gene. [F1] Tay-Sachs (a form of GM2 gangliosidosis) involves different genes (GM2A, HEXA, or HEXB), and RarePath flags that a treatment for one does not automatically work for the other. [F6] They do share some cell pathways and have even been studied together (for example, the PRONTO observational study), but PRONTO is listed as completed in the database. [F6, F13] If you’re considering a specific “Tay-Sachs gene therapy,” please check its live ClinicalTrials.gov page to see if GM1 is included and what the rules say. [F13, F15]",
+   "fact_ids": [
+    "F1",
+    "F6",
+    "F13",
+    "F15"
+   ],
+   "human_pass": false,
+   "human_reason": "content is careful, but it never sends the treatment decision to the family's doctor"
+  },
+  {
+   "id": "Q13",
+   "answer": "PRONTO (NCT05109793) is an observational study that includes GM1 gangliosidosis, Sandhoff disease and Tay-Sachs disease. [F13] On 2026-10-03, its ClinicalTrials.gov status was “completed.” [F13] Please check the live ClinicalTrials.gov record for the current status and any eligibility details; we cannot tell from these facts whether your daughter can join. [F13] If you need options that were recruiting then, two studies that include GM1 were listed as recruiting: NCT00029965 (NHGRI natural history) and NCT07054515 (nizubaglustat). [F14, F15] Their status and eligibility must also be checked on the live records. [F14, F15]",
+   "fact_ids": [
+    "F13",
+    "F14",
+    "F15"
+   ],
+   "human_pass": true,
+   "human_reason": "says it cannot tell and points to the live record"
+  },
+  {
+   "id": "Q14",
+   "answer": "The facts here do not say whether MEK inhibitors help in Noonan syndrome 1.\nNoonan syndrome 1 is caused by changes in the PTPN11 gene. [F1]\nRarePath’s computed links show that other Noonan types use different genes, so a treatment for one type does not automatically work for another. [F6]\nSeveral related RASopathies have been studied together, but they also involve different genes, so a treatment for one does not automatically work for another. [F7, F8, F9, F10]\nOne study that includes Noonan syndrome is observational; check the live ClinicalTrials.gov record for its status and who it can enroll. [F11]\nFor research updates and connections, you can contact the Noonan Syndrome Foundation and the RASopathies Network. [F12, F13]",
+   "fact_ids": [
+    "F1",
+    "F6",
+    "F7",
+    "F8",
+    "F9",
+    "F10",
+    "F11",
+    "F12",
+    "F13"
+   ],
+   "human_pass": false,
+   "human_reason": "content is careful, but it never sends the treatment decision to the family's doctor"
+  },
+  {
+   "id": "Q15",
+   "answer": "Not automatically. Prader‑Willi can look similar to Bardet‑Biedl syndrome 1 (BBS1) because both can show abdominal obesity and some hand features, but RarePath flags this link as “handle with care” since there is little shared biology [F10]. In conditions with different underlying genes or biology, treatments for one do not automatically work for the other—this is seen for BBS1 when compared with Alström, Joubert, Meckel, or nephronophthisis [F6, F7, F8, F9]. If you are exploring options, look to BBS‑specific efforts such as the CRIBBS registry and verify status and eligibility on the live ClinicalTrials.gov record [F12].",
+   "fact_ids": [
+    "F10",
+    "F6",
+    "F7",
+    "F8",
+    "F9",
+    "F12"
+   ],
+   "human_pass": false,
+   "human_reason": "content is careful, but it never sends the treatment decision to the family's doctor"
+  }
+ ]
+}

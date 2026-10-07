@@ -49,7 +49,6 @@ SCHEMA: dict[str, Any] = {
                     "target_id": {"type": "string"},
                     "claim": {"type": "string"},
                     "evidence_id": {"type": "string"},
-                    "confidence": {"type": "string"},
                     "source_span": {"type": "string"},
                 },
                 "required": [
@@ -58,7 +57,6 @@ SCHEMA: dict[str, Any] = {
                     "target_id",
                     "claim",
                     "evidence_id",
-                    "confidence",
                     "source_span",
                 ],
             },
@@ -77,7 +75,100 @@ document ID and must include a short verbatim source_span from that document.
 If evidence is insufficient, return an empty array and explain the uncertainty.
 Use provisional candidate IDs such as CANDIDATE:<label> when no stable ID is
 present. Do not give diagnoses, treatment recommendations, or efficacy claims.
+Do not assign confidence; the application computes confidence from source tier,
+record type, exact source-span matching, and relationship type.
 """
+
+
+DIRECT_RELATIONS = {
+    "in_gene",
+    "has_variant_type",
+    "has_clinical_significance",
+    "has_protein_effect",
+}
+
+RELATION_CAPS = {
+    # A seed/search label is weaker than an explicit condition assertion.
+    "has_condition_label": 0.65,
+    # Similarity and hypothesis edges remain research leads until independently
+    # supported by functional, clinical, or curated disease evidence.
+    "similar_to": 0.45,
+    "possible_association": 0.45,
+    "hypothesizes": 0.35,
+}
+
+
+def endpoint_fragment(value: str) -> str:
+    return value.split(":", 1)[-1].strip().lower()
+
+
+def score_edge(edge: dict[str, Any], documents: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    evidence_id = str(edge.get("evidence_id", ""))
+    document = documents.get(evidence_id)
+    basis: list[str] = []
+    score = 0.0
+    if document is None:
+        return {
+            "confidence": "low",
+            "confidence_score": 0.0,
+            "confidence_basis": ["evidence_id_not_in_retrieved_context"],
+        }
+
+    tier = str(document.get("source_tier", "internal"))
+    if tier == "1":
+        score += 0.45
+        basis.append("tier_1_official_source")
+    elif tier == "2":
+        score += 0.30
+        basis.append("tier_2_specialist_source")
+    else:
+        score += 0.10
+        basis.append("internal_or_unranked_source")
+
+    if document.get("kind") == "structured_record":
+        score += 0.25
+        basis.append("structured_source_record")
+
+    text = str(document.get("text", "")).lower()
+    source_span = str(edge.get("source_span", "")).strip()
+    if source_span and source_span.lower() in text:
+        score += 0.20
+        basis.append("exact_source_span_match")
+    else:
+        basis.append("source_span_not_verified")
+
+    endpoints = " ".join(
+        [endpoint_fragment(str(edge.get("source_id", ""))), endpoint_fragment(str(edge.get("target_id", "")))]
+    )
+    if any(fragment and fragment in text for fragment in endpoints.split()):
+        score += 0.10
+        basis.append("endpoint_appears_in_source")
+
+    edge_type = str(edge.get("edge_type", ""))
+    if edge_type in RELATION_CAPS:
+        score = min(score, RELATION_CAPS[edge_type])
+        basis.append(f"relationship_cap_{edge_type}")
+    elif edge_type in DIRECT_RELATIONS:
+        basis.append("direct_record_relationship")
+    else:
+        score = min(score, 0.55)
+        basis.append("unclassified_relationship_cap")
+
+    independent_sources = {
+        str(item.get("source_url") or item.get("source_path"))
+        for item in documents.values()
+    }
+    if len(independent_sources) < 2:
+        score = min(score, 0.85)
+        basis.append("single_source_context_cap")
+
+    score = round(min(score, 1.0), 2)
+    confidence = "high" if score >= 0.80 else "medium" if score >= 0.55 else "low"
+    return {
+        "confidence": confidence,
+        "confidence_score": score,
+        "confidence_basis": basis,
+    }
 
 
 def evidence_prompt(query: str, results: list[dict[str, Any]]) -> str:
@@ -133,6 +224,9 @@ def main() -> int:
     )
 
     payload = json.loads(response.output_text)
+    evidence_by_id = {str(result["doc_id"]): result for result in results}
+    for edge in payload.get("candidate_edges", []):
+        edge.update(score_edge(edge, evidence_by_id))
     payload["metadata"] = {
         "query": args.query,
         "model": args.model,
@@ -140,6 +234,14 @@ def main() -> int:
         "retrieved_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "review_status": "candidate",
         "neo4j_writeback": False,
+        "confidence_policy": {
+            "version": "0.1",
+            "formula": "source tier + structured-record status + exact source-span match + endpoint match, then relationship-specific and single-source caps",
+            "high": ">= 0.80",
+            "medium": "0.55-0.79",
+            "low": "< 0.55 or unresolved evidence ID",
+            "important_limit": "Sequence/protein similarity alone is capped as a low-confidence research hypothesis unless independent functional or curated disease evidence is present.",
+        },
     }
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)

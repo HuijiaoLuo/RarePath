@@ -1,0 +1,33 @@
+{
+  "pipeline": "RarePath ClinVar missense variants on AlphaFold models",
+  "script_version": "0.1.0",
+  "retrieved_at": "2026-10-05T01:09:53Z",
+  "query": "{gene}[gene] AND (clinsig_pathogenic[prop] OR clinsig_likely_pathogenic[prop])",
+  "kept_classifications": [
+    "likely pathogenic",
+    "pathogenic",
+    "pathogenic/likely pathogenic"
+  ],
+  "filters": "germline classification above; preferred name written on this gene's transcript; single nucleotide missense; reference amino acid matches the AlphaFold model sequence (after a per-gene numbering shift, if one explains >= 90% of variants)",
+  "genes": 32,
+  "variants": 2633,
+  "pooled_confidence": {
+    "variant_positions": 1549,
+    "variant_positions_very_high": 1301,
+    "residues": 20258,
+    "residues_very_high": 11150,
+    "share_of_variant_positions_very_high": 0.84,
+    "share_of_residues_very_high": 0.55,
+    "expected_variant_positions_very_high_if_random": 1170.1,
+    "observed_over_expected": 1.11,
+    "z_score_within_gene_null": 9.7
+  },
+  "statistics_note": "Null model: within each gene, variant positions are a random sample of that protein's residues (hypergeometric); genes are combined by summing means and variances. The pooled shares above mix genes with different baselines, so compare observed with expected, not the two shares.",
+  "interpretation": "Descriptive comparison only. ClinVar over-represents well-studied genes and regions; a higher share in confident regions is consistent with, but does not prove, that disease-causing missense changes concentrate in the folded core.",
+  "problems": [],
+  "source": {
+    "name": "ClinVar via NCBI E-utilities",
+    "url": "https://www.ncbi.nlm.nih.gov/clinvar/",
+    "terms": "https://www.ncbi.nlm.nih.gov/home/about/policies/"
+  }
+}

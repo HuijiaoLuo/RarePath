@@ -3,187 +3,295 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="RarePath evidence atlas for rare disease research navigation." />
-  <title>RarePath · Evidence Atlas</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="description" content="RarePath, a case study: an evidence graph that links rare diseases by mechanism and by symptoms, kept separate, and points families to the studies and patient groups that already exist." />
+  <title>RarePath · Case study</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230a4f45'/%3E%3Ctext x='16' y='21' font-family='Arial' font-weight='700' font-size='13' fill='white' text-anchor='middle'%3ERP%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" />
   <style>
     :root {
-      --ink: #112a32;
-      --muted: #65777b;
-      --paper: #f4f7f3;
-      --card: #ffffff;
-      --line: #d9e3df;
-      --teal: #087f83;
-      --teal-dark: #07565d;
-      --mint: #d9f0e8;
-      --amber: #e7a647;
-      --blue: #5e79ae;
-      --shadow: 0 16px 45px rgba(17, 42, 50, .08);
+      --ink: #15322f; --muted: #5b6f6c; --faint: #8b9a97; --paper: #f4f6f2; --card: #ffffff; --line: #dbe4df;
+      --green: #12705f; --green-dark: #0a4f45; --green-soft: #e0f2ea;
+      --blue: #4a6fa8; --blue-soft: #e7eef9;
+      --violet: #6a55ad; --violet-soft: #eeeafa;
+      --amber: #a8741f; --amber-soft: #fdf3dc;
+      --coral: #bd4f3a; --coral-soft: #fcefeb;
+      --shadow: 0 10px 34px rgba(17, 48, 44, .08);
+      --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+      --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, -apple-system, sans-serif;
+      color-scheme: light;
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      background: var(--paper);
-      font: 16px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    button, input { font: inherit; }
-    button { cursor: pointer; }
-    .topbar {
-      color: #eff9f4;
-      background: #102f36;
-      border-bottom: 1px solid rgba(255,255,255,.12);
-      padding: 20px clamp(20px, 5vw, 72px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .mark {
-      width: 40px; height: 40px; display: grid; place-items: center;
-      border-radius: 12px; color: #102f36; background: #bde6d7; font-weight: 900;
-      letter-spacing: -.08em;
-    }
-    .brand strong { display: block; font-size: 18px; letter-spacing: -.02em; }
-    .brand span { display: block; color: #b9d4cd; font-size: 12px; margin-top: 2px; }
-    .top-status { display: flex; gap: 8px; align-items: center; color: #b9d4cd; font-size: 13px; }
-    .dot { width: 8px; height: 8px; border-radius: 99px; background: #82d1ac; box-shadow: 0 0 0 4px rgba(130,209,172,.12); }
-    main { max-width: 1320px; margin: 0 auto; padding: 42px clamp(20px, 5vw, 72px) 68px; }
-    .intro { display: flex; justify-content: space-between; gap: 40px; align-items: end; margin-bottom: 30px; }
-    h1 { font-size: clamp(32px, 5vw, 58px); line-height: 1.02; letter-spacing: -.055em; margin: 0; max-width: 700px; }
-    .intro p { color: var(--muted); max-width: 560px; margin: 16px 0 0; font-size: 17px; }
-    .eyebrow { color: var(--teal); text-transform: uppercase; letter-spacing: .16em; font-size: 11px; font-weight: 800; margin-bottom: 12px; }
-    .badge { white-space: nowrap; color: var(--teal-dark); background: var(--mint); border-radius: 99px; padding: 8px 12px; font-size: 12px; font-weight: 700; }
-    .search-shell { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 16px; display: flex; gap: 12px; align-items: center; }
-    .search-shell label { color: var(--muted); font-size: 12px; font-weight: 700; padding: 0 5px; }
-    .search-shell input { min-width: 0; flex: 1; border: 0; outline: 0; color: var(--ink); font-size: 17px; background: transparent; }
-    .search-shell input::placeholder { color: #96a5a5; }
-    .primary { border: 0; border-radius: 11px; color: #fff; background: var(--teal); padding: 12px 20px; font-weight: 800; transition: transform .2s, background .2s; }
-    .primary:hover { background: var(--teal-dark); transform: translateY(-1px); }
-    .quick { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 2px 28px; }
-    .quick button { color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 99px; padding: 6px 10px; font-size: 12px; }
-    .quick button:hover { color: var(--teal-dark); border-color: #8bc4b7; background: #edf7f3; }
-    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
-    .metric { background: var(--card); border: 1px solid var(--line); border-radius: 15px; padding: 16px; }
-    .metric strong { display: block; font-size: 25px; letter-spacing: -.04em; }
-    .metric span { color: var(--muted); display: block; font-size: 12px; margin-top: 3px; }
-    .workspace { display: grid; grid-template-columns: minmax(0, 1.14fr) minmax(350px, .86fr); gap: 18px; align-items: start; }
-    .panel { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 10px 30px rgba(17,42,50,.04); overflow: hidden; }
-    .panel-head { padding: 18px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; align-items: center; }
-    .panel-head h2 { margin: 0; font-size: 16px; letter-spacing: -.02em; }
-    .panel-head span { color: var(--muted); font-size: 12px; }
-    #results { padding: 8px 14px 14px; }
-    .result { border-bottom: 1px solid #e7eeeb; padding: 17px 6px; display: grid; grid-template-columns: 1fr auto; gap: 10px; }
-    .result:last-child { border-bottom: 0; }
-    .result h3 { margin: 3px 0 5px; font-size: 17px; letter-spacing: -.02em; }
-    .result p { margin: 0; color: var(--muted); font-size: 13px; max-width: 650px; }
-    .result-meta { color: #718286; font-size: 11px; display: flex; gap: 8px; flex-wrap: wrap; }
-    .result-meta b { color: var(--teal); font-weight: 800; }
-    .score { align-self: start; color: var(--teal-dark); background: #ecf7f0; border-radius: 9px; padding: 5px 8px; font-size: 11px; font-weight: 800; }
-    .empty { color: var(--muted); padding: 35px 8px; text-align: center; }
-    .graph-wrap { padding: 12px 18px 18px; }
-    .graph { width: 100%; height: 330px; border-radius: 14px; background: radial-gradient(circle at 50% 40%, #f0f8f4, #edf3f1 75%); }
-    .edge { stroke: #a6c4be; stroke-width: 2; stroke-dasharray: 5 5; }
-    .node { cursor: pointer; transition: transform .2s; transform-box: fill-box; transform-origin: center; }
-    .node:hover { transform: scale(1.08); }
-    .node circle { stroke: #fff; stroke-width: 4; }
-    .node text { font-size: 12px; font-weight: 800; fill: var(--ink); text-anchor: middle; }
-    .node small { font-size: 10px; font-weight: 500; fill: var(--muted); }
-    .node.disease circle { fill: #d5efe4; }
-    .node.gene circle { fill: #d9e4f7; }
-    .node.protein circle { fill: #f9e6c7; }
-    .node.study circle { fill: #ecd9ef; }
-    .legend { display: flex; flex-wrap: wrap; gap: 13px; padding: 5px 2px 0; color: var(--muted); font-size: 11px; }
-    .legend i { width: 9px; height: 9px; display: inline-block; border-radius: 99px; margin-right: 5px; vertical-align: -1px; }
-    .detail { margin: 0 18px 18px; padding: 14px; border-radius: 12px; background: #f5f8f5; border: 1px solid #e1ebe6; min-height: 88px; }
-    .detail strong { font-size: 13px; }
-    .detail p { color: var(--muted); margin: 5px 0 0; font-size: 12px; }
-    .notice { margin-top: 18px; padding: 13px 15px; border-left: 3px solid var(--amber); background: #fff8e9; color: #72552c; font-size: 12px; border-radius: 0 10px 10px 0; }
-    footer { max-width: 1320px; margin: -20px auto 0; padding: 0 clamp(20px, 5vw, 72px) 44px; color: #809092; font-size: 12px; display: flex; justify-content: space-between; gap: 20px; }
-    @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } .intro { align-items: start; flex-direction: column; gap: 18px; } }
-    @media (max-width: 620px) { .topbar { padding: 16px 20px; } .top-status { display: none; } main { padding-top: 30px; } .metrics { grid-template-columns: repeat(2, 1fr); } .search-shell { align-items: stretch; flex-wrap: wrap; } .search-shell label { width: 100%; } .search-shell input { flex-basis: 100%; } .primary { width: 100%; } footer { flex-direction: column; } }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font: 18px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; }
+    a { color: var(--green); }
+    h1, h2, h3 { font-family: var(--font-display); letter-spacing: -.025em; text-wrap: balance; margin: 0; }
+    p { margin: 0; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+
+    header.top { position: sticky; top: 0; z-index: 10; background: rgba(244,246,242,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    header.top .wrap { height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font-family: var(--font-display); font-weight: 800; font-size: 19px; }
+    .mark { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--green-dark); color: #fff; font-size: 13px; letter-spacing: -.04em; }
+    nav { display: flex; gap: 22px; font-size: 15px; }
+    nav a { color: var(--muted); text-decoration: none; }
+    nav a:hover { color: var(--ink); }
+    @media (max-width: 720px) { nav .hide-sm { display: none; } }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 17px; border: 1px solid transparent; }
+    .btn.primary { background: var(--green-dark); color: #fff; }
+    .btn.primary:hover { background: var(--green); }
+    .btn.ghost { border-color: var(--line); color: var(--ink); background: var(--card); }
+
+    .hero { padding-top: clamp(48px, 8vw, 96px); padding-bottom: 40px; }
+    .eyebrow { font-size: 14px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--green); margin-bottom: 14px; }
+    .hero h1 { font-size: clamp(38px, 6vw, 68px); line-height: 1.02; font-weight: 800; max-width: 15ch; }
+    .hero .lede { margin-top: 22px; max-width: 62ch; font-size: clamp(18px, 2vw, 21px); color: var(--muted); }
+    .hero .actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; }
+    .disclaimer { margin-top: 16px; font-size: 15px; color: var(--faint); }
+    .facts { margin-top: 44px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+    .facts div { background: var(--card); padding: 16px 18px; }
+    .facts dt { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); font-weight: 700; }
+    .facts dd { margin: 4px 0 0; font-size: 16px; }
+    @media (max-width: 760px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+    figure.shot { margin: 8px 0 0; }
+    figure.shot img { width: 100%; height: auto; display: block; border-radius: 18px; border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--card); }
+    figure.shot figcaption { margin-top: 10px; color: var(--muted); font-size: 15px; }
+
+    section { padding: clamp(48px, 7vw, 80px) 0 0; }
+    section > .wrap > h2 { font-size: clamp(28px, 3.6vw, 40px); font-weight: 800; }
+    .kicker { font-size: 14px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px; }
+    .prose { max-width: 68ch; margin-top: 16px; }
+    .prose p + p { margin-top: 14px; }
+
+    .three { margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+    .card h3 { font-size: 21px; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 16px; }
+    .card .num { font-family: var(--font-display); font-weight: 800; color: var(--green); font-size: 15px; margin-bottom: 6px; }
+    @media (max-width: 860px) { .three { grid-template-columns: 1fr; } }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+    th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--faint); background: #fafbf8; }
+    tr:last-child td { border-bottom: 0; }
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
+    .d-gene { background: var(--violet); } .d-strong { background: var(--green); } .d-moderate { background: var(--blue); } .d-weak { background: var(--amber); } .d-caution { background: var(--coral); }
+    .table-scroll { overflow-x: auto; }
+
+    .story { margin-top: 22px; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; padding: 26px 0; border-top: 1px solid var(--line); }
+    .story:first-of-type { border-top: 0; }
+    .story .fam { font-family: var(--font-display); font-weight: 800; font-size: 20px; }
+    .story .fam small { display: block; font-family: var(--font-body); font-weight: 400; color: var(--muted); font-size: 15px; margin-top: 4px; }
+    .story ul { margin: 10px 0 0; padding-left: 20px; }
+    .story li + li { margin-top: 6px; }
+    .story .go { margin-top: 12px; display: inline-block; font-weight: 700; }
+    @media (max-width: 720px) { .story { grid-template-columns: 1fr; gap: 8px; } }
+
+    .lessons { margin-top: 24px; display: grid; gap: 14px; }
+    .lesson { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--green); border-radius: 12px; padding: 18px 22px; }
+    .lesson h3 { font-size: 19px; }
+    .lesson p { margin-top: 6px; color: var(--muted); font-size: 16px; }
+
+    .limits { margin-top: 18px; padding-left: 20px; max-width: 70ch; }
+    .limits li + li { margin-top: 8px; }
+
+    footer { margin-top: 80px; padding: 32px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+    :focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 6px; }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand"><div class="mark">R<span style="letter-spacing:-.13em">P</span></div><div><strong>RarePath</strong><span>Evidence Atlas · research navigation</span></div></div>
-    <div class="top-status"><span class="dot"></span>Prototype snapshot · public sources only</div>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#"><span class="mark" aria-hidden="true">RP</span>RarePath</a>
+      <nav aria-label="Sections">
+        <a class="hide-sm" href="#problem">Problem</a>
+        <a class="hide-sm" href="#method">Method</a>
+        <a class="hide-sm" href="#results">Results</a>
+        <a class="hide-sm" href="#learned">What I learned</a>
+        <a href="explore.html"><b>Open the app</b></a>
+      </nav>
+    </div>
   </header>
-  <main>
-    <section class="intro">
-      <div><div class="eyebrow">GM1 / GM2 gangliosidosis cluster</div><h1>From a rare disease name to an evidence path.</h1><p>Search the curated snapshot, inspect the relationships, and keep every research lead connected to its source.</p></div>
-      <span class="badge">Candidate claims stay reviewable</span>
-    </section>
 
-    <form class="search-shell" id="search-form">
-      <label for="query">Explore</label>
-      <input id="query" autocomplete="off" value="GM1 gangliosidosis GLB1" placeholder="Try a disease, gene, variant, or NCT ID" />
-      <button class="primary" type="submit">Find evidence</button>
-    </form>
-    <div class="quick" aria-label="Example searches">
-      <button type="button" data-query="GM1 gangliosidosis GLB1">GM1 + GLB1</button>
-      <button type="button" data-query="GM2 gangliosidosis HEXA HEXB">GM2 + HEXA / HEXB</button>
-      <button type="button" data-query="NCT05109793 natural history">NCT05109793</button>
+  <main>
+    <div class="wrap hero">
+      <div class="eyebrow">Case study</div>
+      <h1>From a rare diagnosis to the people already working on it</h1>
+      <p class="lede">RarePath is an evidence graph and a conversational guide. A family types the name of a rare genetic disease. RarePath shows which other disease communities share its biology, which studies and patient groups already exist, and one concrete next step. Every link names its source, and anything the system computed says so.</p>
+      <div class="actions">
+        <a class="btn primary" href="explore.html">Open the app →</a>
+        <a class="btn ghost" href="https://github.com/HuijiaoLuo/RarePath">Code on GitHub</a>
+      </div>
+      <p class="disclaimer">A research prototype built on public, aggregate data. It is not medical advice and does not decide eligibility for any study.</p>
+      <dl class="facts">
+        <div><dt>Scope</dt><dd id="fact-scope">43 diseases in 3 families</dd></div>
+        <div><dt>Graph</dt><dd id="fact-graph">Neo4j, CSV source of truth</dd></div>
+        <div><dt>Built with</dt><dd>Python, Neo4j, OpenAI, plain JavaScript and SVG</dd></div>
+        <div><dt>Data</dt><dd>MONDO, HPO, Reactome, UniProt, ClinicalTrials.gov</dd></div>
+      </dl>
     </div>
 
-    <section class="metrics" aria-label="Dataset summary">
-      <div class="metric"><strong>6</strong><span>MONDO disease nodes</span></div>
-      <div class="metric"><strong>4</strong><span>mapped genes</span></div>
-      <div class="metric"><strong>400</strong><span>ClinVar records in seed snapshot</span></div>
-      <div class="metric"><strong>4</strong><span>ClinicalTrials.gov studies</span></div>
+    <div class="wrap">
+      <figure class="shot">
+        <img src="img/rarepath-guide.png" alt="The RarePath guide for GM1 gangliosidosis: its three closest communities, one next step and a map of the connections." width="1912" height="902" loading="lazy" />
+        <figcaption>The guide for GM1 gangliosidosis: the three closest communities, one next step and a map of the connections.</figcaption>
+      </figure>
+    </div>
+
+    <section id="problem">
+      <div class="wrap">
+        <div class="kicker">The problem</div>
+        <h2>Rare-disease data is organised by name. Useful partners are found by biology.</h2>
+        <div class="prose">
+          <p>When a disease has no approved treatment, patient groups often organise the research themselves: they fund natural-history studies, build registries and look for partners. The most useful partner is often a <em>different</em> disease, one whose genes act in the same biological process, or a community that already runs a study the family could learn from.</p>
+          <p>Public databases hold these pieces, but they are split by disease name and by source. Finding that GM1 gangliosidosis and the GM2 gangliosidoses already share a natural-history study takes a specialist. Telling a real mechanism link from a symptom look-alike takes even more.</p>
+        </div>
+        <div class="three">
+          <div class="card"><div class="num">Question 1</div><h3>Who shares our disease characteristics?</h3><p>Communities with a shared gene, a shared biological process or a distinctive shared symptom pattern, each labelled with how strong the link is.</p></div>
+          <div class="card"><div class="num">Question 2</div><h3>What useful work already exists?</h3><p>Studies and patient groups linked to the disease and to its neighbours, with the date each record was checked.</p></div>
+          <div class="card"><div class="num">Question 3</div><h3>What should we do together next?</h3><p>One step, a checklist of what an expert must confirm, and a draft message to send.</p></div>
+        </div>
+      </div>
     </section>
 
-    <section class="workspace">
-      <article class="panel">
-        <div class="panel-head"><h2>Evidence matches</h2><span id="result-count">3 source-backed records</span></div>
-        <div id="results" aria-live="polite"></div>
-      </article>
-      <aside class="panel">
-        <div class="panel-head"><h2>Relationship view</h2><span>curated graph projection</span></div>
-        <div class="graph-wrap">
-          <svg class="graph" viewBox="0 0 500 330" role="img" aria-label="Graph connecting a disease to gene, protein, evidence, and study">
-            <line class="edge" x1="250" y1="88" x2="112" y2="178"/><line class="edge" x1="250" y1="88" x2="388" y2="178"/><line class="edge" x1="112" y1="178" x2="250" y2="263"/><line class="edge" x1="388" y1="178" x2="250" y2="263"/>
-            <g class="node disease" data-node="GM1 gangliosidosis" transform="translate(250 70)"><circle r="45"/><text y="-3">GM1</text><text y="13">gangliosidosis</text></g>
-            <g class="node gene" data-node="GLB1" transform="translate(105 180)"><circle r="38"/><text y="4">GLB1</text></g>
-            <g class="node protein" data-node="beta-galactosidase 1" transform="translate(395 180)"><circle r="43"/><text y="-3">β-galactosidase</text><text y="13">1</text></g>
-            <g class="node study" data-node="NCT05109793" transform="translate(250 270)"><circle r="40"/><text y="-3">NCT05109793</text><text y="13">natural history</text></g>
-          </svg>
-          <div class="legend"><span><i style="background:#d5efe4"></i>disease</span><span><i style="background:#d9e4f7"></i>gene</span><span><i style="background:#f9e6c7"></i>protein</span><span><i style="background:#ecd9ef"></i>study</span></div>
+    <section id="method">
+      <div class="wrap">
+        <div class="kicker">Method</div>
+        <h2>Two signals, kept apart on purpose</h2>
+        <div class="prose">
+          <p>Most disease-similarity tools blend everything into one score. RarePath computes two independent signals for every pair of diseases and only then decides what the pair means:</p>
+          <p><b>Mechanism.</b> The overlap of the Reactome pathways that each disease's causal genes take part in. Each pathway is weighted by how rare it is among the genes being compared, so a process that every lysosomal enzyme belongs to counts for little. Two diseases filed by MONDO as numbered types of one disease series (for example the Noonan syndromes) also count as a mechanism link. A shared causal gene is reported on its own.</p>
+          <p><b>Symptoms.</b> simGIC over HPO annotations: shared symptoms weighted by how informative they are across all of HPO, so "seizure" counts for little and "cherry-red spot of the macula" counts for a lot. Lab findings such as enzyme activity are left out, so the symptom score cannot just repeat the mechanism.</p>
         </div>
-        <div class="detail" id="detail"><strong>Select a node</strong><p>The panel keeps the graph readable while evidence cards preserve the source trail.</p></div>
-      </aside>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Relation</th><th>Rule</th><th>What the guide says</th></tr></thead>
+            <tbody>
+              <tr><td><span class="dot d-gene"></span>Same gene</td><td>Shares a causal gene</td><td>"Same gene, similar signs" or "same gene, a different disease"</td></tr>
+              <tr><td><span class="dot d-strong"></span>Mechanism and symptoms</td><td>Mechanism ≥ 0.25 and symptoms in the family's top quarter</td><td>Strong link</td></tr>
+              <tr><td><span class="dot d-moderate"></span>Mechanism only</td><td>Mechanism ≥ 0.25</td><td>Moderate link, the presentation differs</td></tr>
+              <tr><td><span class="dot d-weak"></span>Symptoms, weak mechanism</td><td>Top-quarter symptoms, 0.10 ≤ mechanism &lt; 0.25 (for example, the same MONDO class but no shared pathway)</td><td>Moderate link, needs review</td></tr>
+              <tr><td><span class="dot d-caution"></span>Look-alike</td><td>Top-quarter symptoms, mechanism &lt; 0.10</td><td>"Look similar, but different biology"</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="prose">
+          <p>The gates were fixed before the results were inspected and are recorded in a manifest. Louvain clustering runs three times (mechanism only, symptoms only, combined), and in the combined run look-alikes carry zero weight, so symptoms alone can never pull two diseases into one community.</p>
+          <p><b>Checked against known biology.</b> 23 checks must hold on every build, from GM2 diseases clustering together to GM1 and Morquio B being "same gene, different disease". For the two newer families, twelve of them were written down <em>before</em> their data was scored, and all twelve held on the first run.</p>
+          <p><b>Grounded answers.</b> The chat sends the model only numbered facts from the graph. It must cite them, and the server deletes any citation that does not match a fact. Without the server, the page answers from the same facts offline.</p>
+        </div>
+      </div>
     </section>
-    <div class="notice"><strong>Research navigation prototype.</strong> Results are public-source evidence and candidate leads, not a diagnosis, treatment recommendation, or clinical eligibility decision.</div>
+
+    <section id="results">
+      <div class="wrap">
+        <div class="kicker">Results</div>
+        <h2>Three disease families, three kinds of insight</h2>
+
+        <div class="story">
+          <div class="fam">Lysosomal storage<small>20 diseases · started here</small></div>
+          <div>
+            <p>GM1 gangliosidosis has no approved treatment. RarePath shows the GM2 gangliosidoses as its strongest neighbour (a shared breakdown process, the same cherry-red spot), and finds that a completed natural-history study, PRONTO, already enrolled children with both.</p>
+            <ul>
+              <li><b>One gene, two diseases:</b> GLB1 causes both GM1 gangliosidosis and Morquio B, a skeletal disease.</li>
+              <li><b>A look-alike:</b> Canavan disease (not lysosomal) mirrors Krabbe disease in infancy but shares no gene or process.</li>
+              <li><b>The 10× case (a hypothesis):</b> reusing an existing natural-history study instead of starting one could cut the time to comparable data from roughly four years to roughly four months. The assumptions about data access and timelines have not yet been tested with patient groups (<a href="https://github.com/HuijiaoLuo/RarePath/blob/main/docs/TEN_X_CASE.md">sources and assumptions</a>).</li>
+            </ul>
+            <a class="go" href="explore.html?focus=MONDO:0018149">Try GM1 gangliosidosis →</a>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="fam">Ciliopathies<small>12 diseases</small></div>
+          <div>
+            <p>Changes in one gene, CEP290, appear in RarePath as three different diseases: Joubert syndrome 5 (brain), Senior-Loken syndrome 6 (kidney and retina) and Meckel syndrome 4 (usually lethal around birth). The guide shows them as one gene community and names the NIH ciliopathy study that recruited people with Joubert, Meckel and related conditions.</p>
+            <ul>
+              <li><b>A look-alike:</b> Prader-Willi syndrome shares obesity and hypogonadism with Bardet-Biedl syndrome but is an imprinting disorder. It is shown as a caution, never a partner.</li>
+              <li><b>Existing work:</b> a phase 3 trial enrolled people with Bardet-Biedl and Alström syndromes together.</li>
+            </ul>
+            <a class="go" href="explore.html?focus=MONDO:0012432">Try Joubert syndrome 5 →</a>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="fam">RASopathies<small>11 diseases</small></div>
+          <div>
+            <p>Noonan, Costello, cardiofaciocutaneous, Legius syndromes and neurofibromatosis type 1 are caused by different genes in one signalling pathway (RAS-MAPK). A single recruiting biorepository already covers five of them.</p>
+            <ul>
+              <li><b>One gene, two diseases:</b> PTPN11 causes both Noonan syndrome 1 and LEOPARD syndrome 1.</li>
+              <li><b>A counterexample:</b> Aarskog-Scott syndrome has a Noonan-like face but a gene outside the pathway, and RarePath keeps it apart.</li>
+            </ul>
+            <a class="go" href="explore.html?focus=MONDO:0008104">Try Noonan syndrome 1 →</a>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="fam">For researchers<small>34 genes · 32 structures</small></div>
+          <div>
+            <p>Every gene name opens a panel that goes from disease to protein. It shows what the protein does (UniProt), which diseases in RarePath it causes, and a rotatable AlphaFold model coloured by AlphaFold's own confidence. Disease-causing missense variants from ClinVar are placed on the model, but only where the variant's reference amino acid matches the model's sequence.</p>
+            <ul>
+              <li><b>One gene, two diseases, one protein:</b> some GLB1 variants are recorded for both GM1 gangliosidosis and Morquio B, and you can see where they sit on the enzyme.</li>
+              <li><b>A pattern, measured fairly:</b> across 2,633 ClinVar variants in 32 proteins, disease-causing missense changes fall where AlphaFold is very confident 1.11 times as often as chance within each gene. Ciliopathy proteins show the clearest enrichment (1.53×). RAF1 goes the other way: its Noonan variants cluster around Ser259, in a flexible regulatory segment. ClinVar favours well-studied regions, so this is a pattern to explore, not a result.</li>
+            </ul>
+            <figure class="shot" style="max-width:420px;margin-top:16px"><img src="img/gene-panel-gba1.png" alt="Gene panel for GBA1: AlphaFold model coloured by confidence, with disease-causing ClinVar missense positions in magenta" width="633" height="912" loading="lazy" /><figcaption>GBA1 (Gaucher disease): 126 disease-causing missense positions on the predicted structure.</figcaption></figure>
+            <a class="go" href="explore.html?focus=MONDO:0018149">Open GM1, then click GLB1 →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="learned">
+      <div class="wrap">
+        <div class="kicker">What I learned</div>
+        <h2>Decisions that mattered</h2>
+        <div class="lessons">
+          <div class="lesson"><h3>A single similarity score hides the most important case</h3><p>Diseases that look alike but work differently are where families get misled. Keeping mechanism and symptoms apart made "look-alike" a first-class answer instead of a false positive.</p></div>
+          <div class="lesson"><h3>Write the checks before tuning the scores</h3><p>The first scoring version passed six of eight textbook checks: it split the GM2 diseases and called Morquio B "similar" to GM1. I fixed both with general rules (a curated disease-series link and a cap on broad pathways), not pair-specific tweaks, and wrote the new families' predictions down before scoring them.</p></div>
+          <div class="lesson"><h3>Passing checks is not the same as being right</h3><p>All twelve predictions for the new families held. Reading every pair anyway showed true relatives labelled as look-alikes: PTPN11 and RAF1 act at different steps of one cascade, and Reactome files those steps in different pathways. The fix targets the cause (a weak link for diseases in the same mechanism-defined MONDO class), is documented as a post-hoc change, and is guarded by new checks. Now only two pairs are labelled look-alikes, Krabbe–Canavan and Bardet-Biedl 1–Prader-Willi, and both involve counterexamples I designed. The third, Aarskog-Scott, stays unlinked from Noonan 1 because its symptom overlap is not high enough.</p></div>
+          <div class="lesson"><h3>Relative weights break when the data grows</h3><p>Pathway rarity was first measured against the whole panel. Adding two new families made lysosomal pathways look rarer and would have changed old answers. Measuring rarity within each family keeps the original 190 lysosomal pairs identical after expansion, and a unit test guards that.</p></div>
+          <div class="lesson"><h3>Show less, and let people ask</h3><p>Three rounds of feedback moved the interface from a dense dashboard to a conversation: three communities, one next step and a small map first, with everything else one question or click away.</p></div>
+          <div class="lesson"><h3>Reproducibility is a feature</h3><p>Every download is reused if present, written atomically and recorded with its version and SHA-256 checksum. The graph's source of truth is two CSV files under version control, so any link can be traced to the run that made it.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="limits">
+      <div class="wrap">
+        <div class="kicker">Limits</div>
+        <h2>What RarePath does not claim</h2>
+        <ul class="limits">
+          <li>It is a research-navigation tool, not a diagnostic or treatment tool. A link between two diseases is a reason to investigate together, not evidence that a treatment transfers.</li>
+          <li>The 43 diseases were chosen by hand to test specific claims. Results describe this panel, not all rare disease.</li>
+          <li>Reactome pathway membership is coarse, and HPO annotation depth varies between diseases.</li>
+          <li>Study status is a dated snapshot. Eligibility must always be checked on the live ClinicalTrials.gov record.</li>
+        </ul>
+      </div>
+    </section>
   </main>
-  <footer><span>RarePath · GM1 / GM2 seed snapshot</span><span>MONDO · ClinVar · ClinicalTrials.gov · UniProt mappings</span></footer>
+
+  <footer>
+    <div class="wrap">
+      <span>RarePath by Huijiao Luo · public, aggregate research data only</span>
+      <span><a href="explore.html">App</a> · <a href="https://github.com/HuijiaoLuo/RarePath">GitHub</a> · <a href="https://github.com/HuijiaoLuo/RarePath/blob/main/docs/CLUSTER_EXPANSION.md">Method notes</a></span>
+    </div>
+  </footer>
+
+  <script src="data/graph.js"></script>
   <script>
-    const records = [
-      { title: 'GM1 gangliosidosis', kind: 'Disease', id: 'MONDO:0018149', body: 'Beta-galactosidase 1 deficiency; GLB1-linked lysosomal neurodegeneration.', source: 'MONDO v2026-09-01', url: 'monarch-initiative/mondo', score: '0.96' },
-      { title: 'GLB1 variant evidence', kind: 'ClinVar record', id: 'VCV004786382', body: 'NM_000404.4(GLB1):c.1347+2del · Likely pathogenic · single submitter.', source: 'NCBI ClinVar', url: 'ncbi.nlm.nih.gov/clinvar', score: '0.91' },
-      { title: 'PRONTO natural-history study', kind: 'Clinical study', id: 'NCT05109793', body: 'Prospective neurological disease trajectory study for children living with GM1 or GM2 gangliosidosis.', source: 'ClinicalTrials.gov', url: 'clinicaltrials.gov/study/NCT05109793', score: '0.88' },
-      { title: 'GM2 gangliosidosis', kind: 'Disease', id: 'MONDO:0017720', body: 'A gangliosidosis cluster connected to HEXA, HEXB, and GM2A candidate paths.', source: 'MONDO v2026-09-01', url: 'monarch-initiative/mondo', score: '0.84' },
-      { title: 'HEXA / HEXB mapping', kind: 'Gene mapping', id: 'GENE:HEXA · GENE:HEXB', body: 'Hexosaminidase pathway genes used for the GM2 seed graph.', source: 'ClinVar / UniProt', url: 'ncbi.nlm.nih.gov/clinvar', score: '0.81' }
-    ];
-    const results = document.getElementById('results');
-    const count = document.getElementById('result-count');
-    const query = document.getElementById('query');
-    const detail = document.getElementById('detail');
-    function render(term) {
-      const tokens = term.toLowerCase().split(/\s+/).filter(Boolean);
-      const matches = records.filter(r => tokens.some(t => `${r.title} ${r.kind} ${r.id} ${r.body} ${r.source}`.toLowerCase().includes(t)));
-      const shown = (matches.length ? matches : records).slice(0, 3);
-      count.textContent = `${shown.length} source-backed records`;
-      results.innerHTML = shown.map(r => `<article class="result"><div><div class="result-meta"><b>${r.kind}</b><span>${r.id}</span></div><h3>${r.title}</h3><p>${r.body}</p><div class="result-meta" style="margin-top:8px"><span>Source: ${r.source}</span><span>${r.url}</span></div></div><span class="score">match ${r.score}</span></article>`).join('');
-    }
-    document.getElementById('search-form').addEventListener('submit', e => { e.preventDefault(); render(query.value); });
-    document.querySelectorAll('[data-query]').forEach(button => button.addEventListener('click', () => { query.value = button.dataset.query; render(query.value); }));
-    document.querySelectorAll('.node').forEach(node => node.addEventListener('click', () => {
-      const label = node.dataset.node;
-      const record = records.find(r => r.title.toLowerCase().includes(label.toLowerCase()) || r.id.toLowerCase().includes(label.toLowerCase()));
-      detail.innerHTML = `<strong>${label}</strong><p>${record ? `${record.body} Source: ${record.source}.` : 'Connected to the current curated graph projection.'}</p>`;
-    }));
-    render(query.value);
+    // Keep the headline numbers in step with the exported graph.
+    try {
+      const g = window.RAREPATH_GRAPH;
+      if (g && g.nodes) {
+        const diseases = g.nodes.filter(n => n.kind === "Disease" && n.props && n.props.family && !n.props.disease_group);
+        const families = new Set(diseases.map(n => n.props.family));
+        if (diseases.length) document.getElementById("fact-scope").textContent = `${diseases.length} diseases in ${families.size} ${families.size === 1 ? "family" : "families"}`;
+        document.getElementById("fact-graph").textContent = `${g.nodes.length} nodes, ${g.edges.length} links (Neo4j)`;
+      }
+    } catch (_) { /* the static text stays */ }
   </script>
 </body>
 </html>

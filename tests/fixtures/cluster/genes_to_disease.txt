@@ -1,0 +1,6 @@
+ncbi_gene_id	gene_symbol	association_type	disease_id	source
+NCBIGene:2720	GLB1	MENDELIAN	OMIM:230500	ftp://ftp.omim.org/x
+NCBIGene:2720	GLB1	MENDELIAN	OMIM:253010	ftp://ftp.omim.org/x
+NCBIGene:3073	HEXA	MENDELIAN	OMIM:272800	ftp://ftp.omim.org/x
+NCBIGene:443	ASPA	MENDELIAN	OMIM:271900	ftp://ftp.omim.org/x
+NCBIGene:1	XYZ	UNKNOWN	OMIM:272800	ftp://ftp.omim.org/x

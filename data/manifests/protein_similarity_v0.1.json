@@ -1,0 +1,18 @@
+{
+  "pipeline": "RarePath protein sequence similarity baseline",
+  "method": "smith_waterman_local_v0.1",
+  "generated_at": "2026-10-03T22:01:10.967058Z",
+  "inputs": {
+    "proteins_csv": "data/processed/proteins.csv",
+    "proteins_fasta": "data/processed/proteins.fasta",
+    "protein_count": 4,
+    "pair_count": 6
+  },
+  "scoring": {
+    "match": 2,
+    "mismatch": -1,
+    "gap": -2,
+    "alignment": "Smith-Waterman local alignment"
+  },
+  "interpretation": "Computational research-navigation signal; not a disease, pathogenicity, or treatment prediction."
+}

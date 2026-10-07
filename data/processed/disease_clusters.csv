@@ -1,0 +1,44 @@
+disease_id,label,family,panel_role,genes,pathway_count,phenotype_term_count,cluster_combined,cluster_mechanism,cluster_phenotype,method
+MONDO:0008104,Noonan syndrome 1,RASopathies,start,PTPN11,48,55,C2,M2,P3,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0008300,Prader-Willi syndrome,ciliopathies,phenocopy_counterexample,,0,84,C7,M7,P2,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0008763,Alstrom syndrome,ciliopathies,mechanism_neighbor,ALMS1,7,46,C3,M3,P2,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0008854,Bardet-Biedl syndrome 1,ciliopathies,start,BBS1,1,60,C4,M4,P2,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0008944,Joubert syndrome 1,ciliopathies,mechanism_neighbor,INPP5E,2,53,C3,M3,P2,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009026,Costello syndrome,RASopathies,mechanism_neighbor,HRAS,44,71,C2,M2,P3,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009218,Farber lipogranulomatosis,lysosomal storage,lysosomal_context,ASAH1,3,19,C8,M8,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009260,GM1 gangliosidosis type 1,lysosomal storage,start,GLB1,5,33,C1,M1,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009261,GM1 gangliosidosis type 2,lysosomal storage,start,GLB1,5,33,C1,M1,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009262,GM1 gangliosidosis type 3,lysosomal storage,start,GLB1,5,26,C1,M1,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009265,Gaucher disease type I,lysosomal storage,lysosomal_context,GBA1,2,23,C5,M5,P6,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009266,Gaucher disease type II,lysosomal storage,resource_counterexample,GBA1,2,29,C5,M5,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009267,Gaucher disease type III,lysosomal storage,lysosomal_context,GBA1,2,18,C5,M5,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009499,Krabbe disease,lysosomal storage,lysosomal_context,GALC,1,25,C9,M9,P4,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009571,"Meckel syndrome, type 1",ciliopathies,mechanism_neighbor,MKS1,2,81,C3,M3,P2,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009591,"metachromatic leukodystrophy, juvenile form",lysosomal storage,lysosomal_context,ARSA,3,29,C10,M10,P4,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009659,mucopolysaccharidosis type 4A,lysosomal storage,mechanism_neighbor,GALNS,2,45,C1,M1,P5,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009660,mucopolysaccharidosis type 4B,lysosomal storage,same_gene_contrast,GLB1,5,44,C1,M1,P5,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009728,nephronophthisis 1,ciliopathies,mechanism_neighbor,NPHP1,1,11,C11,M11,P7,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009737,galactosialidosis,lysosomal storage,mechanism_neighbor,CTSA,5,12,C1,M1,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009738,sialidosis type 2,lysosomal storage,mechanism_neighbor,NEU1,3,27,C1,M1,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009756,Niemann-Pick disease type A,lysosomal storage,lysosomal_context,SMPD1,2,34,C12,M12,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0009757,"Niemann-Pick disease, type C1",lysosomal storage,lysosomal_context,NPC1,1,27,C13,M13,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0010006,Sandhoff disease,lysosomal storage,positive_neighbor,HEXB,5,31,C1,M1,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0010079,Canavan disease,lysosomal storage,phenocopy_counterexample,ASPA,1,20,C14,M14,P4,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0010099,Tay-Sachs disease AB variant,lysosomal storage,positive_neighbor,GM2A,2,24,C1,M1,P4,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0010100,Tay-Sachs disease,lysosomal storage,positive_neighbor,HEXA,4,13,C1,M1,P1,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0010526,Fabry disease,lysosomal storage,lysosomal_context,GLA,2,27,C15,M15,P8,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0010589,"Aarskog-Scott syndrome, X-linked",RASopathies,phenocopy_counterexample,FGD1,3,70,C16,M16,P9,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0011963,Joubert syndrome 2,ciliopathies,mechanism_neighbor,TMEM216,1,47,C3,M3,P2,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0012371,Noonan syndrome 3,RASopathies,mechanism_neighbor,KRAS,47,57,C2,M2,P3,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0012432,Joubert syndrome 5,ciliopathies,same_gene_contrast,CEP290,8,27,C3,M3,P2,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0012433,Senior-Loken syndrome 6,ciliopathies,same_gene_contrast,CEP290,8,5,C3,M3,P2,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0012547,Noonan syndrome 4,RASopathies,mechanism_neighbor,SOS1,46,44,C2,M2,P3,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0012626,"Meckel syndrome, type 4",ciliopathies,same_gene_contrast,CEP290,8,18,C3,M3,P2,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0012669,Legius syndrome,RASopathies,mechanism_neighbor,SPRED1,2,24,C6,M6,P10,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0012690,Noonan syndrome 5,RASopathies,mechanism_neighbor,RAF1,9,38,C2,M2,P3,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0013379,Noonan syndrome 7,RASopathies,mechanism_neighbor,BRAF,8,46,C2,M2,P3,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0014113,cardiofaciocutaneous syndrome 3,RASopathies,mechanism_neighbor,MAP2K1,7,21,C2,M17,P3,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0014432,Bardet-Biedl syndrome 2,ciliopathies,mechanism_neighbor,BBS2,1,38,C4,M4,P2,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0014438,Bardet-Biedl syndrome 10,ciliopathies,mechanism_neighbor,BBS10,1,10,C4,M4,P2,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0018975,neurofibromatosis type 1,RASopathies,mechanism_neighbor,NF1,1,56,C6,M6,P11,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4
+MONDO:0100082,LEOPARD syndrome 1,RASopathies,same_gene_contrast,PTPN11,48,44,C2,M2,P3,disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4

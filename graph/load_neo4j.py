@@ -75,6 +75,37 @@ def validate(nodes: list[dict[str, str]], edges: list[dict[str, str]]) -> None:
         raise ValueError(f"Edges reference missing evidence nodes: {missing_evidence}")
 
 
+LABEL_PATTERN = re.compile(r"^[A-Z][A-Za-z0-9]*$")
+STRUCTURAL_EDGE_FIELDS = {"source_id", "target_id", "edge_type"}
+
+
+def flatten_properties(row: dict[str, str], skip: set[str]) -> dict[str, Any]:
+    """Turn a CSV row (plus its optional properties_json column) into Neo4j-safe properties.
+
+    Empty strings are dropped. Scalars and lists of scalars are stored as-is;
+    nested objects are stored as JSON strings so the API can return them intact.
+    """
+    import json
+
+    props: dict[str, Any] = {k: v for k, v in row.items() if k not in skip and k != "properties_json" and v != ""}
+    raw = row.get("properties_json", "")
+    if raw:
+        extra = json.loads(raw)
+        for key, value in extra.items():
+            if isinstance(value, (str, int, float, bool)):
+                props[key] = value
+            elif isinstance(value, list) and all(isinstance(v, (str, int, float, bool)) for v in value):
+                props[key] = value
+            else:
+                props[key] = json.dumps(value, ensure_ascii=False)
+        props["properties_json"] = raw
+    return props
+
+
+def chunks(rows: list[Any], size: int = 500) -> list[list[Any]]:
+    return [rows[i : i + size] for i in range(0, len(rows), size)]
+
+
 def load_with_driver(
     nodes: list[dict[str, str]],
     edges: list[dict[str, str]],
@@ -82,6 +113,7 @@ def load_with_driver(
     user: str,
     password: str,
     database: str,
+    prune: bool = False,
 ) -> None:
     try:
         from neo4j import GraphDatabase
@@ -98,43 +130,54 @@ def load_with_driver(
                 "FOR (n:Entity) REQUIRE n.node_id IS UNIQUE"
             ).consume()
 
+            by_kind: dict[str, list[dict[str, Any]]] = {}
             for row in nodes:
-                session.run(
-                    "MERGE (n:Entity {node_id: $node_id}) "
-                    "SET n.kind = $node_type, n.label = $label, "
-                    "n.external_id = $external_id, n.source_url = $source_url, "
-                    "n.status = $status",
-                    {
-                        "node_id": row["node_id"],
-                        "node_type": row["node_type"],
-                        "label": row["label"],
-                        "external_id": row["external_id"],
-                        "source_url": row["source_url"],
-                        "status": row["status"],
-                    },
-                ).consume()
+                kind = row["node_type"]
+                if not LABEL_PATTERN.fullmatch(kind):
+                    raise ValueError(f"Invalid node_type for a Neo4j label: {kind!r}")
+                props = flatten_properties(row, {"node_type"})
+                props["kind"] = kind
+                by_kind.setdefault(kind, []).append({"node_id": row["node_id"], "props": props})
+            for kind, batch_rows in by_kind.items():
+                for batch in chunks(batch_rows):
+                    # Generic :Entity keeps the original API stable; the kind label makes Cypher readable.
+                    session.run(
+                        "UNWIND $rows AS row "
+                        "MERGE (n:Entity {node_id: row.node_id}) "
+                        f"SET n += row.props, n:{kind}",
+                        {"rows": batch},
+                    ).consume()
 
+            by_type: dict[str, list[dict[str, Any]]] = {}
             for row in edges:
-                query = (
-                    "MATCH (source:Entity {node_id: $source_id}) "
-                    "MATCH (target:Entity {node_id: $target_id}) "
-                    f"MERGE (source)-[edge:{row['edge_type']} {{edge_id: $edge_id}}]->(target) "
-                    "SET edge.assertion_level = $assertion_level, "
-                    "edge.evidence_id = $evidence_id, edge.confidence = $confidence, "
-                    "edge.source_url = $source_url, edge.notes = $notes"
-                )
-                session.run(
-                    query,
+                by_type.setdefault(row["edge_type"], []).append(
                     {
                         "source_id": row["source_id"],
                         "target_id": row["target_id"],
                         "edge_id": row["edge_id"],
-                        "assertion_level": row["assertion_level"],
-                        "evidence_id": row["evidence_id"],
-                        "confidence": row["confidence"],
-                        "source_url": row["source_url"],
-                        "notes": row["notes"],
-                    },
+                        "props": flatten_properties(row, STRUCTURAL_EDGE_FIELDS),
+                    }
+                )
+            for edge_type, batch_rows in by_type.items():
+                for batch in chunks(batch_rows):
+                    session.run(
+                        "UNWIND $rows AS row "
+                        "MATCH (source:Entity {node_id: row.source_id}) "
+                        "MATCH (target:Entity {node_id: row.target_id}) "
+                        f"MERGE (source)-[edge:{edge_type} {{edge_id: row.edge_id}}]->(target) "
+                        "SET edge += row.props",
+                        {"rows": batch},
+                    ).consume()
+
+            if prune:
+                # Remove graph items that are no longer in the source-controlled CSVs.
+                session.run(
+                    "MATCH (:Entity)-[r]->(:Entity) WHERE NOT r.edge_id IN $ids DELETE r",
+                    {"ids": [row["edge_id"] for row in edges]},
+                ).consume()
+                session.run(
+                    "MATCH (n:Entity) WHERE NOT n.node_id IN $ids DETACH DELETE n",
+                    {"ids": [row["node_id"] for row in nodes]},
                 ).consume()
     finally:
         driver.close()
@@ -144,6 +187,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Validate or load the RarePath seed graph.")
     parser.add_argument("--graph-root", default=str(Path(__file__).resolve().parent))
     parser.add_argument("--load", action="store_true", help="Load into Neo4j after validation.")
+    parser.add_argument(
+        "--prune",
+        action="store_true",
+        help="With --load: delete Entity nodes/relationships that are no longer in the CSVs.",
+    )
     parser.add_argument("--uri", default=os.getenv("NEO4J_URI", "bolt://localhost:7687"))
     parser.add_argument(
         "--user",
@@ -165,7 +213,7 @@ def main() -> int:
 
     if not args.password:
         raise SystemExit("Set NEO4J_PASSWORD or pass --password before using --load.")
-    load_with_driver(nodes, edges, args.uri, args.user, args.password, args.database)
+    load_with_driver(nodes, edges, args.uri, args.user, args.password, args.database, args.prune)
     print(f"Loaded {len(nodes)} nodes and {len(edges)} edges into {args.uri}.")
     return 0
 

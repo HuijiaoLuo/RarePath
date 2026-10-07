@@ -1,0 +1,52 @@
+{
+  "pipeline": "RarePath cluster expansion fetch",
+  "script_version": "0.1.0",
+  "retrieved_at": "2026-10-05T00:21:15.350334Z",
+  "panel_requested": 43,
+  "panel_resolved": 43,
+  "excluded": [],
+  "sources": {
+    "hpo": {
+      "release_tag": "v2026-09-01",
+      "urls": {
+        "phenotype.hpoa": "https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2026-09-01/phenotype.hpoa",
+        "genes_to_disease.txt": "https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2026-09-01/genes_to_disease.txt",
+        "hp.obo": "https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2026-09-01/hp.obo"
+      },
+      "sha256": {
+        "phenotype.hpoa": "e89aa39c8f97bf5a52c5d160f9250a603681d630ade8ec2679d84ac5aece1f72",
+        "genes_to_disease.txt": "7937a1b92779dc8614e39ace623b443c7c71dd15e4de11d5e52b14e331ab5978",
+        "hp.obo": "93dace952fcb3ec4728818857f6ba76bc2d5312f4d83266519b8694b8e798f22"
+      },
+      "hpoa_header": {
+        "description": "\"HPO annotations for rare diseases [8478: OMIM; 47: DECIPHER; 4357 ORPHANET]\"",
+        "version": "2026-09-02",
+        "tracker": "https://github.com/obophenotype/human-phenotype-ontology/issues",
+        "hpo-version": "http://purl.obolibrary.org/obo/hp/releases/2026-09-01/hp.json"
+      }
+    },
+    "mondo": {
+      "release_tag": "v2026-09-01",
+      "sha256": "ba19a3be2a384f21d2a09eaa726daedf6f06b9747ae011ab81d29fcd4dd8d3ee"
+    },
+    "uniprot": {
+      "release": "2026_03",
+      "search_url": "https://rest.uniprot.org/uniprotkb/search"
+    },
+    "reactome": {
+      "version": "97",
+      "api": "https://reactome.org/ContentService",
+      "mapping_file": "https://reactome.org/download/current/UniProt2Reactome.txt",
+      "mapping_sha256": "e34fe56a5129d88d8cd67300c279d7e81fa1d3bf86fa0577cf91032c326eaecc",
+      "human_proteins_with_pathways": 11928
+    }
+  },
+  "outputs": {
+    "cluster_diseases.csv": 43,
+    "cluster_disease_hierarchy.csv": 61,
+    "cluster_disease_phenotypes.csv": 1642,
+    "cluster_hpo_terms.csv": 1663,
+    "cluster_disease_genes.csv": 56,
+    "cluster_gene_pathways.csv": 382
+  }
+}

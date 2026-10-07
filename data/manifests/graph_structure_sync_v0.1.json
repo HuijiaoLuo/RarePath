@@ -1,0 +1,25 @@
+{
+  "pipeline": "RarePath structure evidence graph synchronization",
+  "script_version": "0.1.0",
+  "generated_at": "2026-10-03T23:31:53.783730Z",
+  "inputs": {
+    "structure_comparison_csv": "data/processed/structure_comparison.csv",
+    "structure_comparison_sha256": "d7fc07c104c7bdd7e6d6315bb164386d0fbb601b085420a60f8f3327901bcb28",
+    "nodes_csv": "graph/nodes.csv",
+    "edges_csv": "graph/edges.csv"
+  },
+  "policy": {
+    "created_edges": "only rows where status == computed",
+    "excluded_rows": "not_evaluated rows are not negative structural evidence",
+    "assertion_level": "inferred",
+    "confidence": "medium"
+  },
+  "generated": [
+    {
+      "structure_comparison_id": "SIMSTRUCT:sequence_guided_ca_superposition_horn_quaternion_v0.1:UNIPROT_P06865__UNIPROT_P07686",
+      "evidence_node_id": "EVIDENCE:SIMSTRUCT_P06865_P07686",
+      "edge_id": "EDGE:SIMSTRUCT-P06865-P07686",
+      "primary_score": "0.865"
+    }
+  ]
+}

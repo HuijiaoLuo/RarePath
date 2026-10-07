@@ -1,0 +1,83 @@
+{
+  "pipeline": "RarePath disease similarity and clustering",
+  "script_version": "0.4.0",
+  "method": "disease_similarity_reactome_idf_jaccard_mondo_group_hpo_simgic_v0.4",
+  "generated_at": "2026-10-05T00:25:30.016903Z",
+  "inputs": {
+    "diseases": {
+      "path": "data/processed/cluster_diseases.csv",
+      "sha256": "6fb61ff6dd327455d4153f633fa98acb26914c49f51e24729d6497222e448d06"
+    },
+    "annotations": {
+      "path": "data/processed/cluster_disease_phenotypes.csv",
+      "sha256": "56ffeef06f19d45e0092c4c84585c55771f6dad56cc56a9dd8f963577e34f2e5"
+    },
+    "terms": {
+      "path": "data/processed/cluster_hpo_terms.csv",
+      "sha256": "c0ae182f84bf259909cb33e439ef543919b8321b5c85ad3697d09e3b5d795bbc"
+    },
+    "genes": {
+      "path": "data/processed/cluster_disease_genes.csv",
+      "sha256": "369e938a44ac5044f8e40860db9cfdacb4b5c38cea84bd1d1b5370ca10167ec5"
+    },
+    "pathways": {
+      "path": "data/processed/cluster_gene_pathways.csv",
+      "sha256": "6458aef81503e6e036e9387b9a6ac0be778658f988af066c810b3c55adcf9fe2"
+    }
+  },
+  "gates": {
+    "mechanism_high": 0.25,
+    "mechanism_none": 0.1,
+    "mechanism_definition": "max(IDF-weighted Jaccard of Reactome pathways, MONDO_GROUP_WEIGHT if both diseases share a MONDO series parent, MONDO_CLASS_WEIGHT if they share a mechanism-defined MONDO class); pathway overlap is capped below mechanism_none unless at least one shared pathway involves at most half of the comparison set's genes",
+    "comparison_set": "pairs inside one disease family are weighted and ranked against that family's genes and pairs; pairs across families are weighted against all panel genes and their phenotype score is ranked against the pooled within-family pairs",
+    "scoring_genes": "used_for_scoring flag from the fetch step (Mendelian HPO genes, restricted to curated genes where the panel names them)",
+    "mondo_group_weight": 0.6,
+    "mondo_class_weight": 0.15,
+    "mondo_class_ids": [
+      "MONDO:0002561",
+      "MONDO:0005308",
+      "MONDO:0021060"
+    ],
+    "excluded_phenotype_branches": [
+      "HP:0001939"
+    ],
+    "phenotype_high_percentile": 0.75,
+    "shared_term_min_ic": 2.0,
+    "reactome_disease_pathways_excluded": true,
+    "hpo_aspect": "P (phenotypic abnormality), NOT-qualified annotations excluded",
+    "louvain_seed": 42,
+    "louvain_resolution": 1.0
+  },
+  "interpretation": "Research-navigation signal only. A shared pathway or symptom pattern does not establish shared treatment response, trial eligibility or disease equivalence.",
+  "results": {
+    "mechanism_modularity": 0.7286,
+    "mechanism_cluster_count": 17,
+    "phenotype_modularity": 0.6473,
+    "phenotype_cluster_count": 11,
+    "combined_modularity": 0.7023,
+    "combined_cluster_count": 16,
+    "pairs": 903,
+    "pairs_by_comparison_set": {
+      "RASopathies": 55,
+      "ciliopathies": 66,
+      "cross-family": 592,
+      "lysosomal storage": 190
+    },
+    "lab_annotations_excluded_from_phenotype": 74,
+    "phenotype_high_cutoff_simgic": {
+      "RASopathies": 0.2544,
+      "ciliopathies": 0.1538,
+      "cross-family": 0.1786,
+      "lysosomal storage": 0.161
+    },
+    "relation_class_counts": {
+      "same_gene_similar_presentation": 7,
+      "same_gene_different_presentation": 6,
+      "mechanism_and_phenotype_neighbor": 26,
+      "mechanism_neighbor_different_presentation": 18,
+      "phenotype_lookalike_different_mechanism": 2,
+      "phenotype_neighbor_weak_mechanism": 44,
+      "not_linked": 800
+    }
+  }
+}

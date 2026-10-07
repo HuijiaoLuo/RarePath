@@ -1,0 +1,1634 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Tell RarePath which rare disease your family faces. See who shares its biology, what already exists, and one next step, with sources." />
+  <title>RarePath Guide</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" />
+  <style>
+    /* Layout: a conversation down the middle (question box pinned at the bottom) and the
+       connection map pinned on the right. The first answer shows only the 3 closest
+       communities and 1 next step; everything else opens on request. */
+    :root {
+      --ink: #15322f; --muted: #5b6f6c; --faint: #8b9a97; --paper: #f4f6f2; --card: #ffffff; --line: #dbe4df;
+      --green: #12705f; --green-dark: #0a4f45; --green-soft: #e0f2ea;
+      --blue: #4a6fa8; --blue-soft: #e7eef9;
+      --violet: #6a55ad; --violet-soft: #eeeafa;
+      --amber: #a8741f; --amber-soft: #fdf3dc;
+      --coral: #bd4f3a; --coral-soft: #fcefeb;
+      --slate: #22394a;
+      --shadow: 0 10px 34px rgba(17, 48, 44, .08);
+      --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+      --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, -apple-system, sans-serif;
+      --header-h: 64px;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { height: 100%; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font: 17px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
+    button, input, textarea, select { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    a { color: var(--green); }
+    :focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; border-radius: 8px; }
+    h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -.02em; margin: 0; }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+    /* ---------- header ---------- */
+    .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; height: var(--header-h); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 0 clamp(16px, 2.5vw, 32px); background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; }
+    .mark { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 12px; background: var(--green-dark); color: #fff; font: 800 14px var(--font-display); }
+    .brand strong { font: 800 20px var(--font-display); letter-spacing: -.03em; }
+    .switch { position: relative; justify-self: center; width: min(460px, 100%); }
+    .switch input { width: 100%; padding: 9px 14px 9px 38px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); font-size: 15px; }
+    .switch .glyph { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+    .dropdown { position: absolute; left: 0; right: 0; top: calc(100% + 6px); margin: 0; padding: 6px; list-style: none; background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); max-height: 60vh; overflow-y: auto; z-index: 30; }
+    .dropdown button { width: 100%; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; text-align: left; padding: 9px 10px; border: 0; border-radius: 9px; background: transparent; font-size: 15px; }
+    .dropdown button:hover, .dropdown button.active { background: var(--green-soft); }
+    .dropdown small { color: var(--muted); font-size: 13px; }
+    .tabs { display: flex; gap: 2px; }
+    .tabs button { border: 0; border-radius: 10px; padding: 8px 12px; background: transparent; color: var(--muted); font-size: 15px; font-weight: 700; white-space: nowrap; }
+    .tabs button[aria-selected="true"] { background: var(--green-soft); color: var(--green-dark); }
+
+    /* ---------- shell ---------- */
+    .shell { display: grid; grid-template-columns: minmax(0, 1fr) clamp(360px, 32vw, 520px); height: calc(100% - var(--header-h)); }
+    .convo { min-width: 0; display: flex; flex-direction: column; min-height: 0; }
+    .thread { flex: 1; min-height: 0; overflow-y: auto; padding: 28px clamp(16px, 3vw, 48px) 24px; scroll-behavior: smooth; }
+    .thread-inner { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+    .mappanel { min-width: 0; border-left: 1px solid var(--line); background: #fff; padding: 22px 22px 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+
+    /* ---------- messages ---------- */
+    .bot { align-self: stretch; }
+    .who { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: var(--muted); font-size: 14px; font-weight: 700; }
+    .who i { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 7px; background: var(--green-dark); color: #fff; font: 800 10px var(--font-display); font-style: normal; }
+    .bubble { background: var(--card); border: 1px solid var(--line); border-radius: 18px; border-top-left-radius: 6px; padding: 18px 20px; box-shadow: 0 1px 0 rgba(17,48,44,.03); }
+    .bubble p { margin: 0 0 10px; }
+    .bubble p:last-child { margin-bottom: 0; }
+    .me { align-self: flex-end; max-width: 78%; padding: 12px 16px; border-radius: 18px; border-top-right-radius: 6px; background: var(--green); color: #fff; white-space: pre-wrap; }
+    .divider { align-self: center; color: var(--faint); font-size: 14px; }
+
+    .hello h1 { font-size: clamp(30px, 3.4vw, 44px); line-height: 1.08; font-weight: 800; letter-spacing: -.035em; }
+    .hello p { color: var(--muted); max-width: 60ch; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chips button { border: 1px solid #c5d8d0; border-radius: 99px; padding: 8px 14px; background: #fff; color: var(--green-dark); font-size: 15px; font-weight: 700; }
+    .chips button:hover { border-color: var(--green); background: var(--green-soft); }
+    .chips.quiet button { font-weight: 400; color: var(--ink); }
+
+    .summary-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 14px; }
+    .summary-head h2 { font-size: 28px; font-weight: 800; letter-spacing: -.03em; }
+    .summary-head .gene { color: var(--muted); font-size: 16px; }
+    .genebtn { border: 0; background: none; padding: 0; font: inherit; font-weight: 700; color: var(--blue); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; cursor: pointer; }
+    .genebtn:hover { color: var(--green-dark); text-decoration-style: solid; }
+    .linkbtn { border: 0; background: none; padding: 0; font: inherit; font-weight: 700; color: var(--green); cursor: pointer; }
+    .protname { font: 800 20px var(--font-display, sans-serif); margin: 0 0 2px; }
+    .muted { color: var(--muted); } .small { font-size: 14px; color: var(--muted); }
+    .mol { position: relative; border: 1px solid var(--line); border-radius: 14px; background: #fbfcfa; overflow: hidden; touch-action: none; }
+    .mol canvas { display: block; cursor: grab; } .mol canvas:active { cursor: grabbing; }
+    .molhint { position: absolute; right: 10px; bottom: 8px; font-size: 12px; color: var(--faint); pointer-events: none; transition: opacity .4s; }
+    .mol.touched .molhint { opacity: 0; }
+    .moltip { position: absolute; padding: 4px 8px; border-radius: 6px; background: #22394a; color: #fff; font-size: 12.5px; white-space: nowrap; pointer-events: none; transform: translate(-50%, -12px); line-height: 1.35; }
+    .vtoggle { display: flex; align-items: center; gap: 7px; font-size: 14px; margin: 10px 0 2px; color: var(--ink); }
+    .vtoggle i { width: 11px; height: 11px; border-radius: 50%; background: #c2186b; box-shadow: 0 0 0 1.5px #fff, 0 0 0 2.5px #c2186b; }
+    .plddt { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 8px 0 4px; font-size: 13px; color: var(--muted); }
+    .plddt span { display: inline-flex; align-items: center; gap: 6px; } .plddt i { width: 12px; height: 12px; border-radius: 3px; }
+    .summary-head .fam { font-size: 13px; font-weight: 700; letter-spacing: .02em; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; }
+    .summary-head .gene b { color: var(--blue); }
+    .example { display: inline-block; margin-bottom: 8px; padding: 2px 9px; border-radius: 99px; background: var(--amber-soft); color: #7a5414; font-size: 13px; font-weight: 700; }
+    .label { margin: 4px 0 8px; color: var(--muted); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+
+    .matches { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+    .match { width: 100%; display: grid; grid-template-columns: 14px minmax(0, 1fr) auto 18px; gap: 12px; align-items: center; text-align: left; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+    .match:hover { border-color: var(--green); background: #fbfdfc; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .d-gene { background: var(--violet); } .d-strong { background: var(--green); } .d-moderate { background: var(--blue); } .d-caution { background: var(--coral); }
+    .match strong { display: block; font: 700 18px/1.25 var(--font-display); letter-spacing: -.01em; }
+    .match .why { display: block; margin-top: 2px; color: var(--muted); font-size: 15px; }
+    .pill { padding: 3px 10px; border-radius: 99px; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .p-gene { background: var(--violet-soft); color: #4f3d8f; } .p-strong { background: var(--green-soft); color: var(--green-dark); }
+    .p-moderate { background: var(--blue-soft); color: #33558d; } .p-caution { background: var(--coral-soft); color: #8e3523; }
+    .chev { color: var(--faint); font-size: 22px; line-height: 1; }
+    .careful { margin-top: 10px; font-size: 15px; color: #8e3523; }
+    .careful button { border: 0; background: none; padding: 0; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+
+    .next { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px 18px; align-items: center; padding: 16px 18px; border-radius: 14px; background: var(--green-dark); color: #fff; }
+    .next .label { color: #b6e3d4; margin: 0 0 2px; }
+    .next p { margin: 0; font: 700 19px/1.35 var(--font-display); letter-spacing: -.01em; }
+    .next button { border: 0; border-radius: 11px; padding: 10px 16px; background: #fff; color: var(--green-dark); font-weight: 700; white-space: nowrap; }
+    .more { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line); }
+    .inline-map { display: none; margin-top: 16px; }
+
+    .rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .row { padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    .row b { display: block; font-family: var(--font-display); font-size: 17px; }
+    .row span { display: block; color: var(--muted); font-size: 15px; }
+    .row a { font-size: 15px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .tags span { display: inline-block; padding: 2px 8px; border-radius: 7px; background: var(--paper); color: var(--ink); font-size: 14px; }
+    .tags span.mine { background: var(--green-soft); color: var(--green-dark); font-weight: 700; }
+    .note { margin-top: 10px; color: #7a5414; font-size: 14px; }
+
+    .cite { display: inline-grid; place-items: center; min-width: 20px; height: 20px; margin: 0 2px; padding: 0 5px; border: 0; border-radius: 6px; background: var(--green-soft); color: var(--green-dark); font-size: 12px; font-weight: 700; vertical-align: 2px; }
+    .cite:hover { background: var(--green); color: #fff; }
+    .sources { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); display: grid; gap: 4px; }
+    .sources button { text-align: left; border: 0; background: none; padding: 0; color: var(--green-dark); font-size: 14px; }
+    .sources button b { display: inline-grid; place-items: center; min-width: 18px; height: 18px; margin-right: 6px; border-radius: 5px; background: var(--green-soft); font-size: 11px; }
+    .meta { margin-top: 8px; color: var(--faint); font-size: 13px; }
+    .typing { display: inline-flex; gap: 5px; padding: 4px 0; }
+    .typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); animation: blink 1.2s infinite; }
+    .typing i:nth-child(2) { animation-delay: .2s; } .typing i:nth-child(3) { animation-delay: .4s; }
+    @keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+
+    /* ---------- composer ---------- */
+    .composer { padding: 12px clamp(16px, 3vw, 48px) calc(env(safe-area-inset-bottom, 0px) + 14px); background: linear-gradient(180deg, rgba(244,246,242,0), var(--paper) 30%); }
+    .composer form { max-width: 880px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: end; padding: 8px; border: 1px solid #c5d8d0; border-radius: 18px; background: #fff; box-shadow: var(--shadow); }
+    .composer textarea { min-height: 48px; max-height: 160px; padding: 12px 12px; border: 0; outline: none; resize: none; font-size: 17px; background: transparent; }
+    .composer button { height: 48px; padding: 0 20px; border: 0; border-radius: 13px; background: var(--green); color: #fff; font-weight: 700; }
+    .composer button:disabled { opacity: .5; cursor: default; }
+    .fine { max-width: 880px; margin: 8px auto 0; color: var(--faint); font-size: 13px; text-align: center; }
+    .mode { font-weight: 700; color: var(--muted); }
+
+    /* ---------- map panel ---------- */
+    .mappanel h2 { font-size: 20px; font-weight: 800; }
+    .mappanel p { margin: 0; color: var(--muted); font-size: 15px; }
+    .minimap { width: 100%; height: auto; display: block; }
+    .minimap .lbl { font: 700 12px var(--font-body); fill: var(--ink); }
+    .minimap .nodeg { cursor: pointer; }
+    .minimap .nodeg:hover circle, .minimap .nodeg:focus circle { stroke: var(--amber); stroke-width: 3; }
+    .key { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--muted); }
+    .key span { display: inline-flex; align-items: center; gap: 6px; }
+    .key i { width: 10px; height: 10px; border-radius: 50%; }
+    .linkbtn { align-self: flex-start; border: 0; background: none; padding: 0; color: var(--green); font-weight: 700; font-size: 15px; text-decoration: underline; text-underline-offset: 3px; }
+    .trust { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
+
+    /* ---------- evidence drawer ---------- */
+    .backdrop { position: fixed; inset: 0; z-index: 40; background: rgba(17,40,48,.3); opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .backdrop.open { opacity: 1; pointer-events: auto; }
+    .drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 41; width: min(520px, 100vw); display: flex; flex-direction: column; background: #fff; box-shadow: -20px 0 60px rgba(17,40,48,.18); transform: translateX(105%); transition: transform .25s; }
+    .drawer.open { transform: none; }
+    .drawer-head { padding: calc(env(safe-area-inset-top, 0px) + 18px) 22px 16px; background: var(--slate); color: #fff; display: flex; justify-content: space-between; gap: 12px; }
+    .drawer-head small { color: #b9d3e2; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .drawer-head h2 { margin-top: 4px; font-size: 22px; line-height: 1.2; color: #fff; }
+    .close { flex: 0 0 auto; width: 36px; height: 36px; border-radius: 10px; border: 1px solid rgba(255,255,255,.3); background: transparent; color: #fff; font-size: 20px; }
+    .drawer-body { flex: 1; overflow-y: auto; padding: 4px 22px calc(env(safe-area-inset-bottom, 0px) + 24px); font-size: 16px; }
+    .dsec { padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .dsec h3 { margin: 0 0 8px; font: 700 13px var(--font-body); color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .dsec p { margin: 0 0 8px; }
+    .src { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .tag { display: inline-block; margin-right: 6px; padding: 1px 8px; border-radius: 99px; font-size: 12px; font-weight: 700; }
+    .t-db { background: var(--green-soft); color: var(--green-dark); }
+    .t-calc { background: var(--blue-soft); color: #33558d; }
+    .warn { padding: 10px 12px; border-radius: 10px; background: var(--amber-soft); color: #6c4a10; font-size: 15px; }
+    .warn.red { background: var(--coral-soft); color: #86321f; }
+    details summary { cursor: pointer; color: var(--green); font-weight: 700; font-size: 15px; }
+    dl.kv { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 6px 10px; margin: 10px 0 0; font-size: 13px; }
+    dl.kv dt { color: var(--muted); } dl.kv dd { margin: 0; overflow-wrap: anywhere; }
+    .bars { display: grid; grid-template-columns: 120px minmax(0, 1fr) 70px; gap: 6px 10px; align-items: center; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .bar { height: 8px; border-radius: 99px; background: #e4ebe8; overflow: hidden; }
+    .bar span { display: block; height: 100%; border-radius: inherit; }
+    .reasons { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+    .reasons li { position: relative; padding-left: 20px; }
+    .reasons li::before { content: ""; position: absolute; left: 4px; top: .6em; width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+    .reasons li.diff::before { background: var(--amber); }
+    .strength { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 13px; font-weight: 700; }
+    .s-strong { background: var(--green-soft); color: var(--green-dark); } .s-moderate { background: var(--blue-soft); color: #33558d; }
+    .s-gene { background: var(--violet-soft); color: #4f3d8f; } .s-caution { background: var(--coral-soft); color: #8e3523; }
+    .btn { border: 1px solid #c5d8d0; border-radius: 10px; padding: 8px 12px; background: #fff; font-size: 15px; font-weight: 700; color: var(--green-dark); }
+    .btn.primary { background: var(--green); border-color: var(--green); color: #fff; }
+    /* next-step content inside the drawer (reuses nextStep()) */
+    .action h3 { font-size: 20px; line-height: 1.3; margin-bottom: 8px; }
+    .action p { margin: 0 0 10px; }
+    .row-label { display: block; margin: 16px 0 6px; color: var(--muted); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .checklist { margin: 4px 0 6px; padding: 0; list-style: none; display: grid; gap: 8px; }
+    .checklist li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 8px; }
+    .checklist li::before { content: "?"; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 7px; background: var(--amber-soft); color: #6c4a10; font-size: 13px; font-weight: 700; }
+    .action textarea { width: 100%; min-height: 260px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; font-size: 14px; line-height: 1.5; resize: vertical; }
+    .copy-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 8px; }
+    .copy-status { color: var(--green); font-size: 14px; font-weight: 700; }
+    .gap { padding: 14px 16px; border: 1px dashed #d8b97f; border-radius: 12px; background: var(--amber-soft); color: #5f420f; }
+    .gap h3 { font-size: 18px; margin-bottom: 6px; }
+    .gap ul { margin: 6px 0 0; padding-left: 20px; }
+
+    /* ---------- evidence map tab ---------- */
+    .mapview { padding: 24px clamp(16px, 3vw, 40px) 40px; display: grid; gap: 12px; }
+    .mapbar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: center; }
+    .mapbar h1 { font-size: 26px; }
+    .mapbar p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+    .seg { display: inline-flex; gap: 4px; padding: 3px; border-radius: 11px; background: #fff; border: 1px solid var(--line); }
+    .seg button { border: 0; border-radius: 8px; padding: 7px 12px; background: transparent; font-size: 15px; font-weight: 700; color: var(--muted); }
+    .seg button[aria-pressed="true"] { background: var(--green-soft); color: var(--green-dark); }
+    .toggles { display: flex; flex-wrap: wrap; gap: 16px; font-size: 15px; color: var(--muted); align-items: center; }
+    .toggles label { display: inline-flex; align-items: center; gap: 6px; }
+    .toggles select { padding: 5px 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+    .bigmap { border: 1px solid var(--line); border-radius: 18px; background: #fbfcfa; padding: 8px; }
+    .bigmap svg { display: block; width: 100%; height: auto; max-height: calc(100vh - var(--header-h) - 230px); min-height: 360px; }
+    .bigmap .dlbl { font: 700 15px var(--font-display, sans-serif); fill: var(--ink); paint-order: stroke; stroke: #fbfcfa; stroke-width: 5px; stroke-linejoin: round; }
+    .bigmap .rlbl { font: 400 14px var(--font-body, sans-serif); fill: var(--muted); paint-order: stroke; stroke: #fbfcfa; stroke-width: 5px; stroke-linejoin: round; }
+    .bigmap .resline { stroke: #c3d0cc; stroke-width: 1.3; }
+    .bigmap .resline.mine { stroke-dasharray: 3 4; }
+    .bigmap .res.study { fill: #22394a; } .bigmap .res.org { fill: var(--amber); }
+    .bigmap .nodeg { cursor: pointer; } .bigmap .nodeg:hover circle, .bigmap .nodeg:focus circle { stroke-width: 4; } .bigmap .nodeg:hover .res, .bigmap .nodeg:focus .res { opacity: .8; }
+    .bigmap .nodeg:focus { outline: none; }
+    .maplegend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; color: var(--muted); align-items: center; }
+    .maplegend span { display: inline-flex; align-items: center; gap: 7px; }
+    .maplegend .lg-line { width: 26px; border-top: 3px solid; } .maplegend .lg-line.dashed { border-top-style: dashed; } .maplegend .lg-line.dotted { border-top-style: dotted; }
+    .maplegend .lg-study { width: 12px; height: 12px; border-radius: 3px; background: #22394a; }
+    .maplegend .lg-org { width: 10px; height: 10px; background: var(--amber); transform: rotate(45deg); }
+    .maplegend .lg-note { flex-basis: 100%; font-size: 13px; color: var(--faint); }
+    .cgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; align-items: start; }
+    .ccard { background: #fff; border: 1px solid var(--line); border-left: 5px solid var(--fam, var(--faint)); border-radius: 14px; padding: 14px 16px; display: grid; gap: 10px; align-content: start; }
+    .ccard.alone { border-left-color: var(--line); background: #fafbf8; }
+    .ccard header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .ccard .cfam { font: 700 14px var(--font-display, sans-serif); color: var(--fam, var(--muted)); }
+    .ccard .ccount { font-size: 13px; color: var(--faint); }
+    .cchips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cchip { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 4px 11px; font-size: 14px; }
+    .cchip:hover { border-color: var(--fam, var(--green)); }
+    .cchip.here { background: var(--green-dark); color: #fff; border-color: var(--green-dark); }
+    .csum { margin: 0; font-size: 13px; color: var(--faint); }
+    .fallback { padding: 30px; color: var(--muted); }
+
+    @media (max-width: 1100px) {
+      .shell { grid-template-columns: 1fr; }
+      .mappanel { display: none; }
+      .inline-map { display: block; }
+    }
+    @media (max-width: 700px) {
+      :root { --header-h: 108px; }
+      .top { height: auto; min-height: var(--header-h); grid-template-columns: 1fr auto; padding-block: 8px; }
+      .switch { grid-column: 1 / -1; grid-row: 2; width: 100%; }
+      body { font-size: 16px; }
+      .match { grid-template-columns: 12px minmax(0, 1fr) 16px; }
+      .match .pill { display: none; }
+      .next { grid-template-columns: 1fr; }
+      .me { max-width: 90%; }
+    }
+    .cmplist { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 10px; }
+    .cmp { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: #fff; }
+    .cmp p { margin: 6px 0 0; font-size: 14px; line-height: 1.5; }
+    .cmphead { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .notevald { font-weight: 700; color: var(--muted); }
+    .cmp.slim { padding: 10px 14px; background: transparent; }
+    .recent { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line, #e3ebe7); }
+    .recent .label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .recent .forget { border: 0; background: none; padding: 0; color: var(--faint); font-size: 13px; text-decoration: underline; cursor: pointer; }
+    .fb .chips button { font-size: 13px; padding: 5px 11px; }
+    .fb .fbnote { margin-top: 8px; color: var(--faint); font-size: 13px; }
+    .fb .fbdone { color: var(--green-dark); font-size: 14px; }
+    .ansfb { margin-top: 6px; border: 0; background: none; padding: 0; color: var(--faint); font-size: 13px; text-decoration: underline; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="index.html"><span class="mark">RP</span><strong>RarePath</strong></a>
+    <form class="switch" id="switch" role="search" autocomplete="off">
+      <span class="glyph" aria-hidden="true">⌕</span>
+      <input id="q" type="search" placeholder="Switch disease, gene or symptom" aria-label="Switch to another disease, gene or symptom" aria-controls="dropdown" aria-expanded="false" />
+      <ul class="dropdown" id="dropdown" role="listbox" hidden></ul>
+    </form>
+    <div class="tabs" role="tablist" aria-label="View">
+      <button id="tab-guide" role="tab" aria-selected="true" type="button">Guide</button>
+      <button id="tab-map" role="tab" aria-selected="false" type="button">Evidence map</button>
+    </div>
+  </header>
+
+  <div class="shell" id="shell">
+    <main class="convo" aria-label="Conversation">
+      <div class="thread" id="thread"><div class="thread-inner" id="thread-inner" aria-live="polite"></div></div>
+      <div class="composer">
+        <form id="ask-form" autocomplete="off">
+          <label for="ask" hidden>Type a disease or a question</label>
+          <textarea id="ask" rows="1" placeholder="Type a disease, or ask a question in your own words"></textarea>
+          <button type="submit" id="send">Send</button>
+        </form>
+        <p class="fine"><span class="mode" id="mode">Offline answers</span> · <span id="privacy">Answers use only RarePath's sourced facts. Please don't type names or medical details.</span></p>
+      </div>
+    </main>
+    <aside class="mappanel" id="mappanel" aria-label="Connection map"></aside>
+  </div>
+  <section class="mapview" id="mapview" hidden></section>
+
+  <div class="backdrop" id="backdrop"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="drawer-title" role="dialog">
+    <div class="drawer-head"><div><small id="drawer-kicker">Why we think so</small><h2 id="drawer-title"></h2></div><button class="close" id="drawer-close" type="button" aria-label="Close">×</button></div>
+    <div class="drawer-body" id="drawer-body"></div>
+  </aside>
+
+  <script src="data/graph.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    // ================================================================= data
+    let DATA = window.RAREPATH_GRAPH || { meta: {}, nodes: [], edges: [] };
+    let N = new Map(), byNode = new Map();
+    const SIM = new Set(["SHARES_CAUSAL_GENE", "MECHANISM_NEIGHBOR", "PHENOTYPE_NEIGHBOR", "PHENOTYPE_LOOKALIKE"]);
+    const SEED = new Set(["RESEARCH_NEIGHBOR", "RESOURCE_NEIGHBOR"]);
+    const STUDY_LINK = new Set(["STUDIES", "RESEARCH_ASSET_FOR"]);
+    // Lab and pathology findings are real HPO terms but not signs a family recognises.
+    const LAB_TERM = /(activity|concentration|accumulation|level|excretion|metabolism|uria$|macrophage|histiocyt|foam cell|vacuolat|lymphocyt|inclusion|storage)/i;
+
+    function index() {
+      N = new Map(DATA.nodes.map(n => [n.id, n]));
+      panelGeneCount = new Set(DATA.nodes.filter(n => n.kind === "Pathway").flatMap(n => (n.props && n.props.panel_genes) || [])).size;
+      // Genes per disease family, so "is this pathway specific?" is judged within the family (as in the pipeline).
+      familyGenes = new Map();
+      for (const n of DATA.nodes) {
+        const fam = n.kind === "Disease" && n.props && n.props.family;
+        if (!fam || n.props.disease_group) continue;
+        if (!familyGenes.has(fam)) familyGenes.set(fam, new Set());
+        for (const e of DATA.edges) if (e.type === "HAS_GENE" && e.source === n.id) familyGenes.get(fam).add(label(e.target));
+      }
+      byNode = new Map();
+      for (const e of DATA.edges) {
+        if (!N.has(e.source) || !N.has(e.target)) continue;
+        for (const id of [e.source, e.target]) { if (!byNode.has(id)) byNode.set(id, []); byNode.get(id).push(e); }
+      }
+    }
+    const $ = s => document.querySelector(s);
+    const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const norm = s => String(s || "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+    const other = (e, id) => e.source === id ? e.target : e.source;
+    const edgesOf = id => byNode.get(id) || [];
+    const label = id => (N.get(id) || { label: id }).label;
+    const list = arr => arr.length <= 1 ? (arr[0] || "") : arr.slice(0, -1).join(", ") + " and " + arr[arr.length - 1];
+    const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+    const pct = v => Math.round(Math.max(0, Math.min(1, Number(v) || 0)) * 100);
+    const snapshotDate = () => DATA.meta && DATA.meta.generated_at ? String(DATA.meta.generated_at).slice(0, 10) : "";
+    const pretty = s => String(s || "").toLowerCase().replace(/_/g, " ");
+
+    const parentsOf = id => edgesOf(id).filter(e => e.type === "IS_A" && e.source === id).map(e => e.target);
+    const childrenOf = id => edgesOf(id).filter(e => e.type === "IS_A" && e.target === id).map(e => e.source);
+    function genesOf(ids) {
+      const out = new Set();
+      for (const id of ids) for (const e of edgesOf(id)) if ((e.type === "HAS_GENE" || e.type === "INVOLVES_GENE") && e.source === id) out.add(label(e.target));
+      return [...out].sort();
+    }
+    function studiesOf(ids) {
+      const out = new Set();
+      for (const id of ids) for (const e of edgesOf(id)) if (STUDY_LINK.has(e.type) && e.target === id) out.add(e.source);
+      return out;
+    }
+    function orgsOf(ids) {
+      const out = new Set();
+      for (const id of ids) for (const e of edgesOf(id)) if (e.type === "SUPPORTS" && e.target === id) out.add(e.source);
+      return out;
+    }
+    function pathwaySpecificity(pid, fam) {
+      const n = N.get("REACTOME:" + pid);
+      if (!n || !n.props || !n.props.panel_genes) return 99;
+      const within = fam && familyGenes.get(fam);
+      return within ? n.props.panel_genes.filter(g => within.has(g)).length : n.props.panel_genes.length;
+    }
+    // A pathway shared by more than half of the comparison set's genes (e.g. "Neutrophil degranulation") explains nothing.
+    // The comparison set is the disease family for pairs inside one family, otherwise the whole panel.
+    let panelGeneCount = 0, familyGenes = new Map();
+    function informativePathways(ps, fam) {
+      const within = fam && familyGenes.get(fam);
+      const n = within ? within.size : panelGeneCount;
+      return [...(ps || [])].map(x => ({ x, k: pathwaySpecificity(x.id, within ? fam : "") }))
+        .filter(o => o.k <= Math.max(2, n / 2)).sort((a, b) => a.k - b.k).map(o => o.x);
+    }
+    const clinicalSigns = ps => (ps || []).filter(p => !LAB_TERM.test(p.label));
+
+    // ================================================================= journey model
+    function scopeOf(focusId) {
+      const members = [focusId, ...childrenOf(focusId)];
+      const parents = parentsOf(focusId);
+      const siblings = parents.flatMap(childrenOf).filter(id => id !== focusId);
+      const inherit = [...members, ...parents];
+      // Siblings (other numbered types of the same disease) are shown as their own community, not hidden.
+      const family = new Set(inherit);
+      return { focusId, members, parents, siblings, inherit, family };
+    }
+
+    function communities(scope) {
+      // 1. every disease reachable from the scope by a computed similarity edge or a curated research link
+      const best = new Map();   // neighbor -> strongest computed edge
+      const seeds = new Map();  // neighbor -> curated research/resource edges
+      for (const m of scope.inherit) {
+        for (const e of edgesOf(m)) {
+          const o = other(e, m), on = N.get(o);
+          if (scope.family.has(o) || !on || on.kind !== "Disease") continue;
+          if (SIM.has(e.type) && scope.members.includes(m)) {
+            const s = Number((e.props || {}).combined_score) || 0;
+            if (!best.has(o) || best.get(o).score < s) best.set(o, { edge: e, score: s });
+          } else if (SEED.has(e.type)) {
+            if (!seeds.has(o)) seeds.set(o, []);
+            seeds.get(o).push(e);
+          }
+        }
+      }
+      // 1b. diseases already enrolled in the same study are a research link even without a computed edge
+      //     (computed edges win: a look-alike stays a look-alike even when a study includes both).
+      for (const sid of studiesOf(scope.inherit)) {
+        for (const e of edgesOf(sid)) {
+          if (!STUDY_LINK.has(e.type) || e.source !== sid) continue;
+          const o = e.target, on = N.get(o);
+          if (scope.family.has(o) || !on || on.kind !== "Disease" || best.has(o) || seeds.has(o)) continue;
+          if (scope.siblings.includes(o) || childrenOf(o).some(c => best.has(c))) continue;
+          seeds.set(o, [{ ...e, coStudy: true }]);
+        }
+      }
+      // 2. group neighbors into communities: by their MONDO parent, else by identical causal gene
+      const keyFor = id => {
+        if (scope.siblings.includes(id)) return "SIBLINGS";
+        if (childrenOf(id).length) return id;                       // a parent node is its own community
+        const p = parentsOf(id).find(x => !scope.family.has(x));
+        if (p) return p;
+        const g = genesOf([id]).join("+");
+        return g ? "GENE:" + g : id;
+      };
+      const groups = new Map();
+      for (const id of new Set([...best.keys(), ...seeds.keys()])) {
+        const key = keyFor(id);
+        if (!groups.has(key)) groups.set(key, { key, members: [], edges: [], seedEdges: [] });
+        const g = groups.get(key);
+        if (id !== key || !childrenOf(id).length) g.members.push(id);
+        if (best.has(id)) g.edges.push(best.get(id).edge);
+        if (seeds.has(id)) g.seedEdges.push(...seeds.get(id));
+      }
+      const focusGenes = genesOf(scope.members);
+      const focusStudies = studiesOf(scope.inherit);
+      const out = [];
+      for (const g of groups.values()) {
+        const parentNode = N.get(g.key);
+        const memberIds = g.members.length ? g.members : childrenOf(g.key);
+        const scopeIds = [...new Set([...memberIds, ...(parentNode ? [g.key] : [])])];
+        g.memberIds = memberIds;
+        g.title = g.key === "SIBLINGS" && scope.parents.length
+          ? `Other types of ${label(scope.parents[0])}`
+          : parentNode && parentNode.kind === "Disease" && !memberIds.includes(g.key) ? parentNode.label : groupTitle(memberIds);
+        g.genes = genesOf(scopeIds);
+        g.edges.sort((a, b) => (b.props.combined_score || 0) - (a.props.combined_score || 0));
+        g.top = g.edges[0] || null;
+        const p = g.top ? g.top.props : {};
+        g.mech = Number(p.mechanism_score) || 0;
+        g.pct = Number(p.phenotype_score) > 0 ? Number(p.phenotype_percentile) || 0 : 0;
+        g.sharedGenes = g.genes.filter(x => focusGenes.includes(x));
+        g.studies = [...studiesOf(scopeIds)].filter(s => focusStudies.has(s));
+        g.orgs = [...orgsOf(scopeIds)];
+        g.research = g.seedEdges.some(e => e.type === "RESEARCH_NEIGHBOR");
+        g.resourceOnly = !g.research && g.seedEdges.some(e => e.type === "RESOURCE_NEIGHBOR");
+        const coStudyOnly = !g.top && g.seedEdges.length && g.seedEdges.every(e => e.coStudy);
+        g.score = (g.top ? Number(p.combined_score) || 0 : coStudyOnly ? 0.3 : 0.5) + (g.research ? 0.1 : 0);
+        // Strength comes from the pipeline's relation class (see docs/CLUSTER_EXPANSION.md).
+        const rc = p.relation_class || "";
+        if (g.sharedGenes.length) g.tier = "gene";
+        else if (rc === "mechanism_and_phenotype_neighbor") g.tier = "strong";
+        else if (rc === "mechanism_neighbor_different_presentation" || rc === "phenotype_neighbor_weak_mechanism" || g.research || (coStudyOnly && g.studies.length)) g.tier = "moderate";
+        else g.tier = "caution";
+        out.push(g);
+      }
+      out.sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
+      return { main: out.filter(g => g.tier !== "caution"), caution: out.filter(g => g.tier === "caution"), focusGenes };
+    }
+
+    // Disease family (lysosomal storage, RASopathies, ciliopathies): own label, else a child's (for a group node).
+    function familyOf(n) {
+      if (!n) return "";
+      if (n.props && n.props.family) return n.props.family;
+      const kids = childrenOf(n.id).map(id => N.get(id)).filter(Boolean);
+      const fams = [...new Set(kids.map(k => k.props && k.props.family).filter(Boolean))];
+      return fams.length === 1 ? fams[0] : "";
+    }
+
+    function groupTitle(ids) {
+      const labels = ids.map(label);
+      if (labels.length === 1) return labels[0];
+      const words = labels.map(l => l.split(/\s+/));
+      let k = 0;
+      while (words.every(w => w[k] !== undefined && w[k] === words[0][k])) k++;
+      let prefix = words[0].slice(0, k).join(" ").replace(/[\s,]*(type)?\s*$/i, "").trim();
+      if (prefix.length >= 5) {
+        const tails = labels.map(l => l.slice(prefix.length).replace(/^[\s,]*(type)?\s*/i, "").trim()).filter(Boolean);
+        return `${cap(prefix)} (${tails.length ? "types " + list(tails) : "forms"})`;
+      }
+      return labels.join(" / ");
+    }
+
+    const TIER = {
+      gene: { text: "Same gene", cls: "s-gene" },
+      strong: { text: "Strong link", cls: "s-strong" },
+      moderate: { text: "Moderate link", cls: "s-moderate" },
+      caution: { text: "Handle with care", cls: "s-caution" }
+    };
+
+    function reasons(g, focusGenes) {
+      const r = [], diff = [];
+      const p = g.top ? g.top.props : {};
+      if (g.sharedGenes.length) {
+        r.push(`Caused by changes in the same gene, ${list(g.sharedGenes)}.`);
+        diff.push(g.pct >= 0.75 ? "Many signs overlap too, but they are recorded as separate diseases." : "The disease itself looks different: one gene can lead to different conditions.");
+      }
+      const paths = informativePathways(p.shared_pathways, p.comparison_set).slice(0, 2).map(x => x.label);
+      const series = (p.shared_mondo_group || []).filter(id => N.has(id)).map(label);
+      if (!g.sharedGenes.length && series.length) r.push(`Recorded as types of the same disease, ${list(series)}, in the MONDO disease ontology.`);
+      const klass = (p.shared_mondo_class || []).map(c => c.label).filter(Boolean);
+      if (!g.sharedGenes.length && !series.length && !paths.length && klass.length && g.tier !== "caution")
+        r.push(`Both are ${list(klass.map(k => k + (/s$/.test(k) ? "" : "s")))} in the MONDO disease ontology, but no specific shared process was found. Treat this as a lead to check, not a match.`);
+      if (!g.sharedGenes.length && paths.length && g.tier !== "caution") r.push(`Their genes act in the same biological processes: ${list(paths)}.`);
+      const signs = clinicalSigns(p.shared_phenotypes).slice(0, 3).map(x => x.label.toLowerCase());
+      if (signs.length && g.pct >= 0.5) r.push(`Shared distinctive signs: ${list(signs)}.`);
+      if (g.studies.length) {
+        const named = g.studies.map(studyShort);
+        r.push(g.studies.length === 1 ? `Already studied together in ${named[0].replace(", ", " (")}${named[0].includes(",") ? ")" : ""}.` : `Already studied together in ${g.studies.length} studies, including ${named[0].replace(", ", " (")}${named[0].includes(",") ? ")" : ""}.`);
+      }
+      else if (g.research && !r.length) r.push("Recorded as a research neighbor because the communities share research assets.");
+      if (!g.sharedGenes.length && g.genes.length && focusGenes.length) diff.push(`Different gene (${list(g.genes)}, not ${list(focusGenes)}), so a treatment for one does not automatically work for the other.`);
+      return { r, diff };
+    }
+
+    function studyShort(id) {
+      const n = N.get(id); if (!n) return id;
+      const t = (n.study && n.study.brief_title) || n.label;
+      const acr = t.match(/\(([A-Z][A-Za-z0-9-]{2,})\)\s*$/);
+      return acr ? `${acr[1]}, ${n.external_id}` : n.external_id || n.label;
+    }
+
+    function scoreNode(n, q) {
+      let best = 0;
+      for (const raw of n.search || [n.label]) {
+        const t = norm(raw); if (!t) continue;
+        if (t === q) best = Math.max(best, raw === n.label ? 100 : 90);
+        else if (t.startsWith(q)) best = Math.max(best, raw === n.label ? 80 : 70);
+        else if (t.includes(q)) best = Math.max(best, raw === n.label ? 60 : 50);
+        else if (q.split(" ").every(w => t.includes(w))) best = Math.max(best, 40);
+      }
+      if (!best) return 0;
+      const boost = { Disease: 8, Gene: 6, Phenotype: 5, Organization: 4, Pathway: 3, Study: 2, Protein: 1 };
+      return best + (boost[n.kind] || -60);
+    }
+    function search(text) {
+      const q = norm(text); if (!q) return [];
+      return DATA.nodes.filter(n => n.kind !== "Evidence").map(n => ({ n, s: scoreNode(n, q) })).filter(x => x.s > 0)
+        .sort((a, b) => b.s - a.s || a.n.label.localeCompare(b.n.label)).slice(0, 10).map(x => x.n);
+    }
+    const KIND_TEXT = { Disease: "disease", Gene: "gene", Phenotype: "symptom", Organization: "patient group", Pathway: "biological process", Study: "study", Protein: "protein" };
+    function diseasesFor(n) {
+      const ids = new Set();
+      const walk = (id, depth) => {
+        for (const e of edgesOf(id)) {
+          const o = other(e, id), on = N.get(o);
+          if (!on) continue;
+          if (on.kind === "Disease" && e.type !== "IS_A" && !SIM.has(e.type) && !SEED.has(e.type)) ids.add(o);
+          else if (depth < 1 && (on.kind === "Gene" || on.kind === "Protein") && n.kind !== "Disease") walk(o, depth + 1);
+        }
+      };
+      walk(n.id, 0);
+      return [...ids].sort((a, b) => label(a).localeCompare(label(b)));
+    }
+
+    function topSigns(ids, max) {
+      const seen = new Map();
+      for (const id of ids) for (const e of edgesOf(id)) if (e.type === "HAS_PHENOTYPE" && e.source === id) {
+        const t = N.get(e.target); if (!t || LAB_TERM.test(t.label)) continue;
+        seen.set(t.label, Math.max(seen.get(t.label) || 0, (t.props || {}).information_content || 0));
+      }
+      return [...seen.entries()].sort((a, b) => b[1] - a[1]).slice(0, max).map(x => x[0]);
+    }
+    function cautionLine(g) {
+      const p = g.top ? g.top.props : {};
+      const bits = [];
+      if (g.resourceOnly || g.studies.length) bits.push("shares a study that may be reusable");
+      if (g.pct >= 0.5) { const s = clinicalSigns(p.shared_phenotypes).slice(0, 2).map(x => x.label.toLowerCase()); if (s.length) bits.push("similar signs (" + s.join(", ") + ")"); }
+      bits.push(g.genes.length ? `but a different gene (${list(g.genes)}) with ${g.mech > 0 ? "little" : "no"} shared biological process` : "but little shared biology");
+      return cap(bits.join(", "));
+    }
+    function nextStep(f, scope, actionable, yourOrgs, focusGenes) {
+      const g = actionable[0];
+      if (!g) {
+        return `<div class="card gap"><h3>No sourced partner yet. Here is how to change that.</h3><ul>
+          <li>Look up a patient group for ${esc(f.label)} in NORD, Global Genes or Orphanet, and ask whether they keep a registry.</li>
+          <li>Ask your clinical team whether a natural-history study already includes ${esc(f.label)}.</li>
+          <li>Send what you find to RarePath with its official page, so the next family finds it here.</li></ul></div>`;
+      }
+      const theirOrg = g.orgs[0] ? label(g.orgs[0]) : "the study team";
+      const yourOrg = yourOrgs[0] ? label(yourOrgs[0]) : "our patient group";
+      const study = g.studies[0] ? N.get(g.studies[0]) : null;
+      const st = study ? study.study || {} : {};
+      const shortName = study ? studyShort(study.id).split(",")[0] : "";
+      const headline = study
+        ? `Ask ${theirOrg} and ${yourOrg} to compare how ${shortName} measures disease progression.`
+        : `Ask ${theirOrg} whether their registry and outcome measures could be shared with ${yourOrg}.`;
+      const why = study
+        ? `${st.brief_title || study.label} already includes people with ${f.label} and ${g.title}. Comparing its outcome measures, registry fields and age ranges is a concrete first step toward shared natural-history work, without assuming the diseases share a treatment.`
+        : `${g.title} is a ${TIER[g.tier].text.toLowerCase()} for ${f.label}. Comparing what each community already collects avoids building the same assets twice.`;
+      const checks = [
+        study ? `Is ${study.external_id} still running, and who leads it now? Our ${snapshotDate()} snapshot says “${pretty(st.overall_status || "unknown")}”.` : "Which data does each group already collect, and under what consent?",
+        "Do the age ranges and eligibility criteria overlap?",
+        g.genes.length && !g.sharedGenes.length ? `The causal genes differ (${list(focusGenes)} and ${list(g.genes)}). Sharing data and study design is reasonable; sharing a therapy is not implied.` : "The diseases present differently. Which outcome measures make sense for both?",
+        "What data can each group share, and does consent allow it?"
+      ];
+      const sources = [study && `${study.external_id}: https://clinicaltrials.gov/study/${study.external_id}`, ...g.orgs.map(o => `${label(o)}: ${N.get(o).source_url}`), ...yourOrgs.map(o => `${label(o)}: ${N.get(o).source_url}`)].filter(Boolean);
+      const because = reasons(g, focusGenes).r.map(x => x.replace(/\.$/, "")).map((x, i) => i ? x.charAt(0).toLowerCase() + x.slice(1) : x.charAt(0).toLowerCase() + x.slice(1)).join("; ");
+      const draft = `Subject: Comparing ${f.label} and ${g.title} natural-history data
+
+Hello ${g.orgs[0] ? theirOrg + " team" : "study team"},
+
+I am writing on behalf of ${yourOrg}. Public records link ${f.label} and ${g.title}: ${because}.
+
+${study ? `${st.brief_title || study.label} (${study.external_id}) already includes both conditions. ` : ""}We would like to understand whether our communities could compare outcome measures, registry fields and age ranges, as a first step toward shared natural-history work. We are not assuming that a treatment for one condition applies to the other.
+
+Would you be open to a short call in the coming weeks?
+
+Sources:
+${sources.map(s => "- " + s).join("\n")}
+
+Kind regards,
+[Your name]
+[Your role, ${yourOrg}]`;
+      return `<div class="card action"><h3>${esc(headline)}</h3><p>${esc(why)}</p>
+        <span class="row-label">Check these with an expert first</span><ul class="checklist">${checks.map(c => `<li><span>${esc(c)}</span></li>`).join("")}</ul>
+        <label class="row-label" for="draft">Draft message (edit before sending)</label>
+        <textarea id="draft">${esc(draft)}</textarea>
+        <div class="copy-row"><button class="btn primary" type="button" id="copy">Copy message</button><span class="copy-status" id="copy-status" aria-live="polite"></span></div></div>`;
+    }
+
+    // ---------------------------------------------------------------- mini map (SVG)
+    function wrap(text, max) {
+      const words = String(text).split(/\s+/), lines = [""];
+      for (const w of words) { const l = lines[lines.length - 1]; if ((l + " " + w).trim().length > max && l) lines.push(w); else lines[lines.length - 1] = (l + " " + w).trim(); }
+      return lines.slice(0, 3);
+    }
+    function shortName(n) {
+      const lbl = n.label || "";
+      const words = lbl.split(/\s+/);
+      const variant = lbl.match(/\b(\w+) variant$/i);
+      if (/\d/.test(words[0]) && words[0].length <= 8) return words[0] + (/type\s+(\w+)$/i.test(lbl) ? " type " + lbl.match(/type\s+(\w+)$/i)[1] : "");
+      if (variant && words[0].length <= 12) return words[0] + " " + variant[1];
+      if (lbl.length <= 12) return lbl;
+      if (words[0].length <= 12 && !/^(disease|syndrome)$/i.test(words[0])) {
+        const t = lbl.match(/type\s+(\w+)$/i);
+        return words[0].replace(/,$/, "") + (t ? " " + t[1] : "");
+      }
+      const syn = (n.synonyms || []).filter(x => x.length >= 3 && x.length <= 10 && !/[:_]/.test(x)).sort((a, b) => a.length - b.length)[0];
+      return syn || words[0].slice(0, 10) + "…";
+    }
+    function miniMap(f, main, caution) {
+      const W = 380, H = 380, cx = W / 2, cy = 180, R = 122;
+      const items = [...main.map(g => ({ g, c: false })), ...caution.map(g => ({ g, c: true }))];
+      const n = items.length;
+      let lines = "", nodes = "";
+      items.forEach((it, i) => {
+        const a = -Math.PI / 2 + (2 * Math.PI * i) / Math.max(n, 1) + (n === 2 ? Math.PI / 2 : 0);
+        const x = cx + R * 1.08 * Math.cos(a), y = cy + R * 0.92 * Math.sin(a);
+        const g = it.g;
+        const stroke = it.c ? "var(--coral)" : g.tier === "gene" ? "var(--violet)" : "var(--blue)";
+        const dash = it.c ? "2 6" : g.tier === "gene" ? "" : "8 6";
+        const w = it.c ? 2 : 2 + 3 * Math.min(1, g.score);
+        lines += `<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${stroke}" stroke-width="${w.toFixed(1)}" stroke-dasharray="${dash}" stroke-linecap="round" />`;
+        const r = it.c ? 12 : 14 + 8 * Math.min(1, g.score);
+        const fill = it.c ? "var(--coral-soft)" : g.tier === "gene" ? "var(--violet-soft)" : g.tier === "strong" ? "var(--green-soft)" : "var(--blue-soft)";
+        const tl = wrap(g.title, 20);
+        const below = y >= cy - 20;
+        const ty = below ? y + r + 14 : y - r - 7 - (tl.length - 1) * 13;
+        nodes += `<g class="nodeg" data-group="${esc(g.key)}" tabindex="0" role="button" aria-label="${esc(g.title)}: ${esc(TIER[g.tier].text)}">
+          <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="${fill}" stroke="${stroke}" stroke-width="2" />
+          ${tl.map((t, j) => `<text class="lbl" x="${x.toFixed(1)}" y="${(ty + j * 13).toFixed(1)}" text-anchor="middle">${esc(t)}</text>`).join("")}</g>`;
+      });
+      // Centre: a short name people recognise ("GM1", "Tay-Sachs"), never a generic "You".
+      const sn = shortName(f);
+      const fs = sn.length <= 6 ? 17 : sn.length <= 10 ? 14 : 13;
+      const cr = Math.max(40, Math.ceil(sn.length * fs * 0.3) + 10);
+      const center = `<circle cx="${cx}" cy="${cy}" r="${cr}" fill="var(--green-dark)" /><circle cx="${cx}" cy="${cy}" r="${cr + 6}" fill="none" stroke="var(--green-soft)" stroke-width="6" />
+        <text x="${cx}" y="${cy + fs / 3}" text-anchor="middle" fill="#ffffff" style="font:800 ${fs}px var(--font-display, sans-serif)">${esc(sn)}</text>`;
+      return `<svg class="minimap" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(f.label)} and its ${n} closest communities">${lines}${center}${nodes}</svg>`;
+    }
+
+    // ================================================================= this device only: recent diseases
+    // Only disease IDs from the graph are kept, never questions or anything typed. Nothing leaves the browser.
+    const RECENT_KEY = "rarepath.recent.v1", RECENT_MAX = 6;
+    function readRecent() {
+      try {
+        const v = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
+        return Array.isArray(v) ? v.filter(id => typeof id === "string" && N.has(id) && N.get(id).kind === "Disease").slice(0, RECENT_MAX) : [];
+      } catch (_) { return []; }
+    }
+    function remember(id) {
+      try { localStorage.setItem(RECENT_KEY, JSON.stringify([id, ...readRecent().filter(x => x !== id)].slice(0, RECENT_MAX))); } catch (_) { /* private mode or storage off */ }
+    }
+    function forgetRecent() {
+      try { localStorage.removeItem(RECENT_KEY); } catch (_) {}
+      document.querySelectorAll(".recent").forEach(el => { el.innerHTML = `<p class="meta">Cleared. RarePath no longer remembers what you looked at on this device.</p>`; });
+    }
+    const recentHtml = ids => ids.length ? `<div class="recent"><div class="label">Recently viewed on this device <button type="button" class="forget" data-forget="1">Forget</button></div>
+      <div class="chips quiet">${ids.map(id => `<button type="button" data-go="${esc(id)}">${esc(label(id))}</button>`).join("")}</div></div>` : "";
+
+    // ================================================================= feedback: fixed categories, no free text
+    const FEEDBACK = {
+      useful: "This helped",
+      relationship_wrong: "The link looks wrong",
+      source_broken: "A source is broken or out of date",
+      missing_resource: "A study or group is missing",
+      display_issue: "The protein view looks wrong",
+      answer_unsupported: "Says more than its sources",
+    };
+    const FEEDBACK_FOR = {
+      link: ["useful", "relationship_wrong", "source_broken", "missing_resource"],
+      edge: ["useful", "relationship_wrong", "source_broken"],
+      gene: ["useful", "display_issue", "source_broken"],
+      resource: ["useful", "source_broken", "missing_resource"],
+    };
+    const ISSUES = "https://github.com/HuijiaoLuo/RarePath/issues/new";
+    const fbSent = new Set();
+    let feedbackServer = false;
+    const graphVersion = () => (DATA.meta && DATA.meta.graph_version) || "";
+    const buildText = () => Object.entries((DATA.meta && DATA.meta.build) || {}).map(([k, v]) => `${k.replace(/_/g, " ")}: ${v}`).join("; ");
+    function feedbackBlock(kind, targetId) {
+      if (!targetId) return "";
+      const cats = FEEDBACK_FOR[kind] || [];
+      return `<div class="dsec fb"><h3>Is this right?</h3><div class="chips quiet">${cats.map(c => `<button type="button" data-fb="${c}" data-fbk="${esc(kind)}" data-fbt="${esc(targetId)}">${esc(FEEDBACK[c])}</button>`).join("")}</div>
+        <p class="fbnote">One tap sends the category and the record's ID, nothing you type and nothing about you.</p></div>`;
+    }
+    async function sendFeedback(btn) {
+      const box = btn.closest(".fb, .bubble") || btn.parentElement;
+      const rec = { category: btn.dataset.fb, target_kind: btn.dataset.fbk, target_id: btn.dataset.fbt, focus_id: focusId || "", graph_version: graphVersion() };
+      if (btn.dataset.fbfacts) { rec.fact_ids = btn.dataset.fbfacts.split(",").filter(Boolean); rec.answer_source = btn.dataset.fbsrc || ""; }
+      const once = rec.category + "|" + rec.target_id;
+      const place = html => { const out = box.querySelector(".fbresult") || box.appendChild(Object.assign(document.createElement("div"), { className: "fbresult" })); out.innerHTML = html; };
+      if (fbSent.has(once)) { place(`<p class="fbdone">Already noted. Thank you.</p>`); return; }
+      if (feedbackServer) {
+        try {
+          const res = await fetch("api/feedback", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(rec) });
+          if (res.ok) { fbSent.add(once); place(`<p class="fbdone">Thank you. Noted for review; it does not change the graph until someone checks it.</p>`); return; }
+        } catch (_) { /* fall through to the public route */ }
+      }
+      const what = `${FEEDBACK[rec.category]}: ${rec.target_kind} ${rec.target_id}`;
+      const body = ["Feedback from the RarePath guide (fixed fields only).", "", `- Category: ${FEEDBACK[rec.category]}`, `- Record: ${rec.target_kind} ${rec.target_id}`,
+        rec.focus_id ? `- Viewing: ${rec.focus_id} (${label(rec.focus_id)})` : "", rec.fact_ids ? `- Answer facts: ${rec.fact_ids.join(", ")}` : "", `- Graph version: ${rec.graph_version || "unknown"}`,
+        "", "Optional: what should it say instead? Please don't add names or medical details; this issue is public."].filter(x => x !== "").join("\n");
+      const url = `${ISSUES}?title=${encodeURIComponent("[feedback] " + what)}&body=${encodeURIComponent(body)}`;
+      place(`<p class="fbnote">This copy of RarePath has no feedback server, so nothing was sent. You can <a href="${esc(url)}" target="_blank" rel="noopener">open a prefilled GitHub issue ↗</a>. GitHub issues are public, so please leave out names and medical details.</p>`);
+    }
+
+    // ================================================================= drawer
+    let lastFocus = null;
+    function openDrawer(kicker, title, body) {
+      lastFocus = document.activeElement;
+      $("#drawer-kicker").textContent = kicker; $("#drawer-title").textContent = title; $("#drawer-body").innerHTML = body;
+      $("#drawer").classList.add("open"); $("#backdrop").classList.add("open"); $("#drawer").setAttribute("aria-hidden", "false");
+      $("#drawer-body").scrollTop = 0; $("#drawer-close").focus();
+    }
+    function closeDrawer() {
+      if (!$("#drawer").classList.contains("open")) return;
+      $("#drawer").classList.remove("open"); $("#backdrop").classList.remove("open"); $("#drawer").setAttribute("aria-hidden", "true");
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    function groupDrawer(key) {
+      if (!lastModel) return;
+      const g = [...lastModel.main, ...lastModel.caution].find(x => x.key === key); if (!g) return;
+      const f = N.get(focusId);
+      const p = g.top ? g.top.props : {};
+      const { r, diff } = reasons(g, lastModel.focusGenes);
+      let html = `<div class="dsec"><span class="strength ${TIER[g.tier].cls}">${TIER[g.tier].text}</span><p style="margin-top:10px"><b>${esc(f.label)}</b> and <b>${esc(g.title)}</b></p>
+        <ul class="reasons">${(r.length ? r : ["No shared gene or biological process was found."]).map(x => `<li>${esc(x)}</li>`).join("")}${diff.map(x => `<li class="diff">${esc(x)}</li>`).join("")}</ul></div>`;
+      const src = [];
+      for (const gene of g.sharedGenes) src.push(`<li><span class="tag t-db">From a database</span>${geneButtons([gene])[0]} is a recorded cause of both (HPO gene–disease links). <a href="https://hpo.jax.org/browse/gene/${esc(gene)}" target="_blank" rel="noopener">HPO ↗</a></li>`);
+      const fam = p.comparison_set && familyGenes.has(p.comparison_set) ? p.comparison_set : "";
+      for (const pw of [...(p.shared_pathways || [])].sort((a, b) => pathwaySpecificity(a.id, fam) - pathwaySpecificity(b.id, fam))) {
+        const k = pathwaySpecificity(pw.id, fam), node = N.get("REACTOME:" + pw.id), human = node && node.props && node.props.human_proteins;
+        const scope = fam ? `the ${familyGenes.get(fam).size} ${fam} genes in RarePath` : `the ${panelGeneCount} genes in RarePath`;
+        src.push(`<li><span class="tag t-db">From a database</span>Both genes act in “${esc(pw.label)}”${k < 99 ? ` (${k} of ${scope} do${human ? `; ${human} human proteins in all` : ""})` : ""}. <a href="https://reactome.org/content/detail/${esc(pw.id)}" target="_blank" rel="noopener">Reactome ↗</a></li>`);
+      }
+      for (const ph of p.shared_phenotypes || []) src.push(`<li><span class="tag t-db">From a database</span>Both are annotated with “${esc(ph.label)}”. <a href="https://hpo.jax.org/browse/term/${esc(ph.id)}" target="_blank" rel="noopener">HPO ↗</a></li>`);
+      for (const s of g.studies) src.push(`<li><span class="tag t-db">From a database</span>${esc(N.get(s).label)} includes both. <a href="https://clinicaltrials.gov/study/${esc(N.get(s).external_id)}" target="_blank" rel="noopener">ClinicalTrials.gov ↗</a></li>`);
+      for (const e of g.seedEdges.filter(x => !x.coStudy)) { const ev = N.get("EVIDENCE:" + e.evidence_id); src.push(`<li><span class="tag t-db">Curated by the team</span>${esc(ev && ev.wording ? ev.wording.wording : e.notes)} ${e.source_url ? `<a href="${esc(e.source_url)}" target="_blank" rel="noopener">Source ↗</a>` : ""}</li>`); }
+      if (g.top) src.push(`<li><span class="tag t-calc">Computed by RarePath</span>${esc(g.top.notes)}</li>`);
+      html += `<div class="dsec"><h3>Sources</h3><ul class="src">${src.join("")}</ul></div>`;
+      const limits = [...new Set([...g.edges, ...g.seedEdges].map(e => e.limitations).filter(Boolean))];
+      html += `<div class="dsec"><h3>What we don't know</h3>${(limits.length ? limits : ["This is a research lead from public records. An expert must review it before any joint study."]).map(l => `<p class="warn ${g.tier === "caution" ? "red" : ""}">${esc(l)}</p>`).join("")}</div>`;
+      if (g.top) {
+        const mine = new Set(lastModel.scope.members);
+        html += `<div class="dsec"><details><summary>Technical details</summary>
+          <div class="bars" style="margin-top:12px"><span>Shared processes</span><span class="bar"><span style="width:${pct(p.mechanism_score)}%;background:var(--green)"></span></span><span>${pct(p.mechanism_score)}%</span>
+          <span>Shared signs</span><span class="bar"><span style="width:${pct(g.pct)}%;background:var(--blue)"></span></span><span>${Number(p.phenotype_score) > 0 ? "top " + Math.max(1, 100 - pct(g.pct)) + "%" : "none"}</span></div>
+          <dl class="kv">${g.edges.map(e => `<dt>${esc(label(mine.has(e.source) ? e.target : e.source))}</dt><dd>${esc(e.type)} · ${esc(e.assertion_level)} · confidence ${esc(e.confidence)}<br />pathway overlap ${esc(e.props.mechanism_score)} · simGIC ${esc(e.props.phenotype_score)}<br /><small>${esc(e.id)}</small></dd>`).join("")}
+          <dt>Method</dt><dd>${esc(p.method || "")}</dd></dl></details></div>`;
+      }
+      const linkId = g.top ? g.top.id : ([...g.edges, ...g.seedEdges][0] || {}).id;
+      html += feedbackBlock("link", linkId);
+      openDrawer("Why we think so", g.title, html);
+    }
+
+    const RELATION = { HAS_GENE: "is caused by changes in", INVOLVES_GENE: "involves the gene", IS_A: "is a form of", STUDIES: "studies", RESEARCH_ASSET_FOR: "is a research resource for", SUPPORTS: "supports families affected by", RESEARCH_NEIGHBOR: "is a research neighbor of", RESOURCE_NEIGHBOR: "shares research resources with", ENCODES: "makes the protein", SIMILAR_TO: "has a similar predicted structure to", HAS_PHENOTYPE: "has the sign", PARTICIPATES_IN: "acts in", SHARES_CAUSAL_GENE: "shares a causal gene with", MECHANISM_NEIGHBOR: "shares biological processes with", PHENOTYPE_NEIGHBOR: "has overlapping signs with", PHENOTYPE_LOOKALIKE: "looks similar to, but works differently from", SUPPORTED_BY: "is backed by" };
+    function edgeDrawer(e) {
+      const ev = N.get("EVIDENCE:" + e.evidence_id), p = e.props || {};
+      const computed = e.assertion_level === "inferred" || e.assertion_level === "extracted";
+      let html = `<div class="dsec"><p><b>${esc(label(e.source))}</b> ${esc(RELATION[e.type] || pretty(e.type))} <b>${esc(label(e.target))}</b>.</p>
+        <span class="tag ${computed ? "t-calc" : "t-db"}">${computed ? "Computed by RarePath" : "From a database"}</span></div>`;
+      if (e.notes) html += `<div class="dsec"><h3>In plain language</h3><p>${esc(e.notes)}</p></div>`;
+      if (ev && ev.wording) html += `<div class="dsec"><h3>Curated wording</h3><p>${esc(ev.wording.wording)}</p></div>`;
+      const url = e.source_url || (ev && ev.source_url) || "";
+      html += `<div class="dsec"><h3>Source</h3>${url ? url.split(";").map(u => /^https?:/.test(u) ? `<p><a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\//, "").slice(0, 70))} ↗</a></p>` : `<p>${esc(u)}</p>`).join("") : "<p>Recorded in the RarePath evidence table.</p>"}
+        ${p.reference ? `<p>Reference: ${/^PMID:/.test(p.reference) ? `<a href="https://pubmed.ncbi.nlm.nih.gov/${esc(p.reference.slice(5))}/" target="_blank" rel="noopener">${esc(p.reference)} ↗</a>` : esc(p.reference)}</p>` : ""}</div>`;
+      if (e.limitations || computed) html += `<div class="dsec"><h3>What we don't know</h3><p class="warn ${e.type === "PHENOTYPE_LOOKALIKE" ? "red" : ""}">${esc(e.limitations || "A computed research lead. It needs expert review and is not a clinical claim.")}</p></div>`;
+      html += `<div class="dsec"><details><summary>Technical details</summary><dl class="kv"><dt>Type</dt><dd>${esc(e.type)}</dd><dt>Assertion</dt><dd>${esc(e.assertion_level)}</dd><dt>Confidence</dt><dd>${esc(e.confidence)}</dd><dt>Evidence ID</dt><dd>${esc(e.evidence_id)}</dd>
+        ${Object.entries(p).filter(([, v]) => typeof v !== "object").map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}<dt>Edge ID</dt><dd>${esc(e.id)}</dd></dl></details></div>`;
+      html += feedbackBlock("edge", e.id);
+      openDrawer("Why this link exists", `${label(e.source)} → ${label(e.target)}`, html);
+    }
+
+    // ================================================================= gene panel + protein structure
+    const geneButtons = genes => genes.map(g => `<button type="button" class="genebtn" data-gene="${esc(g)}" title="About the ${esc(g)} gene and its protein">${esc(g)}</button>`);
+    function geneNode(symbol) {
+      const cands = DATA.nodes.filter(n => n.kind === "Gene" && n.label === symbol);
+      return cands.find(n => n.props && n.props.protein) || cands[0] || null;
+    }
+    let structuresLoading = null;
+    function loadStructures() {
+      if (window.RAREPATH_STRUCTURES) return Promise.resolve(window.RAREPATH_STRUCTURES);
+      if (!structuresLoading) structuresLoading = new Promise(resolve => {
+        const s = document.createElement("script"); s.src = "data/structures.js";
+        s.onload = () => resolve(window.RAREPATH_STRUCTURES || {}); s.onerror = () => resolve({});
+        document.head.appendChild(s);
+      });
+      return structuresLoading;
+    }
+    // ---- protein comparison: sequence alignment, then a structure fit only where the alignment allows one
+    const SUP = { "-": "⁻", "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" };
+    function fmtE(v) {
+      const x = Number(v); if (!isFinite(x) || v === "") return "not computed";
+      if (x >= 0.01) return x.toFixed(2);
+      const [m, e] = x.toExponential(1).split("e");
+      return `${m} × 10${String(Number(e)).split("").map(c => SUP[c] || c).join("")}`;
+    }
+    const COMPARED = () => [...new Set((DATA.protein_comparisons || []).flatMap(c => c.genes))];
+    function comparisonHtml(symbol) {
+      const rows = (DATA.protein_comparisons || []).filter(c => c.genes.includes(symbol));
+      const all = COMPARED();
+      if (!rows.length) return all.length ? `<div class="dsec"><h3>Protein comparison</h3><p class="small muted">Not compared with other proteins yet. So far, comparisons cover ${esc(list(all))}, the GM1 and GM2 genes.</p></div>` : "";
+      rows.sort((a, b) => Number(a.sequence && a.sequence.evalue || 9) - Number(b.sequence && b.sequence.evalue || 9));
+      const pct = v => Math.round(Number(v));
+      const strong = rows.filter(c => c.sequence && c.sequence.significant === true), weak = rows.filter(c => !strong.includes(c));
+      const head = (other, cls, text) => `<div class="cmphead"><button type="button" class="genebtn" data-gene="${esc(other)}">${esc(other)}</button><span class="pill ${cls}">${text}</span></div>`;
+      const otherOf = c => c.genes[0] === symbol ? c.genes[1] : c.genes[0];
+      const strongItem = c => {
+        const q = c.sequence, st = c.structure || {}, fitted = st.status === "computed";
+        return `<li class="cmp">${head(otherOf(c), fitted ? "p-gene" : "p-strong", fitted ? "Closely related" : "Related sequence")}
+          <p><b>Sequence:</b> ${esc(Number(q.identity_pct).toFixed(1))}% identical over ${esc(q.aligned_residues)} aligned residues, covering at least ${pct(q.minimum_coverage_pct)}% of each protein. E-value ${fmtE(q.evalue)}: a match this good would essentially never happen by chance.</p>
+          <p><b>Shape:</b> ${fitted
+            ? `on the ${esc(st.high_confidence_ca_pairs)} aligned residues where both AlphaFold models are confident (pLDDT ≥ ${pct(st.plddt_cutoff)}), the backbones superimpose to ${esc(st.ca_rmsd_angstrom)}&nbsp;Å RMSD (root-mean-square distance), less than the length of one chemical bond (about 1.5 Å). The predicted shapes are nearly the same.`
+            : `<span class="notevald">not evaluated</span>.`}</p></li>`;
+      };
+      const weakItem = c => {
+        const q = c.sequence || {};
+        return `<li class="cmp slim">${head(otherOf(c), "p-moderate", "No detectable match")}
+          <p>Best local match: ${esc(q.aligned_residues || "?")} residues (${pct(q.minimum_coverage_pct)}% of the longer protein), E-value ${fmtE(q.evalue)}. Shape <span class="notevald">not evaluated</span>.</p></li>`;
+      };
+      return `<div class="dsec"><h3>Protein comparison</h3><ul class="cmplist">${strong.map(strongItem).join("")}${weak.map(weakItem).join("")}</ul>
+        ${weak.length ? `<p class="small">“No detectable match” means this method found nothing beyond chance (E-value ≥ 0.001), not that the proteins are unrelated. “Not evaluated” means too little of the sequences aligned to superimpose the two models: the rule, set in advance, needs at least 30 aligned pairs covering at least 25% of each protein. It is not evidence that the shapes differ.</p>` : ""}
+        <details><summary>How this was compared</summary><p class="small">First a Smith-Waterman local alignment of the UniProt sequences (BLOSUM62, gap open 11, extend 1), with a Karlin-Altschul E-value; a match counts only if E &lt; 0.001, a threshold set before the results were seen. Where enough residues align, the two AlphaFold models are then superimposed on those aligned residues.</p>
+        <p class="small">This is a <b>sequence-guided comparison of predicted models</b>. It is not an independent structure search (such as Foldseek or TM-align), so it cannot find proteins with similar shapes but unrelated sequences. It is also not a measure of clinical similarity: related proteins can cause diseases that behave differently. <a href="https://github.com/HuijiaoLuo/RarePath/blob/main/docs/PROTEIN_SIMILARITY_PORTFOLIO.md" target="_blank" rel="noopener">Method notes ↗</a></p></details></div>`;
+    }
+    function geneDrawer(symbol) {
+      const g = geneNode(symbol); if (!g) return;
+      const pr = (g.props && g.props.protein) || {};
+      const diseases = edgesOf(g.id).filter(e => (e.type === "HAS_GENE" || e.type === "INVOLVES_GENE") && e.target === g.id).map(e => e.source)
+        .filter((id, i, a) => a.indexOf(id) === i && N.has(id)).sort((a, b) => label(a).localeCompare(label(b), undefined, { numeric: true }));
+      const pathways = edgesOf(g.id).filter(e => e.type === "PARTICIPATES_IN" && e.source === g.id).map(e => N.get(e.target)).filter(Boolean);
+      const prot = edgesOf(g.id).filter(e => e.type === "ENCODES" && e.source === g.id).map(e => e.target)[0];
+      const af = pr.alphafold;
+      let html = `<div class="dsec"><p class="protname">${esc(pr.name || label(prot) || symbol)}</p>
+        <p class="muted">${[pr.length ? pr.length + " amino acids" : "", pr.uniprot ? "UniProt " + pr.uniprot : ""].filter(Boolean).map(esc).join(" · ")}</p>
+        ${pr.function ? `<p>${esc(pr.function)}</p>` : `<p class="muted">No function summary in this snapshot yet. Run <code>pipelines/fetch_gene_profiles.py</code> to add one.</p>`}
+        ${pr.location ? `<p class="muted"><b>Where in the cell:</b> ${esc(pr.location)}</p>` : ""}
+        ${pr.uniprot ? `<p class="small">Summary from UniProt${pr.uniprot_release ? " (release " + esc(pr.uniprot_release) + ")" : ""}. <a href="https://www.uniprot.org/uniprotkb/${esc(pr.uniprot)}/entry" target="_blank" rel="noopener">UniProt entry ↗</a></p>` : ""}</div>`;
+      html += `<div class="dsec"><h3>Predicted 3D structure</h3>${af
+        ? `<div class="mol" id="mol" role="img" aria-label="Rotating AlphaFold model of ${esc(pr.name || symbol)}, coloured by confidence"><canvas></canvas><div class="moltip" hidden></div><div class="molhint">Drag to turn</div></div>
+          <div class="plddt"><span><i style="background:#0053d6"></i>Very high</span><span><i style="background:#65cbf3"></i>Confident</span><span><i style="background:#ffdb13"></i>Low</span><span><i style="background:#ff7d45"></i>Very low</span></div>
+          <div id="variant-box"></div>
+          <p class="small">The backbone of an <b>AlphaFold prediction</b> (model ${esc(af.model_id)}, version ${esc(af.version)}; mean confidence ${esc(af.mean_plddt)} of 100). It is a prediction, not an experimental structure. Colours show AlphaFold's own confidence for each part. Orange regions are often flexible or disordered, so do not read their shape literally.</p>
+          <p class="small"><a href="https://alphafold.ebi.ac.uk/entry/${esc(pr.uniprot)}" target="_blank" rel="noopener">Full 3D view on AlphaFold DB ↗</a> · Model from AlphaFold DB, CC BY 4.0 (Jumper et al. 2021; Varadi et al. 2024).</p>`
+        : `<p class="muted">${pr.structure_status === "no full-length AlphaFold model" ? "AlphaFold DB has no single full-length model for this protein (very long proteins are only predicted in pieces)." : "No structure in this snapshot."}${pr.uniprot ? ` <a href="https://alphafold.ebi.ac.uk/entry/${esc(pr.uniprot)}" target="_blank" rel="noopener">Check AlphaFold DB ↗</a>` : ""}</p>`}</div>`;
+      if (diseases.length) html += `<div class="dsec"><h3>Diseases in RarePath caused by ${esc(symbol)}</h3><div class="chips">${diseases.map(id => `<button type="button" data-go="${esc(id)}">${esc(label(id))}</button>`).join("")}</div>
+        ${diseases.length > 1 ? `<p class="small">One gene, ${diseases.length} recorded diseases: the same gene can lead to different conditions.</p>` : ""}</div>`;
+      if (pathways.length) {
+        const sorted = pathways.sort((a, b) => ((a.props && a.props.human_proteins) || 999) - ((b.props && b.props.human_proteins) || 999));
+        html += `<div class="dsec"><h3>Biological processes shared with other genes here</h3><ul class="src">${sorted.slice(0, 8).map(p => `<li>${esc(p.label)}${p.props && p.props.human_proteins ? ` <span class="muted">(${p.props.human_proteins} human proteins)</span>` : ""} <a href="${esc(p.source_url)}" target="_blank" rel="noopener">Reactome ↗</a></li>`).join("")}</ul></div>`;
+      }
+      html += comparisonHtml(symbol);
+      html += feedbackBlock("gene", g.id);
+      openDrawer("Gene and protein", symbol, html);
+      if (af) loadStructures().then(all => {
+        const s = all[symbol]; const box = $("#mol");
+        if (!box) return;
+        if (!s) { box.innerHTML = `<p class="muted">The structure file did not load. Use the AlphaFold DB link below.</p>`; return; }
+        const vb = $("#variant-box"); if (vb) vb.innerHTML = variantSummary(symbol, s);
+        molViewer(box, s);
+      });
+    }
+
+    // ClinVar missense variants on the model: a toggle, one honest sentence and the most reported positions.
+    function variantSummary(symbol, s) {
+      const v = s.variants; if (!v || !v.positions || !v.positions.length) return v ? `<p class="small">No pathogenic missense variant from ClinVar could be placed on this model.</p>` : "";
+      const pctV = Math.round(100 * v.variant_positions_very_high / Math.max(1, v.variant_positions));
+      const pctR = Math.round(100 * v.residues_very_high / Math.max(1, v.residues));
+      const top = [...v.positions].sort((a, b) => b[2] - a[2] || a[0] - b[0]).slice(0, 6);
+      // Conditions named across the variants: shows "one gene, different diseases" at the level of single changes.
+      const named = {};
+      for (const p of v.positions) for (const c of (p[3] || "").split("; ").filter(Boolean)) named[c] = (named[c] || 0) + 1;
+      const conds = Object.entries(named).filter(([c]) => !/related disorder|not provided|not specified|inborn genetic/i.test(c)).sort((a, b) => b[1] - a[1]).slice(0, 4);
+      return `<label class="vtoggle"><input type="checkbox" id="show-variants" checked /> <i></i>Show disease-causing variants (${v.positions.length} position${v.positions.length === 1 ? "" : "s"}, ${v.missense_kept} ClinVar record${v.missense_kept === 1 ? "" : "s"})</label>
+        <p class="small">${v.variant_positions_very_high} of ${v.variant_positions} variant positions (${pctV}%) sit where AlphaFold is very confident, against ${pctR}% of the whole protein. ClinVar favours well-studied regions, so treat this as a pattern to look at, not a finding.</p>
+        ${v.clinvar_to_uniprot_offset ? `<p class="small">ClinVar numbers ${esc(symbol)} on a transcript that starts ${Math.abs(v.clinvar_to_uniprot_offset)} residue${Math.abs(v.clinvar_to_uniprot_offset) === 1 ? "" : "s"} ${v.clinvar_to_uniprot_offset < 0 ? "earlier" : "later"} than UniProt's sequence. Names keep ClinVar's numbering; dots sit on the matching residue of the model.</p>` : ""}
+        ${conds.length > 1 ? `<p class="small">Conditions named for these variants: ${conds.map(([c, n]) => `${esc(c)} (${n} position${n === 1 ? "" : "s"})`).join(", ")}.</p>` : ""}
+        <p class="small">Positions with the most ClinVar records (not how common they are in patients): ${top.map(([pos, change, n]) => `${esc(change.split(" / ")[0])}${n > 1 ? ` (${n})` : ""}`).join(", ")}. Hover a dot for details. <a href="https://www.ncbi.nlm.nih.gov/clinvar/?term=${encodeURIComponent(symbol + "[gene]")}" target="_blank" rel="noopener">All ${esc(symbol)} variants in ClinVar ↗</a></p>`;
+    }
+
+    // A small C-alpha "ribbon" viewer: smoothed backbone, coloured by pLDDT, depth-shaded, drag to rotate.
+    function plddtColor(v) { return v >= 90 ? [0, 83, 214] : v >= 70 ? [101, 203, 243] : v >= 50 ? [255, 219, 19] : [255, 125, 69]; }
+    function molViewer(box, s) {
+      const canvas = box.querySelector("canvas"), ctx = canvas.getContext("2d");
+      const tip = box.querySelector(".moltip"), varToggle = document.getElementById("show-variants");
+      const marks = ((s.variants && s.variants.positions) || []).map(([pos, change, count, conditions]) => ({ i: pos - (s.first_residue || 1), change, count, conditions: conditions || "" }))
+        .filter(v => v.i >= 0 && v.i < s.plddt.length);
+      let shown = [];
+      const n = s.plddt.length, P = [];
+      for (let i = 0; i < n; i++) P.push([s.xyz[3 * i] / 10, s.xyz[3 * i + 1] / 10, s.xyz[3 * i + 2] / 10]);
+      // Centre and size the view on the confidently predicted core, so a floppy tail does not shrink the protein.
+      const core = P.filter((_, i) => s.plddt[i] >= 70);
+      const ref = core.length >= 10 ? core : P;
+      const c0 = [0, 1, 2].map(d => ref.reduce((a, p) => a + p[d], 0) / ref.length);
+      for (const p of P) for (let d = 0; d < 3; d++) p[d] -= c0[d];
+      // Catmull-Rom smoothing: 4 points per residue step.
+      const pts = [], col = [];
+      for (let i = 0; i < n - 1; i++) {
+        const p0 = P[Math.max(0, i - 1)], p1 = P[i], p2 = P[i + 1], p3 = P[Math.min(n - 1, i + 2)];
+        for (let k = 0; k < 4; k++) {
+          const t = k / 4, t2 = t * t, t3 = t2 * t;
+          pts.push([0, 1, 2].map(d => 0.5 * (2 * p1[d] + (-p0[d] + p2[d]) * t + (2 * p0[d] - 5 * p1[d] + 4 * p2[d] - p3[d]) * t2 + (-p0[d] + 3 * p1[d] - 3 * p2[d] + p3[d]) * t3)));
+          col.push(s.plddt[k < 2 ? i : i + 1]);
+        }
+      }
+      pts.push(P[n - 1]); col.push(s.plddt[n - 1]);
+      const dist = ref.map(p => Math.hypot(p[0] - c0[0], p[1] - c0[1], p[2] - c0[2])).sort((a, b) => a - b);
+      const radius = dist[Math.floor(0.95 * (dist.length - 1))] || 1;
+      let rx = -0.4, ry = 0.6, spin = !window.matchMedia("(prefers-reduced-motion: reduce)").matches, drag = null, raf = 0;
+      function size() {
+        const w = box.clientWidth, h = Math.round(w * 0.78), dpr = window.devicePixelRatio || 1;
+        canvas.width = w * dpr; canvas.height = h * dpr; canvas.style.width = w + "px"; canvas.style.height = h + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0); return [w, h];
+      }
+      let [W, H] = size();
+      function draw() {
+        const cx = Math.cos(rx), sx = Math.sin(rx), cy = Math.cos(ry), sy = Math.sin(ry);
+        const scale = 0.46 * Math.min(W, H) / radius;
+        const pr = pts.map(([x, y, z]) => {
+          const x1 = x * cy + z * sy, z1 = -x * sy + z * cy;      // turn around the vertical axis
+          const y2 = y * cx - z1 * sx, z2 = y * sx + z1 * cx;     // then tilt
+          return [W / 2 + x1 * scale, H / 2 - y2 * scale, Math.max(-1, Math.min(1, z2 / radius))];
+        });
+        const segs = [];
+        for (let i = 0; i < pr.length - 1; i++) segs.push([i, (pr[i][2] + pr[i + 1][2]) / 2]);
+        segs.sort((a, b) => a[1] - b[1]);                          // far first (painter's algorithm)
+        ctx.clearRect(0, 0, W, H); ctx.lineCap = "round";
+        for (const [i, z] of segs) {
+          const near = (z + 1) / 2, c = plddtColor(col[i]), fog = 0.55 * (1 - near);
+          ctx.strokeStyle = `rgb(${c.map(v => Math.round(v + (251 - v) * fog)).join(",")})`;
+          ctx.lineWidth = 2.5 + 4.5 * near;
+          ctx.beginPath(); ctx.moveTo(pr[i][0], pr[i][1]); ctx.lineTo(pr[i + 1][0], pr[i + 1][1]); ctx.stroke();
+        }
+        // ClinVar disease-causing missense positions: magenta dots on the residue, nearer ones larger.
+        shown = [];
+        if (marks.length && (!varToggle || varToggle.checked)) {
+          for (const v of [...marks].sort((a, b) => pr[4 * a.i][2] - pr[4 * b.i][2])) {
+            const [x, y, z] = pr[4 * v.i], near = (z + 1) / 2, r = 3.5 + 3.5 * near + Math.min(3, v.count - 1);
+            ctx.globalAlpha = 0.45 + 0.55 * near; ctx.fillStyle = "#c2186b"; ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fill(); ctx.stroke(); ctx.globalAlpha = 1;
+            shown.push({ x, y, r, v });
+          }
+        }
+      }
+      function hover(e) {
+        if (!tip) return;
+        const b = canvas.getBoundingClientRect(), mx = e.clientX - b.left, my = e.clientY - b.top;
+        const hit = shown.slice().reverse().find(m => Math.hypot(m.x - mx, m.y - my) <= m.r + 3);
+        if (!hit) { tip.hidden = true; return; }
+        tip.hidden = false;
+        const off = (s.variants && s.variants.clinvar_to_uniprot_offset) || 0;
+        tip.innerHTML = `<b>${esc(hit.v.change)}</b>${off ? ` (model residue ${hit.v.i + (s.first_residue || 1)})` : ""} · ${hit.v.count} ClinVar record${hit.v.count === 1 ? "" : "s"} · confidence ${s.plddt[hit.v.i]}${hit.v.conditions ? `<br>${esc(hit.v.conditions.split("; ").slice(0, 3).join(", "))}` : ""}`;
+        tip.style.left = Math.min(b.width - 10, hit.x + 10) + "px"; tip.style.top = (hit.y - 30) + "px";
+      }
+      if (varToggle) varToggle.addEventListener("change", () => draw());
+      function tick() { if (!document.body.contains(canvas)) return; if (spin) { ry += 0.006; draw(); } raf = requestAnimationFrame(tick); }
+      canvas.addEventListener("pointerdown", e => { drag = [e.clientX, e.clientY]; spin = false; canvas.setPointerCapture(e.pointerId); box.classList.add("touched"); });
+      canvas.addEventListener("pointermove", e => { if (!drag) { hover(e); return; } if (tip) tip.hidden = true; ry += (e.clientX - drag[0]) * 0.01; rx += (e.clientY - drag[1]) * 0.01; drag = [e.clientX, e.clientY]; draw(); });
+      canvas.addEventListener("pointerup", () => { drag = null; });
+      window.addEventListener("resize", () => { if (document.body.contains(canvas)) { [W, H] = size(); draw(); } });
+      draw(); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick);
+    }
+
+    // ================================================================= evidence map tab
+    // Hand-drawn SVG (no graph library): the same colours and line styles as the Guide's small map,
+    // with labels placed so they never overlap and a fixed text size that does not zoom.
+    let mapBasis = "combined";
+    const FAMILY_COLOR = { "lysosomal storage": "var(--green)", "RASopathies": "var(--blue)", "ciliopathies": "var(--violet)" };
+    const TIER_STYLE = {
+      gene: { stroke: "var(--violet)", fill: "var(--violet-soft)", dash: "" },
+      strong: { stroke: "var(--green)", fill: "var(--green-soft)", dash: "" },
+      moderate: { stroke: "var(--blue)", fill: "var(--blue-soft)", dash: "9 6" },
+      caution: { stroke: "var(--coral)", fill: "var(--coral-soft)", dash: "2 6" }
+    };
+    function renderMap() {
+      view = "map"; setTabs(); $("#shell").hidden = true; $("#mapview").hidden = false; closeDrawer();
+      const f = N.get(focusId);
+      if (f && (!lastModel || lastModel.f.id !== focusId)) lastModel = computeModel(focusId);
+      const focus = mapMode === "focus";
+      $("#mapview").innerHTML = `<section class="mapview">
+        <div class="mapbar"><div><h1>${focus ? "How " + esc(f ? f.label : "") + " connects" : "Disease communities"}</h1>
+          <p>${focus ? "Its closest communities, and the studies and patient groups linked to them. Click any shape for the evidence." : "RarePath groups the diseases into communities from shared genes, processes and signs. Click a disease to open it in the Guide."}</p></div>
+          <div class="seg" role="group" aria-label="Map type"><button type="button" data-mapmode="focus" aria-pressed="${focus}">Around this disease</button><button type="button" data-mapmode="clusters" aria-pressed="${!focus}">All communities</button></div></div>
+        <div class="toggles">${focus
+          ? `<label><input type="checkbox" id="opt-res" checked /> Studies and patient groups</label><label><input type="checkbox" id="opt-care" checked /> Look-alikes</label>`
+          : `<label for="opt-basis">Group by</label><select id="opt-basis"><option value="combined">Biology and signs</option><option value="mechanism">Genes and processes only</option><option value="phenotype">Signs only</option></select>`}</div>
+        <div id="mapbody"></div></section>`;
+      for (const id of ["#opt-res", "#opt-care"]) { const el = $(id); if (el) el.addEventListener("change", drawMap); }
+      const basis = $("#opt-basis"); if (basis) { basis.value = mapBasis; basis.addEventListener("change", () => { mapBasis = basis.value; drawMap(); }); }
+      drawMap();
+    }
+    function drawMap() {
+      const body = $("#mapbody"); if (!body) return;
+      if (mapMode !== "focus") { body.innerHTML = clusterCards(); return; }
+      if (!lastModel) { body.innerHTML = `<div class="fallback">Choose a disease in the Guide first.</div>`; return; }
+      body.innerHTML = focusMap(lastModel, { res: !$("#opt-res") || $("#opt-res").checked, care: !$("#opt-care") || $("#opt-care").checked });
+    }
+    // Text block next to a point, pushed outward from the centre so it never sits on a line.
+    function svgLabel(x, y, a, r, lines, cls) {
+      const c = Math.cos(a), s = Math.sin(a), lh = 17;
+      let anchor = "middle", tx = x, ty;
+      if (Math.abs(c) > 0.2) { anchor = c > 0 ? "start" : "end"; tx = x + (c > 0 ? 1 : -1) * (r + 9); ty = y - ((lines.length - 1) * lh) / 2 + 5; }
+      else if (s > 0) ty = y + r + 18;
+      else ty = y - r - 10 - (lines.length - 1) * lh;
+      return lines.map((t, j) => `<text class="${cls}" x="${tx.toFixed(1)}" y="${(ty + j * lh).toFixed(1)}" text-anchor="${anchor}">${esc(t)}</text>`).join("");
+    }
+    function focusMap(m, opt) {
+      const W = 1200, H = 780, cx = W / 2, cy = H / 2;
+      const items = [...m.main.slice(0, 9), ...(opt.care ? m.caution.slice(0, 3) : [])];
+      const n = items.length;
+      const R1x = 250, R1y = 190, R2x = 470, R2y = 330;
+      const angle = i => -Math.PI / 2 + (2 * Math.PI * i) / Math.max(n, 1) + (n === 2 ? Math.PI / 2 : 0);
+      const pos = items.map((g, i) => { const a = angle(i); return { g, a, x: cx + R1x * Math.cos(a), y: cy + R1y * Math.sin(a) }; });
+      let back = "", front = "";
+      // Resources: studies and patient groups, placed on an outer ring near the communities they cover.
+      if (opt.res) {
+        const res = [...new Set([...m.studyIds, ...m.yourOrgs, ...m.relatedOrgs])].filter(id => N.has(id));
+        const placed = res.map(id => {
+          const targets = new Set(edgesOf(id).filter(e => (STUDY_LINK.has(e.type) || e.type === "SUPPORTS") && e.source === id).map(e => e.target));
+          const hits = pos.filter(p => [...p.g.memberIds, p.g.key].some(x => targets.has(x)));
+          const mine = m.scope.inherit.some(x => targets.has(x));
+          const sx = hits.reduce((s, p) => s + Math.cos(p.a), 0), sy = hits.reduce((s, p) => s + Math.sin(p.a), 0);
+          return { id, hits, mine, want: hits.length ? Math.atan2(sy, sx) : NaN };
+        }).filter(r => r.hits.length || r.mine);
+        // Spread around the ring: wanted angle where there is one, otherwise the largest free gap.
+        const gap = Math.min(0.55, (2 * Math.PI) / Math.max(placed.length, 1));
+        const free = placed.filter(r => isNaN(r.want));
+        free.forEach((r, k) => { r.want = Math.PI / 2 + (k - (free.length - 1) / 2) * gap; });
+        placed.sort((a, b) => a.want - b.want);
+        for (let pass = 0; pass < 40; pass++) for (let i = 0; i < placed.length; i++) {
+          const a = placed[i], b = placed[(i + 1) % placed.length]; if (placed.length < 2) break;
+          let d = b.want - a.want; if (i === placed.length - 1) d += 2 * Math.PI;
+          if (d < gap) { const push = (gap - d) / 2; a.want -= push; b.want += push; }
+        }
+        for (const r of placed) {
+          const a = r.want, x = cx + R2x * Math.cos(a), y = cy + R2y * Math.sin(a), node = N.get(r.id);
+          const study = node.kind === "Study";
+          for (const p of r.hits) back += `<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}" class="resline" />`;
+          if (r.mine) back += `<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${cx}" y2="${cy}" class="resline mine" />`;
+          const name = study ? studyShort(r.id).split(",")[0] : (node.props && node.props.short_name) || node.label;
+          const shape = study
+            ? `<rect x="${(x - 11).toFixed(1)}" y="${(y - 11).toFixed(1)}" width="22" height="22" rx="5" class="res study" />`
+            : `<rect x="${(x - 10).toFixed(1)}" y="${(y - 10).toFixed(1)}" width="20" height="20" rx="3" class="res org" transform="rotate(45 ${x.toFixed(1)} ${y.toFixed(1)})" />`;
+          front += `<g class="nodeg resg" data-res="${esc(r.id)}" tabindex="0" role="button" aria-label="${esc(study ? "Study" : "Patient group")}: ${esc(node.label)}">${shape}
+            ${svgLabel(x, y, a, 12, wrap(name, 22), "rlbl")}</g>`;
+        }
+      }
+      for (const p of pos) {
+        const st = TIER_STYLE[p.g.tier], w = p.g.tier === "caution" ? 2 : 2 + 3 * Math.min(1, p.g.score);
+        back += `<line x1="${cx}" y1="${cy}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}" stroke="${st.stroke}" stroke-width="${w.toFixed(1)}" stroke-dasharray="${st.dash}" stroke-linecap="round" />`;
+        const r = p.g.tier === "caution" ? 15 : 18 + 8 * Math.min(1, p.g.score);
+        front += `<g class="nodeg" data-group="${esc(p.g.key)}" tabindex="0" role="button" aria-label="${esc(p.g.title)}: ${esc(TIER[p.g.tier].text)}">
+          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${r.toFixed(1)}" fill="${st.fill}" stroke="${st.stroke}" stroke-width="2.5" />
+          ${svgLabel(p.x, p.y, p.a, r, wrap(p.g.title, 20), "dlbl")}</g>`;
+      }
+      const sn = shortName(m.f), fs = sn.length <= 6 ? 24 : sn.length <= 10 ? 19 : 16, cr = Math.max(52, Math.ceil(sn.length * fs * 0.3) + 14);
+      const center = `<circle cx="${cx}" cy="${cy}" r="${cr + 8}" fill="none" stroke="var(--green-soft)" stroke-width="8" /><circle cx="${cx}" cy="${cy}" r="${cr}" fill="var(--green-dark)" />
+        <text x="${cx}" y="${cy + fs / 3}" text-anchor="middle" fill="#ffffff" style="font:800 ${fs}px var(--font-display, sans-serif)">${esc(sn)}</text>`;
+      const legend = `<div class="maplegend">
+        <span><i class="lg-line" style="border-color:var(--violet)"></i>Same gene</span>
+        <span><i class="lg-line" style="border-color:var(--green)"></i>Strong link</span>
+        <span><i class="lg-line dashed" style="border-color:var(--blue)"></i>Moderate link or needs review</span>
+        <span><i class="lg-line dotted" style="border-color:var(--coral)"></i>Look similar only</span>
+        ${opt.res ? `<span><i class="lg-study"></i>Study</span><span><i class="lg-org"></i>Patient group</span>` : ""}
+        <span class="lg-note">Thicker line = stronger link. Grey lines join a study or group to the diseases it covers.</span></div>`;
+      if (!n) return `<div class="fallback">RarePath has no sourced link from ${esc(m.f.label)} to another disease yet.</div>`;
+      return `<div class="bigmap"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.f.label)} and its ${n} closest communities">${back}${center}${front}</svg></div>${legend}`;
+    }
+    function resourceDrawer(id) {
+      const s = N.get(id); if (!s) return;
+      const st = s.study || {}, p = s.props || {};
+      const covers = edgesOf(id).filter(e => (STUDY_LINK.has(e.type) || e.type === "SUPPORTS") && e.source === id).map(e => label(e.target));
+      const url = s.kind === "Study" ? `https://clinicaltrials.gov/study/${s.external_id}` : s.source_url;
+      let html = `<div class="dsec"><p><b>${esc(st.brief_title || s.label)}</b></p>
+        ${s.kind === "Study" ? `<p>${esc(cap(pretty(st.overall_status || "status unknown")))} on ${esc((st.retrieved_at || p.checked_on || "").slice(0, 10))}${st.lead_sponsor ? " · " + esc(st.lead_sponsor) : ""}</p>` : ""}
+        ${p.claim ? `<p>${esc(p.claim)}</p>` : ""}</div>
+        <div class="dsec"><h3>${s.kind === "Study" ? "Includes" : "Supports families affected by"}</h3><div class="tags">${covers.map(c => `<span>${esc(c)}</span>`).join("")}</div></div>
+        <div class="dsec"><h3>Source</h3><p><a href="${esc(url)}" target="_blank" rel="noopener">${esc(url.replace(/^https?:\/\//, ""))} ↗</a></p>
+        ${s.kind === "Study" ? `<p class="warn">Status and eligibility can change. Check the live record before contacting the study team.</p>` : ""}</div>`;
+      html += feedbackBlock("resource", id);
+      openDrawer(s.kind === "Study" ? "Study" : "Patient group", s.kind === "Study" ? studyShort(id).split(",")[0] : s.label, html);
+    }
+    function clusterCards() {
+      const ds = DATA.nodes.filter(n => n.kind === "Disease" && n.props && n.props.cluster && n.props.cluster[mapBasis]);
+      const groups = new Map();
+      for (const n of ds) { const c = n.props.cluster[mapBasis]; if (!groups.has(c)) groups.set(c, []); groups.get(c).push(n); }
+      const famOrder = Object.keys(FAMILY_COLOR);
+      const famOf = ms => { const fs = [...new Set(ms.map(n => n.props.family).filter(Boolean))]; return fs.length === 1 ? fs[0] : ""; };
+      const cards = [...groups.values()].filter(ms => ms.length > 1)
+        .sort((a, b) => famOrder.indexOf(famOf(a)) - famOrder.indexOf(famOf(b)) || b.length - a.length);
+      const alone = [...groups.values()].filter(ms => ms.length === 1).map(ms => ms[0]);
+      const chip = n => `<button type="button" class="cchip${n.id === focusId || childrenOf(focusId).includes(n.id) ? " here" : ""}" data-go="${esc(n.id)}">${esc(n.label)}</button>`;
+      const summary = ms => {
+        const ids = new Set(ms.map(n => n.id)), counts = { gene: 0, mech: 0, signs: 0 };
+        for (const e of DATA.edges) if (SIM.has(e.type) && ids.has(e.source) && ids.has(e.target)) {
+          const rc = (e.props || {}).relation_class || "";
+          if (rc.startsWith("same_gene")) counts.gene++; else if (rc.startsWith("mechanism")) counts.mech++; else if (rc === "phenotype_neighbor_weak_mechanism") counts.signs++;
+        }
+        const total = counts.gene + counts.mech + counts.signs;
+        return `${total} ${total === 1 ? "link" : "links"} inside: ` + [counts.gene && `${counts.gene} same gene`, counts.mech && `${counts.mech} shared process`, counts.signs && `${counts.signs} needs review`].filter(Boolean).join(" · ");
+      };
+      const card = ms => {
+        const fam = famOf(ms);
+        return `<article class="ccard" style="--fam:${FAMILY_COLOR[fam] || "var(--faint)"}">
+          <header><span class="cfam">${esc(cap(fam || "mixed families"))}</span><span class="ccount">${ms.length} diseases</span></header>
+          <div class="cchips">${ms.sort((a, b) => a.label.localeCompare(b.label)).map(chip).join("")}</div>
+          <p class="csum">${esc(summary(ms))}</p></article>`;
+      };
+      return `<div class="cgrid">${cards.map(card).join("")}
+        ${alone.length ? `<article class="ccard alone"><header><span class="cfam">On their own</span><span class="ccount">${alone.length} diseases</span></header>
+          <div class="cchips">${alone.sort((a, b) => a.label.localeCompare(b.label)).map(chip).join("")}</div>
+          <p class="csum">No link strong enough to join a community with this grouping. Look-alikes never join one.</p></article>` : ""}</div>`;
+    }
+
+    // ================================================================= model for one disease
+    let view = "guide", focusId = null, mapMode = "focus", lastModel = null;
+    function computeModel(id) {
+      const f = N.get(id);
+      const scope = scopeOf(id);
+      const { main, caution, focusGenes } = communities(scope);
+      const yourOrgs = [...orgsOf(scope.inherit)];
+      const top = main.slice(0, 4);
+      const relatedOrgs = [...new Set(top.flatMap(g => g.orgs))].filter(o => !yourOrgs.includes(o));
+      const studyIds = [...new Set([...studiesOf(scope.inherit), ...top.flatMap(g => g.studies)])];
+      const formIds = scope.members.length > 1 ? scope.members.slice(1) : [...scope.parents, ...scope.siblings];
+      return { f, scope, main, caution, focusGenes, signs: topSigns(scope.members, 6), yourOrgs, relatedOrgs, studyIds,
+        actionable: main.filter(g => g.studies.length || g.orgs.length), formIds };
+    }
+    const DOT = { gene: "d-gene", strong: "d-strong", moderate: "d-moderate", caution: "d-caution" };
+    const PILL = { gene: "p-gene", strong: "p-strong", moderate: "p-moderate", caution: "p-caution" };
+    function shortWhy(g) {
+      if (g.sharedGenes.length) return g.pct >= 0.75 ? `Same gene (${list(g.sharedGenes)}), similar signs` : `Same gene (${list(g.sharedGenes)}), a different disease`;
+      const p = g.top ? g.top.props : {};
+      const bits = [];
+      const pw = informativePathways(p.shared_pathways, p.comparison_set)[0];
+      if (!pw && (p.shared_mondo_group || []).length && g.tier !== "caution") bits.push("same disease series");
+      else if (!pw && (p.shared_mondo_class || []).length && g.tier !== "caution") bits.push(`also a ${p.shared_mondo_class[0].label}, needs review`);
+      if (pw && g.tier !== "caution") bits.push(softLower(pw.label.replace(/\bdegradation\b/i, "breakdown")));
+      const sg = clinicalSigns(p.shared_phenotypes)[0];
+      if (sg && g.pct >= 0.5) bits.push(sg.label.toLowerCase());
+      if (g.studies.length) bits.push("already studied together");
+      return cap(bits.join(" · ")) || "Shares research resources";
+    }
+    // Lower-case a leading word only when it is an ordinary word ("Sialic" -> "sialic"), keep "CS/DS", "GM2".
+    function softLower(s) {
+      return String(s).replace(/^([A-Z])([a-z])/, (_, a, b) => a.toLowerCase() + b);
+    }
+    function nextLine(m) {
+      const g = m.actionable[0]; if (!g) return null;
+      const their = g.orgs[0] ? label(g.orgs[0]) : "the study team";
+      const study = g.studies[0] ? studyShort(g.studies[0]).split(",")[0] : "";
+      return study ? `Talk to ${their} about comparing data from the ${study} study.` : `Talk to ${their} about sharing what each community collects.`;
+    }
+
+    // ================================================================= thread
+    const thread = () => $("#thread-inner");
+    function scrollDown() { const t = $("#thread"); requestAnimationFrame(() => { t.scrollTop = t.scrollHeight; }); }
+    function postBot(html, cls) { const el = document.createElement("div"); el.className = "bot"; el.innerHTML = `<div class="who"><i>RP</i>RarePath</div><div class="bubble ${cls || ""}">${html}</div>`; thread().appendChild(el); scrollDown(); return el; }
+    function postMe(text) { const el = document.createElement("div"); el.className = "me"; el.textContent = text; thread().appendChild(el); scrollDown(); }
+    function postDivider(text) { const el = document.createElement("div"); el.className = "divider"; el.textContent = text; thread().appendChild(el); }
+
+    function hello() {
+      // One starting point per disease family, plus the counterexample (Canavan).
+      const picks = ["MONDO:0018149", "MONDO:0010100", "MONDO:0008104", "MONDO:0008854", "MONDO:0012432", "MONDO:0010079"].filter(id => N.has(id));
+      postBot(`<div class="hello"><h1>Which rare disease is your family facing?</h1>
+        <p>Type its name below. RarePath shows which other communities share its biology, what already exists, and one step you can take. Every answer shows its source.</p>
+        <div class="chips">${picks.map(id => `<button type="button" data-go="${esc(id)}">${esc(label(id))}</button>`).join("")}</div>
+        ${recentHtml(readRecent())}</div>`);
+    }
+
+    function selectDisease(id, opts = {}) {
+      if (!N.has(id) || N.get(id).kind !== "Disease") return;
+      showGuide();
+      const switching = focusId && focusId !== id;
+      focusId = id;
+      remember(id);
+      lastModel = computeModel(id);
+      chatState.facts = buildFacts(); chatState.history = [];
+      if (switching) postDivider(`Now looking at ${label(id)}`);
+      const card = postBot(summaryHtml(lastModel, opts.example));
+      requestAnimationFrame(() => requestAnimationFrame(() => { $("#thread").scrollTop = Math.max(0, card.offsetTop - 16); }));
+      renderMapPanel();
+      try { const u = new URL(location.href); u.searchParams.set("focus", id); u.searchParams.delete("q"); history.replaceState(null, "", u); } catch (_) {}
+    }
+
+    function summaryHtml(m, example) {
+      const f = m.f;
+      if (!m.main.length && !m.caution.length) {
+        return `<div class="summary-head"><h2>${esc(f.label)}</h2>${m.focusGenes.length ? `<span class="gene">Gene ${list(geneButtons(m.focusGenes))}</span>` : ""}</div>
+          <div class="gap"><h3>No related community found yet</h3><p>RarePath has no sourced link from ${esc(f.label)} to another disease yet. Ask below what to do next, or try the gene name.</p></div>`;
+      }
+      const top3 = m.main.slice(0, 3);
+      const care = m.caution.slice(0, 3);
+      const nl = nextLine(m);
+      const extras = [];
+      if (m.main.length > 3) extras.push(["groups", `${m.main.length - 3} more ${m.main.length - 3 === 1 ? "community" : "communities"}`]);
+      if (m.studyIds.length) extras.push(["studies", `${m.studyIds.length} existing ${m.studyIds.length === 1 ? "study" : "studies"}`]);
+      if (m.yourOrgs.length || m.relatedOrgs.length) extras.push(["orgs", "Patient groups"]);
+      if (m.signs.length) extras.push(["signs", "Typical signs"]);
+      return `${example ? `<span class="example">Example</span>` : ""}
+        <div class="summary-head"><h2>${esc(f.label)}</h2>${m.focusGenes.length ? `<span class="gene">Caused by changes in ${list(geneButtons(m.focusGenes))}</span>` : ""}${familyOf(f) ? `<span class="fam">${esc(cap(familyOf(f)))}</span>` : ""}</div>
+        <div class="label">Closest communities</div>
+        <ul class="matches">${top3.map(g => `<li><button class="match" type="button" data-group="${esc(g.key)}">
+          <span class="dot ${DOT[g.tier]}" aria-hidden="true"></span>
+          <span><strong>${esc(g.title)}</strong><span class="why">${esc(shortWhy(g))}</span></span>
+          <span class="pill ${PILL[g.tier]}">${esc(TIER[g.tier].text)}</span><span class="chev" aria-hidden="true">›</span></button></li>`).join("")}</ul>
+        ${care.length ? `<p class="careful">Look similar, but different biology: ${care.map(g => `<button type="button" data-group="${esc(g.key)}">${esc(g.title)}</button>`).join(", ")}</p>` : ""}
+        ${nl ? `<div class="next"><div><div class="label">Your next step</div><p>${esc(nl)}</p></div><button type="button" data-more="draft">See the plan</button></div>` : ""}
+        <div class="inline-map">${miniMap(f, m.main.slice(0, 4), m.caution.slice(0, 2))}</div>
+        ${extras.length ? `<div class="more"><div class="chips quiet">${extras.map(([k, t]) => `<button type="button" data-more="${k}">${esc(t)}</button>`).join("")}</div></div>` : ""}`;
+    }
+
+    function moreCard(kind) {
+      const m = lastModel; if (!m) return;
+      const f = m.f;
+      if (kind === "draft") { openDrawer("Your next step", label(focusId), nextStep(f, m.scope, m.actionable, m.yourOrgs, m.focusGenes)); return; }
+      if (kind === "groups") {
+        postBot(`<div class="label">All related communities</div><ul class="matches">${m.main.slice(3).map(g => `<li><button class="match" type="button" data-group="${esc(g.key)}"><span class="dot ${DOT[g.tier]}"></span><span><strong>${esc(g.title)}</strong><span class="why">${esc(shortWhy(g))}</span></span><span class="pill ${PILL[g.tier]}">${esc(TIER[g.tier].text)}</span><span class="chev">›</span></button></li>`).join("")}</ul>`);
+      } else if (kind === "studies") {
+        const mine = new Set(m.scope.inherit);
+        postBot(`<div class="label">Studies that already exist</div><ul class="rows">${m.studyIds.map(id => {
+          const s = N.get(id), st = s.study || {};
+          const covers = edgesOf(id).filter(e => STUDY_LINK.has(e.type)).map(e => e.target);
+          return `<li class="row"><b>${esc(studyShort(id).split(",")[0] === s.external_id ? (st.brief_title || s.label) : studyShort(id).split(",")[0] + " · " + (st.brief_title || s.label))}</b>
+            <span>${esc(cap(pretty(st.overall_status || "status unknown")))} on ${esc((st.retrieved_at || "").slice(0, 10))}${st.lead_sponsor ? " · " + esc(st.lead_sponsor) : ""}</span>
+            <div class="tags">${covers.map(c => `<span class="${mine.has(c) ? "mine" : ""}">${esc(label(c))}</span>`).join("")}</div>
+            <a href="https://clinicaltrials.gov/study/${esc(s.external_id)}" target="_blank" rel="noopener">${esc(s.external_id)} on ClinicalTrials.gov ↗</a></li>`;
+        }).join("")}</ul><p class="note">Status can change. Check the live record before contacting a study team.</p>`);
+      } else if (kind === "orgs") {
+        postBot(`<div class="label">Patient groups</div><ul class="rows">${[...m.yourOrgs.map(o => [o, "Your community"]), ...m.relatedOrgs.map(o => [o, "Related community"])].map(([o, k]) => {
+          const n = N.get(o); const serves = edgesOf(o).filter(e => e.type === "SUPPORTS").map(e => label(e.target));
+          return `<li class="row"><b>${esc(n.label)}</b><span>${esc(k)} · supports families with ${esc(list(serves))}</span>${n.source_url ? `<a href="${esc(n.source_url)}" target="_blank" rel="noopener">Website ↗</a>` : ""}</li>`;
+        }).join("")}</ul>`);
+      } else if (kind === "signs") {
+        postBot(`<div class="label">Typical signs of ${esc(f.label)}</div><p>${esc(cap(list(m.signs.map(s => s.toLowerCase()))))}.</p><p class="note">From HPO, the Human Phenotype Ontology. These are the rarest recorded signs, not a checklist for diagnosis.</p>`);
+      }
+    }
+
+    function chooserCard(n) {
+      const ds = diseasesFor(n);
+      postBot(ds.length
+        ? `<p><b>${esc(n.label)}</b> is linked to ${ds.length} disease${ds.length === 1 ? "" : "s"}. Which one?</p><div class="chips">${ds.map(id => `<button type="button" data-go="${esc(id)}">${esc(label(id))}</button>`).join("")}</div>
+          ${n.kind === "Gene" ? `<p style="margin-top:10px"><button type="button" class="linkbtn" data-gene="${esc(n.label)}">About the ${esc(n.label)} gene and its protein, with a 3D view →</button></p>` : ""}`
+        : `<p>RarePath has <b>${esc(n.label)}</b>, but no disease is linked to it yet.</p>`);
+    }
+    function gapCard(text) {
+      const k = (DATA.meta && DATA.meta.kinds) || {};
+      postBot(`<div class="gap"><h3>I couldn't find “${esc(text)}”</h3><p>RarePath only shows what it can source. This snapshot covers ${k.Disease || 0} diseases and ${k.Gene || 0} genes. You could try:</p>
+        <ul><li>the gene named in the genetic test report</li><li>another name for the disease</li><li>one distinctive symptom</li></ul></div>`);
+    }
+
+    // ================================================================= map panel
+    function renderMapPanel() {
+      const m = lastModel; if (!m) return;
+      $("#mappanel").innerHTML = `<h2>How ${esc(m.f.label)} connects</h2><p>Tap a circle to see why.</p>
+        ${miniMap(m.f, m.main.slice(0, 4), m.caution.slice(0, 2))}
+        <div class="key"><span><i class="d-gene"></i>same gene</span><span><i class="d-strong"></i>strong link</span><span><i class="d-moderate"></i>moderate link</span><span><i class="d-caution"></i>look similar only</span></div>
+        <button class="linkbtn" type="button" id="open-map">Open the full evidence map</button>
+        <p class="trust">Links come from MONDO, HPO, Reactome, ClinicalTrials.gov and patient-group websites, or are computed by RarePath from them. Not medical advice. Data from ${esc(snapshotDate())}${DATA.meta && DATA.meta.source === "neo4j" ? ", live from Neo4j" : ""}${graphVersion() ? `, graph <span title="${esc(buildText())}">${esc(graphVersion())}</span>` : ""}.</p>`;
+    }
+
+    // ================================================================= asking
+    const chatState = { facts: [], history: [], ai: false, model: "", busy: false };
+    function suggestionsFor() {
+      const m = lastModel; if (!m) return [];
+      const out = [];
+      if (m.main[0]) out.push(`How is ${m.f.label} different from ${m.main[0].title}?`);
+      out.push("What should we do first?", "Explain this in simple words");
+      if (m.caution[0]) out.push(`Why be careful with ${m.caution[0].title}?`);
+      return out.slice(0, 3);
+    }
+    function postAnswer(result, meta) {
+      const used = (result.fact_ids || []).map(id => chatState.facts.find(f => f.id === id)).filter(Boolean);
+      const follow = (result.follow_ups && result.follow_ups.length ? result.follow_ups : suggestionsFor()).slice(0, 3);
+      postBot(`${renderAnswer(result.answer || "")}
+        ${used.length ? `<div class="sources">${used.map(f => `<button type="button" data-fact="${f.id}"><b>${f.id.slice(1)}</b>${esc(f.title || f.text.slice(0, 70))}</button>`).join("")}</div>` : ""}
+        ${meta ? `<div class="meta">${esc(meta)}</div>` : ""}
+        <button type="button" class="ansfb" data-fb="answer_unsupported" data-fbk="answer" data-fbt="${esc(focusId || "")}" data-fbfacts="${esc((result.fact_ids || []).join(","))}" data-fbsrc="${result.source === "openai" ? "openai" : "offline"}">This answer says more than its sources</button>
+        ${follow.length ? `<div class="chips quiet" style="margin-top:12px">${follow.map(q => `<button type="button" data-ask="${esc(q)}">${esc(q)}</button>`).join("")}</div>` : ""}`);
+    }
+    async function ask(q) {
+      if (!lastModel) { gapCard(q); return; }
+      chatState.busy = true; $("#send").disabled = true;
+      const wait = postBot(`<span class="typing" aria-label="Checking the sources"><i></i><i></i><i></i></span>`);
+      let result = null, meta = "";
+      if (chatState.ai) {
+        try {
+          const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 90000);
+          const res = await fetch("api/chat", { method: "POST", signal: ctrl.signal, headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question: q, focus_id: focusId, focus_label: label(focusId), history: chatState.history.slice(-6),
+              facts: chatState.facts.map(f => ({ id: f.id, text: f.text, refs: f.refs, computed: !!f.computed })) }) });
+          clearTimeout(t);
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || res.status);
+          result = data; meta = `Answered by ${data.model}, using ${data.fact_ids.length} of RarePath's facts${data.graph_version ? ` (graph ${data.graph_version})` : ""}`;
+          if (data.graph_version && graphVersion() && data.graph_version !== graphVersion()) meta += ". The server's graph differs from this page's, so reload to see the same data";
+        } catch (err) { meta = "The AI could not answer just now, so this answer was put together from RarePath's facts directly"; }
+      }
+      if (!result) { result = offlineAnswer(q); if (!meta) meta = "Put together from RarePath's facts"; }
+      wait.remove();
+      postAnswer(result, meta);
+      chatState.history.push({ role: "user", text: q }, { role: "assistant", text: result.answer });
+      chatState.busy = false; $("#send").disabled = false;
+    }
+    function handleInput(text) {
+      const q = text.trim(); if (!q || chatState.busy) return;
+      postMe(q);
+      const isQuestion = /\?|^(what|why|how|who|which|when|where|can|could|should|is|are|do|does|tell|explain|help)\b/i.test(q);
+      const hits = search(q);
+      const top = hits[0];
+      if (!isQuestion && top && q.split(/\s+/).length <= 6) {
+        const strong = scoreNode(top, norm(q)) >= 58;
+        if (strong && top.kind === "Disease") { selectDisease(top.id); return; }
+        if (strong) { chooserCard(top); return; }
+      }
+      if (!lastModel || (!isQuestion && !hits.length && q.split(/\s+/).length <= 4)) { gapCard(q); return; }
+      ask(q);
+    }
+
+    // ================================================================= header switcher
+    let active = -1;
+    function renderDropdown(text) {
+      const dd = $("#dropdown");
+      if (!text.trim()) { dd.hidden = true; $("#q").setAttribute("aria-expanded", "false"); return; }
+      const hits = search(text); active = 0;
+      dd.innerHTML = hits.length ? hits.map((n, i) => {
+        const extra = n.kind === "Disease" ? genesOf([n.id]).join(", ") : `${diseasesFor(n).length} linked`;
+        return `<li><button type="button" role="option" data-pick="${esc(n.id)}" class="${i === 0 ? "active" : ""}"><span>${esc(n.label)}</span><small>${esc(KIND_TEXT[n.kind] || n.kind)}${extra ? " · " + esc(extra) : ""}</small></button></li>`;
+      }).join("") : `<li><button type="button" data-gap="${esc(text)}"><span>No match for “${esc(text)}”</span></button></li>`;
+      dd.hidden = false; $("#q").setAttribute("aria-expanded", "true");
+    }
+    function pick(id) {
+      $("#dropdown").hidden = true; $("#q").value = "";
+      const n = N.get(id); if (!n) return;
+      showGuide();
+      if (n.kind === "Disease") selectDisease(id); else chooserCard(n);
+    }
+
+    // ================================================================= tabs
+    function setTabs() { $("#tab-guide").setAttribute("aria-selected", String(view === "guide")); $("#tab-map").setAttribute("aria-selected", String(view === "map")); }
+    function showGuide() { view = "guide"; setTabs(); $("#shell").hidden = false; $("#mapview").hidden = true; }
+    function go(id) { selectDisease(id); }
+
+    function buildFacts() {
+      const m = lastModel; if (!m) return [];
+      const facts = []; let i = 0;
+      const add = (text, refs, extra) => {
+        const r = [...new Set(refs.filter(Boolean))];
+        if (!text || !r.length) return null;
+        const fact = Object.assign({ id: "F" + (++i), text, refs: r }, extra || {});
+        facts.push(fact); return fact;
+      };
+      const f = m.f;
+      const geneEdges = m.scope.members.flatMap(id => edgesOf(id).filter(e => (e.type === "HAS_GENE" || e.type === "INVOLVES_GENE") && e.source === id).map(e => e.id));
+      if (m.focusGenes.length) add(`${f.label} is caused by changes in the ${list(m.focusGenes)} gene.`, geneEdges, { title: `${f.label}: cause` });
+      if (m.formIds.length) {
+        const isa = [...m.scope.members, ...m.formIds].flatMap(id => edgesOf(id).filter(e => e.type === "IS_A").map(e => e.id));
+        add(`${f.label} ${m.scope.members.length > 1 ? "has these forms" : "is related to these forms"}: ${list(m.formIds.map(label))}.`, isa, { title: "Forms of the disease" });
+      }
+      const fam = familyOf(f);
+      if (fam) {
+        const peers = DATA.nodes.filter(n => n.kind === "Disease" && n.props && n.props.family === fam && !n.props.disease_group).length;
+        add(`RarePath files ${f.label} under its ${fam} family (${peers} diseases in this snapshot). Diseases in one family are compared with each other first.`,
+          [f.id], { title: `Disease family: ${fam}` });
+      }
+      if (m.signs.length) {
+        const pe = m.scope.members.flatMap(id => edgesOf(id).filter(e => e.type === "HAS_PHENOTYPE" && m.signs.includes(label(e.target))).map(e => e.id));
+        add(`The most distinctive signs recorded for ${f.label} in HPO are: ${list(m.signs.map(s => s.toLowerCase()))}.`, pe, { title: "Distinctive signs" });
+      }
+      // Names people actually type: "tay sachs", "sandhoff", "gaucher", "morquio", "gm2".
+      const terms = ids => [...new Set(ids.flatMap(id => (N.get(id).search || []).map(norm))
+        .filter(t => t && !/^(mondo|omim|orpha|gene symbol|ncbigene)/.test(t))
+        .flatMap(t => [t, t.replace(/\b(disease|syndrome|type|form|variant|deficiency)\b.*$/, "").trim(), ...(t.match(/\b[a-z]+\d\w*\b/g) || [])]))]
+        .filter(t => t.length >= 3 && !/^(type|disease|the|and)$/.test(t));
+      for (const g of [...m.main.slice(0, 8), ...m.caution.slice(0, 5)]) {
+        const { r, diff } = reasons(g, m.focusGenes);
+        const members = g.memberIds.length > 1 ? ` (${g.memberIds.map(label).join(", ")})` : "";
+        const care = g.tier === "caution" ? ` RarePath advises handling this one with care: ${cautionLine(g).toLowerCase()}.` : "";
+        add(`${g.title}${members} has a "${TIER[g.tier].text.toLowerCase()}" with ${f.label}. ${[...r, ...diff].join(" ")}${care}`,
+          [...g.edges, ...g.seedEdges].map(e => e.id), { group: g.key, title: g.title, computed: g.edges.length > 0, match: terms([...g.memberIds, g.key].filter(id => N.has(id))), caution: g.tier === "caution" });
+      }
+      for (const sid of m.studyIds) {
+        const s = N.get(sid), st = s.study || {};
+        const covers = edgesOf(sid).filter(e => STUDY_LINK.has(e.type));
+        add(`${st.brief_title || s.label} (${s.external_id}) is ${st.study_type ? "an " + pretty(st.study_type) + " study" : "a study"}${st.lead_sponsor ? " run by " + st.lead_sponsor : ""} that includes ${list(covers.map(e => label(e.target)))}. Its status on ${(st.retrieved_at || "").slice(0, 10)} was "${pretty(st.overall_status || "unknown")}". Status and eligibility must be checked on the live ClinicalTrials.gov record.`,
+          covers.map(e => e.id), { title: studyShort(sid), url: `https://clinicaltrials.gov/study/${s.external_id}`, study: true });
+      }
+      for (const o of [...m.yourOrgs, ...m.relatedOrgs]) {
+        const sup = edgesOf(o).filter(e => e.type === "SUPPORTS");
+        add(`${label(o)} is a patient organisation that supports families affected by ${list(sup.map(e => label(e.target)))}${m.yourOrgs.includes(o) ? ` (this is ${f.label}'s own community)` : ""}. Website: ${N.get(o).source_url || "not recorded"}.`,
+          sup.map(e => e.id), { title: label(o), url: N.get(o).source_url, org: true });
+      }
+      const g = m.actionable[0];
+      if (g) {
+        const study = g.studies[0] ? N.get(g.studies[0]) : null;
+        const theirOrg = g.orgs[0] ? label(g.orgs[0]) : "the study team";
+        const yourOrg = m.yourOrgs[0] ? label(m.yourOrgs[0]) : "your patient group";
+        const studyRefs = study ? edgesOf(study.id).filter(e => STUDY_LINK.has(e.type)).map(e => e.id) : [];
+        add(`RarePath's suggested first step: ${theirOrg} and ${yourOrg} could compare outcome measures, registry fields and age ranges${study ? ` in ${(study.study || {}).brief_title || study.label} (${study.external_id})` : ""}. Before joining forces, an expert should check whether the study is still running, whether age ranges and eligibility overlap, that the causal genes differ (so sharing data does not mean sharing a treatment), and what data consent allows each group to share. A draft message is in step 4 of the guide.`,
+          [...g.edges, ...g.seedEdges].map(e => e.id).concat(studyRefs), { title: "Suggested next step", computed: true, next: true });
+      }
+      return facts;
+    }
+
+    function suggestions() {
+      const m = lastModel; if (!m) return [];
+      const short = m.f.label;
+      const out = [`Who is most like ${short}, and why?`];
+      if (m.main[0]) out.push(`How is ${short} different from ${m.main[0].title}?`);
+      out.push("What research already exists that we could use?", "What should we do first?");
+      if (m.caution[0]) out.push(`Why be careful with ${m.caution[0].title}?`);
+      out.push(`Explain ${short} in simple words`);
+      return out.slice(0, 5);
+    }
+
+    function renderAnswer(text) {
+      const safe = esc(text).replace(/\[(F\d+(?:\s*,\s*F\d+)*)\]/g, (_, ids) => ids.split(",").map(x => x.trim()).map(id => `<button class="cite" type="button" data-fact="${id}" aria-label="Source ${id.slice(1)}">${id.slice(1)}</button>`).join(""));
+      return safe.split(/\n{2,}/).map(p => `<p>${p.replace(/\n/g, "<br />")}</p>`).join("");
+    }
+    function offlineAnswer(q) {
+      const n = norm(q), facts = chatState.facts, m = lastModel;
+      const has = (...w) => w.some(x => n.includes(x));
+      const pickF = pred => facts.filter(pred);
+      const say = (lead, fs, tail) => ({ answer: [lead, ...fs.map(f => `${f.text} [${f.id}]`), tail].filter(Boolean).join("\n\n"), fact_ids: fs.map(f => f.id) });
+      const gene = pickF(f => /is caused by changes/.test(f.text))[0];
+      const next = pickF(f => f.next)[0];
+      const groups = pickF(f => f.group && !f.caution);
+      const careful = pickF(f => f.caution);
+      // A disease name in the question counts only if it is not the disease being viewed ("Noonan" while on Noonan 1).
+      const own = norm([m ? m.f.label : "", ...(m ? (m.f.search || []) : [])].join(" "));
+      const named = pickF(f => f.group && (f.match || []).some(t => n.includes(t) && !own.includes(t)));
+      const studies = pickF(f => f.study);
+      if (has("join", "take part", "particip", "eligib", "enrol", "enroll", "qualif", "sign up")) {
+        return say("RarePath cannot say whether someone can join a study. Eligibility depends on age, diagnosis and the study's current status, so check with the study team and the live ClinicalTrials.gov record, and with your doctor. What RarePath has on record:", studies.slice(0, 2));
+      }
+      if (has("treat", "cure", "drug", "therap", "medicine", "medication", "inhibitor", "dose", "should we start", "should we try", "same treatment")) {
+        const lead = "RarePath cannot say whether a treatment will work or should be started. That is a decision for your doctors. A link between diseases is a reason to compare research, not evidence that a treatment transfers.";
+        const lookalike = named.find(f => f.caution);
+        if (lookalike) return say(lead + " Here the two diseases only look similar; their biology is different:", [lookalike]);
+        return say(lead + " What the records do show:", named.length ? [gene, named[0]].filter(Boolean) : [gene, groups[0]].filter(Boolean));
+      }
+      // Whole words only: "cost" must not match "Costello", "die" must not match "studies".
+      const word = (...ws) => ws.some(w => new RegExp(`\\b${w}\\b`).test(n));
+      const scope = [["life expectancy", "prognosis", "survival", "how long will", "lifespan", "die", "dies"], ["how many people", "how many patients", "prevalence", "incidence", "how common", "how rare"],
+        ["hospital", "hospitals", "clinic", "clinics", "doctor near", "best doctor", "specialist centre", "specialist center", "near me", "in beijing"], ["cost", "costs", "price", "insurance", "pay for"]];
+      const topic = scope.findIndex(ws => word(...ws));
+      if (topic >= 0) {
+        const where = ["Natural-history studies and your care team are the right sources for prognosis.", "Orphanet and GARD publish prevalence estimates.",
+          "Patient organisations usually know the specialist centres; RarePath lists them under Patient groups.", "Your care team or patient organisation can advise on costs and coverage."][topic];
+        return say(`RarePath does not record ${["life expectancy or prognosis", "how many people have a disease", "hospitals or doctors", "costs or insurance"][topic]}, so it cannot answer that. ${where} What RarePath does have:`,
+          [gene, topic === 2 ? pickF(f => f.org)[0] : studies[0]].filter(Boolean));
+      }
+      if (has("registry", "biorepository", "biobank", "natural history") && studies.length) return say("This is the existing work RarePath has on record:", studies.slice(0, 3));
+      if (named.length) return say(`Here is what RarePath records about ${named.map(f => f.title).join(" and ")}:`, [...named.slice(0, 2), gene].filter(Boolean));
+      if (has("careful", "caution", "look alike", "lookalike", "similar but", "trust", "not related")) return careful.length ? say("These look similar, but RarePath found little shared biology:", careful.slice(0, 3)) : say("RarePath has not flagged any look-alikes for this disease.", []);
+      if (has("study", "studies", "trial", "registry", "research", "existing", "already", "data", "natural history", "group", "organi", "foundation", "community")) {
+        const fs = [...pickF(f => f.study), ...pickF(f => f.org)].slice(0, 5);
+        return fs.length ? say("This is the existing work RarePath has on record:", fs) : say("RarePath has no study, registry or patient group recorded for this disease yet. NORD, Global Genes and Orphanet are good places to look.", []);
+      }
+      if (has("next", "first", "start", "contact", "email", "plan", "what should", "what can we", "help")) return next ? say("A concrete step you could take this week:", [next]) : say("RarePath has no sourced partner to suggest yet. Step 4 of the guide lists how to find one.", []);
+      if (has("sign", "symptom", "look like", "feature")) return say("", pickF(f => /distinctive signs/.test(f.text)).concat(gene ? [gene] : []));
+      if (has("gene", "cause", "why does", "genetic")) return say("", [gene, pickF(f => /forms/.test(f.text))[0]].filter(Boolean));
+      if (has("similar", "close", "share", "related", "who", "other famil", "like us", "neighbo")) return groups.length ? say("The closest communities RarePath found, strongest first:", groups.slice(0, 3)) : say("RarePath found no related community with sourced evidence yet.", []);
+      return say(`Here is the short version for ${m ? m.f.label : "this disease"}:`, [gene, groups[0], next].filter(Boolean), "Ask me about a specific disease, the studies, or what to do next.");
+    }
+
+    function factDrawer(id) {
+      const f = chatState.facts.find(x => x.id === id); if (!f) return;
+      if (f.group) { groupDrawer(f.group); return; }
+      const edges = f.refs.map(r => DATA.edges.find(e => e.id === r)).filter(Boolean);
+      openDrawer(`Source ${id.slice(1)}`, f.title || "Fact", `<div class="dsec"><span class="tag ${f.computed ? "t-calc" : "t-db"}">${f.computed ? "Computed by RarePath" : "From a database"}</span><p style="margin-top:10px">${esc(f.text)}</p>
+        ${f.url ? `<p><a href="${esc(f.url)}" target="_blank" rel="noopener">Open the original record ↗</a></p>` : ""}</div>
+        <div class="dsec"><h3>Graph records behind this fact</h3><ul class="src">${edges.map(e => `<li><button class="btn" type="button" data-edge="${esc(e.id)}">${esc(label(e.source))} → ${esc(label(e.target))}</button></li>`).join("")}</ul></div>`);
+    }
+
+    // ================================================================= events
+    document.addEventListener("click", ev => {
+      if (ev.target.id === "copy") {
+        const ta = $("#draft"), status = $("#copy-status");
+        const fallback = () => { ta.focus(); ta.select(); status.textContent = "Text selected. Press Ctrl+C to copy."; };
+        try { navigator.clipboard.writeText(ta.value).then(() => { status.textContent = "Copied. Paste it into your email."; }, fallback); } catch (_) { fallback(); }
+        return;
+      }
+      if (ev.target.id === "open-map") { mapMode = "focus"; renderMap(); return; }
+      const fb = ev.target.closest("[data-fb]");
+      if (fb) { sendFeedback(fb); return; }
+      if (ev.target.closest("[data-forget]")) { forgetRecent(); return; }
+      const t = ev.target.closest("[data-gene],[data-pick],[data-go],[data-group],[data-res],[data-gap],[data-mapmode],[data-ask],[data-fact],[data-edge],[data-more]");
+      if (!t) { if (!ev.target.closest("#switch")) $("#dropdown").hidden = true; return; }
+      if (t.dataset.gene) { geneDrawer(t.dataset.gene); return; }
+      if (t.dataset.pick) pick(t.dataset.pick);
+      else if (t.dataset.go) { $("#dropdown").hidden = true; closeDrawer(); selectDisease(t.dataset.go); }
+      else if (t.dataset.group) groupDrawer(t.dataset.group);
+      else if (t.dataset.res) resourceDrawer(t.dataset.res);
+      else if (t.dataset.gap) { $("#dropdown").hidden = true; showGuide(); gapCard(t.dataset.gap); }
+      else if (t.dataset.mapmode) { mapMode = t.dataset.mapmode; renderMap(); }
+      else if (t.dataset.ask) { closeDrawer(); showGuide(); handleInput(t.dataset.ask); }
+      else if (t.dataset.fact) factDrawer(t.dataset.fact);
+      else if (t.dataset.edge) { const e = DATA.edges.find(x => x.id === t.dataset.edge); if (e) edgeDrawer(e); }
+      else if (t.dataset.more) moreCard(t.dataset.more);
+    });
+    document.addEventListener("keydown", ev => {
+      if (ev.key === "Escape") { closeDrawer(); $("#dropdown").hidden = true; }
+      const g = ev.target.closest && ev.target.closest(".nodeg");
+      if (g && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); if (g.dataset.res) resourceDrawer(g.dataset.res); else groupDrawer(g.dataset.group); }
+    });
+    $("#q").addEventListener("input", ev => renderDropdown(ev.target.value));
+    $("#q").addEventListener("keydown", ev => {
+      const bs = [...document.querySelectorAll("#dropdown button")];
+      if (!bs.length || (ev.key !== "ArrowDown" && ev.key !== "ArrowUp")) return;
+      ev.preventDefault(); active = (active + (ev.key === "ArrowDown" ? 1 : -1) + bs.length) % bs.length;
+      bs.forEach((b, i) => b.classList.toggle("active", i === active));
+    });
+    $("#switch").addEventListener("submit", ev => {
+      ev.preventDefault();
+      const v = $("#q").value.trim(); if (!v) return;
+      renderDropdown(v);
+      const bs = [...document.querySelectorAll("#dropdown button")];
+      (bs[Math.max(0, active)] || bs[0]).click();
+    });
+    $("#ask-form").addEventListener("submit", ev => { ev.preventDefault(); const v = $("#ask").value; $("#ask").value = ""; $("#ask").style.height = ""; handleInput(v); });
+    $("#ask").addEventListener("keydown", ev => { if (ev.key === "Enter" && !ev.shiftKey) { ev.preventDefault(); $("#ask-form").requestSubmit(); } });
+    $("#ask").addEventListener("input", ev => { ev.target.style.height = "auto"; ev.target.style.height = Math.min(160, ev.target.scrollHeight) + "px"; });
+    $("#drawer-close").addEventListener("click", closeDrawer);
+    $("#backdrop").addEventListener("click", closeDrawer);
+    $("#tab-guide").addEventListener("click", showGuide);
+    $("#tab-map").addEventListener("click", () => { if (focusId) renderMap(); });
+
+    // ================================================================= boot
+    function boot() {
+      index();
+      hello();
+      const params = new URLSearchParams(location.search);
+      const f = params.get("focus"), q = params.get("q");
+      const example = ["MONDO:0018149", "MONDO:0009261"].find(id => N.has(id)) || (DATA.nodes.find(n => n.kind === "Disease") || {}).id;
+      if (f && N.has(f)) { N.get(f).kind === "Disease" ? selectDisease(f) : chooserCard(N.get(f)); }
+      else if (q) handleInput(q);
+      else if (readRecent()[0]) selectDisease(readRecent()[0]);
+      else if (example) selectDisease(example, { example: true });
+      if (params.get("view") === "map" && focusId) renderMap();
+    }
+    async function tryLive() {
+      if (!/^https?:$/.test(location.protocol)) return;
+      try {
+        const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 4000);
+        const res = await fetch("api/graph", { signal: ctrl.signal }); clearTimeout(t);
+        if (res.ok) { const live = await res.json(); if (live && live.nodes && live.nodes.length >= (DATA.nodes || []).length) DATA = live; }
+      } catch (_) { /* keep the exported snapshot */ }
+    }
+    async function checkChat() {
+      if (!/^https?:$/.test(location.protocol)) return;
+      try {
+        const res = await fetch("api/health"); if (!res.ok) return;
+        const h = await res.json();
+        feedbackServer = !!h.feedback;
+        if (h.chat) {
+          chatState.ai = true; chatState.model = h.chat_model || "";
+          $("#mode").textContent = `AI answers (${chatState.model})`;
+          $("#privacy").textContent = "Your question goes to OpenAI through your own RarePath server. Please don't type names or medical details.";
+        }
+      } catch (_) { /* offline answers */ }
+    }
+    // Read-only hook for evals/capture_facts.py: the exact facts the page would send, and its offline answer.
+    window.RAREPATH_EVAL = {
+      facts(id) { selectDisease(id); return JSON.parse(JSON.stringify(chatState.facts)); },
+      offline(id, q) { if (focusId !== id) selectDisease(id); return offlineAnswer(q); },
+      graphVersion,
+    };
+    Promise.all([tryLive(), checkChat()]).then(boot);
+  })();
+  </script>
+</body>
+</html>

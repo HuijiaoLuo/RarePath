@@ -6,9 +6,9 @@ Neo4j is the query and provenance layer for the RarePath research-navigation pro
 
 The current seed snapshot contains:
 
-- 30 `Entity` nodes;
-- 34 relationships;
-- 6 diseases, 4 genes, 4 proteins, 4 studies, 10 evidence records, and 2 organizations.
+- 31 `Entity` nodes;
+- 35 relationships;
+- 6 diseases, 4 genes, 4 proteins, 4 studies, 11 evidence records, and 2 organizations.
 
 ## Files to use
 
@@ -22,6 +22,8 @@ The current seed snapshot contains:
 | `data/processed/*.csv` | Normalized disease, gene, variant, and study data. |
 | `data/processed/proteins.csv` / `proteins.fasta` | Reviewed human protein mapping and sequence snapshot. |
 | `pipelines/fetch_protein_mappings.py` | Reproducible UniProt mapping step. |
+| `data/processed/structure_comparison.csv` | Bounded AlphaFold sequence-guided C-alpha comparison; only eligible computed rows may become graph edges. |
+| `pipelines/sync_structure_evidence_to_graph.py` | Local synchronization of computed structure evidence into graph CSVs; does not contact Neo4j. |
 
 ## Data model
 
@@ -45,6 +47,7 @@ The main relationship semantics are:
 - `STUDIES` / `RESEARCH_ASSET_FOR`: study or research-resource links;
 - `SUPPORTED_BY`: link from an entity to an evidence node;
 - `RESEARCH_NEIGHBOR` / `RESOURCE_NEIGHBOR`: navigation links only, never treatment equivalence.
+- `SIMILAR_TO`: inferred protein-level computational lead; its method, score, coverage, and model provenance remain visible.
 
 `assertion_level` is one of `curated`, `extracted`, `inferred`, or `human_reviewed`. Similarity results from the planned protein layer should use `inferred` and must carry a method, release, score, and provenance.
 
@@ -72,6 +75,15 @@ python graph/load_neo4j.py --load
 
 The first command validates duplicate IDs, CSV shape, missing endpoints, relationship names, and evidence references. The second command writes the prepared graph after the connection variables have been set.
 
+Before either command, regenerate the local inferred similarity edge after a structure-comparison refresh:
+
+```bash
+python pipelines/sync_structure_evidence_to_graph.py
+python graph/load_neo4j.py
+```
+
+The synchronizer currently adds a single HEXA -> HEXB `SIMILAR_TO` edge. It has `assertion_level = inferred` and `confidence = medium`, because it is reproducible computational support but not independent evidence of shared mechanism or treatment response.
+
 ## Starter Cypher queries
 
 Count the graph by node type:
@@ -97,6 +109,14 @@ Show a disease and its evidence links:
 MATCH (d:Entity {node_id:'MONDO:0018149'})-[r]->(x:Entity)
 RETURN d, r, x
 ORDER BY r.confidence DESC;
+```
+
+Show the bounded protein structure result and its evidence node:
+
+```cypher
+MATCH (a:Entity {node_id:'UNIPROT:P06865'})-[s:SIMILAR_TO]->(b:Entity {node_id:'UNIPROT:P07686'})
+MATCH (e:Entity {node_id:'EVIDENCE:SIMSTRUCT_P06865_P07686'})
+RETURN a, s, b, e;
 ```
 
 ## Recommended product UI

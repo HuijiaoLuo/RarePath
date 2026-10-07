@@ -14,6 +14,10 @@ venv/
 tmp/
 *.log
 file.pdf
+Claude outputs/
+
+# RAG corpus and candidates are rebuilt from the project brief (not committed): python rag/build_corpus.py
+data/derived/rag/
 Neo4j-*-Created-*.txt
 neo4j-credentials*.txt
 .DS_Store
@@ -21,3 +25,6 @@ Thumbs.db
 
 # Keep the curated snapshot metadata committed
 !data/manifests/manifest.json
+
+# Feedback collected by a local server (reviewed with pipelines/review_feedback.py, never committed)
+data/feedback/

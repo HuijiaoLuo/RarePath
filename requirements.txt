@@ -1,6 +1,6 @@
-# RarePath lightweight RAG and Graph DB MVP.
-# Heavy ML packages (torch, transformers, sentence-transformers, Chroma) are
-# intentionally excluded. Add them only after the retrieval baseline is tested.
+# RarePath dependencies. The pipelines use the standard library plus networkx;
+# the rest serve the local server (Neo4j, OpenAI) and the RAG review queue.
+# Heavy ML packages (torch, transformers) are intentionally not needed.
 
 neo4j==6.3.1
 httpx==0.28.1
@@ -10,3 +10,4 @@ rank-bm25==0.2.2
 rapidfuzz==3.14.3
 jsonschema==4.25.1
 openai==3.24.0
+networkx>=3.2

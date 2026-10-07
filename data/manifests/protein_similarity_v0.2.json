@@ -1,0 +1,40 @@
+{
+  "pipeline": "RarePath protein sequence similarity baselines",
+  "generated_at": "2026-10-04T14:40:12.565126Z",
+  "inputs": {
+    "proteins_csv": "data/processed/proteins.csv",
+    "proteins_fasta": "data/processed/proteins.fasta",
+    "protein_count": 4,
+    "unique_pair_count": 6,
+    "result_row_count": 12
+  },
+  "methods": [
+    {
+      "method": "smith_waterman_local_linear_v0.1",
+      "substitution_matrix": "identity_match+2_mismatch-1",
+      "gap_model": "linear",
+      "gap_open_penalty": "",
+      "gap_extend_penalty": "2",
+      "score_name": "smith_waterman_linear_raw_score",
+      "method_source_url": "",
+      "notes": "Transparent teaching baseline; not calibrated for protein substitution chemistry."
+    },
+    {
+      "method": "smith_waterman_local_blosum62_affine_v0.2",
+      "substitution_matrix": "BLOSUM62",
+      "gap_model": "affine; cost=-(open + extend*gap_length)",
+      "gap_open_penalty": "11",
+      "gap_extend_penalty": "1",
+      "score_name": "smith_waterman_blosum62_affine_raw_score",
+      "method_source_url": "https://ftp.ncbi.nlm.nih.gov/blast/matrices/BLOSUM62",
+      "notes": "BLOSUM62 with NCBI-style affine gaps; raw score is only comparable within this method."
+    }
+  ],
+  "significance": {
+    "applies_to": "smith_waterman_local_blosum62_affine_v0.2",
+    "parameters": "NCBI BLAST gapped BLOSUM62 parameters (gap open 11, extend 1): lambda=0.267, K=0.041",
+    "formula": "E = K*m*n*exp(-lambda*S); bits = (lambda*S - ln K)/ln 2; no edge correction",
+    "significant_if_evalue_below": 0.001
+  },
+  "interpretation": "Computational research-navigation signals; not disease, pathogenicity, or treatment predictions."
+}
